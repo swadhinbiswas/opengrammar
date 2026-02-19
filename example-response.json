@@ -1,0 +1,36 @@
+{
+  "issues": [
+    {
+      "type": "grammar",
+      "original": "me and him went",
+      "suggestion": "he and I went",
+      "reason": "Subject-verb agreement error.",
+      "offset": 0,
+      "length": 15
+    },
+    {
+      "type": "spelling",
+      "original": "teh",
+      "suggestion": "the",
+      "reason": "Misspelled word.",
+      "offset": 20,
+      "length": 3
+    },
+    {
+      "type": "clarity",
+      "original": "utilize",
+      "suggestion": "use",
+      "reason": "Simpler word choice.",
+      "offset": 45,
+      "length": 7
+    },
+    {
+      "type": "style",
+      "original": "mistakes were made",
+      "suggestion": "we made mistakes",
+      "reason": "Passive voice.",
+      "offset": 60,
+      "length": 18
+    }
+  ]
+}
