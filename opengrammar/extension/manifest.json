@@ -1,12 +1,13 @@
 {
   "manifest_version": 3,
   "name": "OpenGrammar",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Your privacy-first, open-source writing assistant. Check grammar, spelling, and style everywhere on the web.",
   "permissions": [
     "storage",
     "activeTab",
-    "scripting"
+    "scripting",
+    "contextMenus"
   ],
   "host_permissions": [
     "<all_urls>"
@@ -27,6 +28,15 @@
   "options_ui": {
     "page": "src/options/index.html",
     "open_in_tab": true
+  },
+  "commands": {
+    "rewrite-text": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+R",
+        "mac": "Command+Shift+R"
+      },
+      "description": "Open rewrite tool"
+    }
   },
   "content_scripts": [
     {

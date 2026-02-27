@@ -3,6 +3,15 @@ import type { AnalyzeRequest, AnalyzeResponse, RewriteRequest, RewriteResponse, 
 // Default backend URL
 const DEFAULT_BACKEND_URL = 'http://localhost:8787';
 
+// Initialize context menus
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.contextMenus.create({
+    id: 'opengrammar-rewrite',
+    title: 'Rewrite with OpenGrammar',
+    contexts: ['selection'],
+  });
+});
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === 'CHECK_GRAMMAR') {
     handleGrammarCheck(request.text, sendResponse);
@@ -11,6 +20,16 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   
   if (request.type === 'REWRITE_TEXT') {
     handleRewrite(request.text, request.tone, sendResponse);
+    return true;
+  }
+  
+  if (request.type === 'GET_SELECTION') {
+    // Get selected text from the current tab
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      chrome.tabs.sendMessage(tabs[0].id, { type: 'GET_SELECTED_TEXT' }, (response) => {
+        sendResponse(response);
+      });
+    });
     return true;
   }
   
@@ -34,6 +53,26 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       sendResponse({ success: true });
     });
     return true;
+  }
+});
+
+// Handle context menu clicks
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  if (info.menuItemId === 'opengrammar-rewrite' && info.selectionText) {
+    // Open rewrite popup with selected text
+    chrome.tabs.sendMessage(tab.id, {
+      type: 'OPEN_REWRITE',
+      text: info.selectionText,
+    });
+  }
+});
+
+// Handle keyboard shortcuts
+chrome.commands.onCommand.addListener((command) => {
+  if (command === 'rewrite-text') {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      chrome.tabs.sendMessage(tabs[0].id, { type: 'OPEN_REWRITE' });
+    });
   }
 });
 
