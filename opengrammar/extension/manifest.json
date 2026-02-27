@@ -2,9 +2,15 @@
   "manifest_version": 3,
   "name": "OpenGrammar",
   "version": "1.0.0",
-  "description": "Open-source grammar and writing assistant.",
-  "permissions": ["storage", "activeTab", "scripting"],
-  "host_permissions": ["<all_urls>"],
+  "description": "Your privacy-first, open-source writing assistant. Check grammar, spelling, and style everywhere on the web.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "background": {
     "service_worker": "src/background/index.ts",
     "type": "module"
@@ -12,10 +18,11 @@
   "action": {
     "default_popup": "src/popup/index.html",
     "default_icon": {
-      "16": "public/icon-16.png",
-      "48": "public/icon-48.png",
-      "128": "public/icon-128.png"
-    }
+      "16": "icon-16.png",
+      "48": "icon-48.png",
+      "128": "icon-128.png"
+    },
+    "default_title": "OpenGrammar"
   },
   "options_ui": {
     "page": "src/options/index.html",
@@ -25,13 +32,19 @@
     {
       "matches": ["<all_urls>"],
       "js": ["src/content/index.ts"],
-      "run_at": "document_idle"
+      "run_at": "document_idle",
+      "css": []
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": ["assets/*", "public/*"],
+      "resources": ["assets/*"],
       "matches": ["<all_urls>"]
     }
-  ]
+  ],
+  "icons": {
+    "16": "icon-16.png",
+    "48": "icon-48.png",
+    "128": "icon-128.png"
+  }
 }
