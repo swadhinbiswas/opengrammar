@@ -580,14 +580,20 @@ Return ONLY JSON. If no issues: {"issues": []}`;
   static async getModels(provider: string, apiKey?: string, baseUrl?: string): Promise<string[]> {
     try {
       const providerBaseUrl = baseUrl || this.getProviderBaseUrl(provider as LLMProvider);
+      
+      // For Ollama, use 'ollama' as dummy key
+      // For other providers, use provided key or empty string
+      const keyForRequest = provider === 'ollama' ? 'ollama' : (apiKey || '');
+      
       const openai = new OpenAI({
-        apiKey: apiKey || 'ollama',
+        apiKey: keyForRequest,
         baseURL: providerBaseUrl,
       });
       const models = await openai.models.list();
       return models.data.map(m => m.id).slice(0, 50);
     } catch (error) {
-      console.error(`Failed to fetch models for ${provider}:`, error);
+      console.debug(`Failed to fetch models for ${provider}:`, error instanceof Error ? error.message : error);
+      // Return default models from config instead of failing
       return [];
     }
   }

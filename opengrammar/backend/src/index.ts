@@ -32,23 +32,44 @@ app.get('/providers', (c) => {
 app.post('/models', async (c) => {
   try {
     const { provider, apiKey, baseUrl } = await c.req.json();
-    
+
     if (!provider) {
       return c.json({ error: 'Provider is required' }, 400);
     }
 
-    const models = await LLMAnalyzer.getModels(provider, apiKey, baseUrl);
+    // Get default models from config
+    const providerConfig = PROVIDERS.find(p => p.id === provider);
+    const defaultModels = providerConfig?.models || [];
+
+    // Try to fetch live models, but don't fail if it doesn't work
+    let models = defaultModels;
     
+    // Only try to fetch live models if API key is provided (except for Ollama)
+    if ((apiKey && apiKey !== 'ollama') || provider === 'ollama') {
+      try {
+        const liveModels = await LLMAnalyzer.getModels(provider, apiKey, baseUrl);
+        if (liveModels.length > 0) {
+          models = liveModels;
+        }
+      } catch (fetchError) {
+        // Silently use default models if fetch fails
+        console.debug(`Using default models for ${provider}`);
+      }
+    }
+
     return c.json({
       provider,
-      models: models.length > 0 ? models : PROVIDERS.find(p => p.id === provider)?.models || [],
+      models: models,
     });
   } catch (error) {
     console.error('Failed to fetch models:', error);
-    return c.json({ 
-      error: 'Failed to fetch models',
-      message: error instanceof Error ? error.message : 'Unknown error'
-    }, 500);
+    // Return default models for the provider
+    const { provider } = await c.req.json().catch(() => ({}));
+    const providerConfig = PROVIDERS.find(p => p.id === provider);
+    return c.json({
+      provider,
+      models: providerConfig?.models || [],
+    });
   }
 });
 
