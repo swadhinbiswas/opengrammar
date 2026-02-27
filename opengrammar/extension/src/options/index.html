@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenGrammar Options</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 19l7-7 3 3-7 7-3-3z"/>
+          <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
+          <path d="M2 2l7.586 7.586"/>
+          <circle cx="11" cy="11" r="2"/>
+        </svg>
+        <h1>OpenGrammar</h1>
+      </div>
+      <p class="tagline">Your privacy-first writing assistant</p>
+    </header>
+
+    <main>
+      <!-- General Settings -->
+      <section class="settings-section">
+        <h2>General Settings</h2>
+        
+        <div class="setting-group">
+          <label class="toggle-setting">
+            <div class="toggle-info">
+              <span class="setting-label">Enable OpenGrammar</span>
+              <span class="setting-description">Turn grammar checking on or off globally</span>
+            </div>
+            <input type="checkbox" id="enabled" class="toggle-input">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-group">
+          <label class="toggle-setting">
+            <div class="toggle-info">
+              <span class="setting-label">Check as you type</span>
+              <span class="setting-description">Automatically check grammar while typing</span>
+            </div>
+            <input type="checkbox" id="checkAsYouType" class="toggle-input">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-group">
+          <label class="toggle-setting">
+            <div class="toggle-info">
+              <span class="setting-label">Show notifications</span>
+              <span class="setting-description">Display error notifications</span>
+            </div>
+            <input type="checkbox" id="showNotifications" class="toggle-input">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </section>
+
+      <!-- API Settings -->
+      <section class="settings-section">
+        <h2>AI Settings</h2>
+        
+        <div class="setting-group">
+          <label for="apiKey">
+            <span class="setting-label">OpenAI API Key</span>
+            <span class="setting-description">
+              Your API key is stored locally and never sent to our servers. 
+              <a href="https://platform.openai.com/api-keys" target="_blank">Get your API key</a>
+            </span>
+          </label>
+          <div class="input-group">
+            <input type="password" id="apiKey" class="text-input" placeholder="sk-...">
+            <button id="toggleApiKey" class="btn-icon" title="Show/Hide">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="setting-group">
+          <label for="model">
+            <span class="setting-label">AI Model</span>
+            <span class="setting-description">Choose the AI model for advanced grammar checking</span>
+          </label>
+          <select id="model" class="select-input">
+            <option value="gpt-3.5-turbo">GPT-3.5 Turbo (Fast & Affordable)</option>
+            <option value="gpt-4">GPT-4 (High Quality)</option>
+            <option value="gpt-4-turbo">GPT-4 Turbo (Latest)</option>
+            <option value="gpt-4o">GPT-4o (Optimized)</option>
+            <option value="gpt-4o-mini">GPT-4o Mini (Cost Effective)</option>
+          </select>
+        </div>
+
+        <div class="setting-group">
+          <label for="backendUrl">
+            <span class="setting-label">Backend URL</span>
+            <span class="setting-description">
+              Your self-hosted backend URL. Leave empty to use localhost for development.
+            </span>
+          </label>
+          <input type="url" id="backendUrl" class="text-input" placeholder="https://your-backend.workers.dev/analyze">
+          <div class="backend-status" id="backendStatus">
+            <span class="status-indicator"></span>
+            <span class="status-text">Checking...</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Site-Specific Settings -->
+      <section class="settings-section">
+        <h2>Site-Specific Settings</h2>
+        <p class="section-description">
+          Control where OpenGrammar is active. Add domains to disable grammar checking on specific websites.
+        </p>
+        
+        <div class="setting-group">
+          <div class="domain-list-container">
+            <div class="domain-input-group">
+              <input type="text" id="newDomain" class="text-input" placeholder="example.com">
+              <button id="addDomain" class="btn-primary">Add Domain</button>
+            </div>
+            <div id="domainList" class="domain-list">
+              <!-- Domains will be listed here -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Dictionary -->
+      <section class="settings-section">
+        <h2>Custom Dictionary</h2>
+        <p class="section-description">
+          Words you've added or that were auto-saved. These words won't be flagged as spelling errors.
+        </p>
+        
+        <div class="setting-group">
+          <div class="dictionary-container">
+            <div class="dictionary-input-group">
+              <input type="text" id="newWord" class="text-input" placeholder="Add a word...">
+              <button id="addWord" class="btn-primary">Add</button>
+            </div>
+            <div id="dictionaryList" class="dictionary-list">
+              <!-- Dictionary words will be listed here -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Ignored Issues -->
+      <section class="settings-section">
+        <h2>Ignored Suggestions</h2>
+        <p class="section-description">
+          Manage grammar issues you've chosen to ignore.
+        </p>
+        
+        <div class="setting-group">
+          <div id="ignoredIssuesList" class="ignored-list">
+            <!-- Ignored issues will be listed here -->
+          </div>
+          <button id="clearIgnored" class="btn-secondary" style="margin-top: 12px;">
+            Clear All Ignored Issues
+          </button>
+        </div>
+      </section>
+
+      <!-- Data Management -->
+      <section class="settings-section">
+        <h2>Data Management</h2>
+        
+        <div class="setting-group">
+          <div class="data-actions">
+            <button id="exportData" class="btn-secondary">Export Settings</button>
+            <button id="importData" class="btn-secondary">Import Settings</button>
+            <input type="file" id="importFile" accept=".json" style="display: none;">
+          </div>
+        </div>
+
+        <div class="setting-group">
+          <button id="resetSettings" class="btn-danger">
+            Reset All Settings
+          </button>
+        </div>
+      </section>
+
+      <!-- About -->
+      <section class="settings-section about-section">
+        <h2>About OpenGrammar</h2>
+        <div class="about-content">
+          <p><strong>Version:</strong> <span id="version">1.0.0</span></p>
+          <p><strong>License:</strong> Apache 2.0</p>
+          <p class="about-description">
+            OpenGrammar is a privacy-first, open-source writing assistant that helps you write clearly 
+            and confidently everywhere on the web.
+          </p>
+          <div class="about-links">
+            <a href="https://github.com/your-repo/opengrammar" target="_blank" class="link">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+              </svg>
+              GitHub
+            </a>
+            <a href="https://github.com/your-repo/opengrammar/issues" target="_blank" class="link">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+              Report Issue
+            </a>
+            <a href="https://github.com/your-repo/opengrammar/blob/main/ROADMAP.md" target="_blank" class="link">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h11z"/>
+              </svg>
+              Roadmap
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Built with ❤️ by the OpenGrammar community</p>
+    </footer>
+  </div>
+
+  <script src="options.tsx" type="module"></script>
+</body>
+</html>
