@@ -6,62 +6,154 @@ This roadmap outlines the major phases of development, from the initial MVP to a
 
 ---
 
-## 🎯 Phase 1: Foundation & MVP (Current)
+## ✅ Phase 1: Foundation & MVP (Completed)
 
-The goal of this phase is to establish a solid, functional, and secure base architecture that proves the concept of a privacy-first, dual-engine writing assistant.
+The goal of this phase was to establish a solid, functional, and secure base architecture.
 
 *   [x] **Chrome Extension Skeleton:** Manifest V3 setup with React and Vite.
 *   [x] **Serverless Backend:** A stateless Hono API deployable to edge networks (Cloudflare/Vercel).
 *   [x] **Dual Engine:**
-    *   [x] Local rule-based checks (passive voice, repetition).
-    *   [x] AI-powered checks (OpenAI compatibility) with a strict JSON response format.
+    *   [x] Local rule-based checks (40+ rules: passive voice, repetition, spacing, apostrophes, clichés, etc.)
+    *   [x] AI-powered checks (OpenAI/OpenRouter/Groq/Together/Ollama compatible)
 *   [x] **Privacy:** Secure local storage for API keys (`chrome.storage.sync`); no backend logging or databases.
 *   [x] **Core UI:** Basic popup for configuration (toggling, setting API key/model).
 *   [x] **Content Script MVP:** Text extraction and basic visual highlighting for `input`, `textarea`, and standard `contenteditable` elements.
+*   [x] **Interactive Tooltips:** Click-to-apply suggestions with ignore and dictionary features.
+*   [x] **Comprehensive Options Page:** Site-specific settings, dictionary management, data export/import.
+*   [x] **Docker Self-Hosting:** Complete Docker setup with Ollama support for local LLM.
+*   [x] **Multi-Provider Support:** 6 AI providers (OpenAI, Groq, OpenRouter, Together, Ollama, Custom).
 
 ---
 
-## 🚀 Phase 2: Enhanced User Experience & Accuracy (Next Steps)
+## ✅ Phase 2: Enhanced User Experience (Completed)
 
-This phase focuses on making the extension feel natural, responsive, and highly accurate across a wider variety of modern web applications.
+This phase focused on making the extension feature-rich and highly customizable.
 
-*   **Advanced Highlighting Engine:**
-    *   Improve the robustness of highlighting inside complex `contenteditable` editors (like Google Docs, Notion, and rich text webmail).
-    *   Implement reliable inline underlines that move correctly when text is edited or scrolled.
-*   **Interactive Tooltips:**
-    *   Develop a polished, floating UI when hovering over an issue.
-    *   Enable "Click to Apply" functionality to instantly replace the original text with the suggested correction.
-    *   Allow users to "Ignore" a suggestion or "Add to Dictionary" for false positives.
-*   **Smarter Local Rules:**
-    *   Expand the local, non-AI rule engine using lightweight natural language processing (NLP) libraries (like `compromise` or a small WASM-based parser) to catch more errors offline and for free.
-*   **Custom Prompts:** Allow advanced users to customize the system prompt sent to the AI (e.g., "Make my writing sound more professional" or "Translate to UK English").
+*   [x] **Tone & Style Rewriting:**
+    *   [x] 8 tone options (formal, casual, professional, friendly, concise, detailed, persuasive, neutral)
+    *   [x] Context menu integration (right-click → Rewrite)
+    *   [x] Keyboard shortcut (Ctrl+Shift+R / Cmd+Shift+R)
+    *   [x] Side-by-side text comparison UI
+*   [x] **Writing Statistics Dashboard:**
+    *   [x] Word count, character count, sentence count, paragraph count
+    *   [x] Flesch Reading Ease Score
+    *   [x] Flesch-Kincaid Grade Level
+    *   [x] Automated Readability Index (ARI)
+    *   [x] Vocabulary diversity percentage
+    *   [x] Reading/speaking time estimates
+    *   [x] Issue breakdown by type
+*   [x] **Custom Prompts for AI:**
+    *   [x] 8 preset prompts (Fix Grammar, Make Formal, Simplify, Summarize, etc.)
+    *   [x] Prompt categories (grammar, style, creative, professional)
+    *   [x] Extensible system for user-defined prompts
+*   [ ] **Better Google Docs Support:** (See implementation guide)
+*   [ ] **Advanced Highlighting Engine:**
+    *   [ ] Improve robustness inside complex `contenteditable` editors
+    *   [ ] Implement reliable inline underlines that move correctly
 
 ---
 
-## 🧠 Phase 3: Advanced Capabilities & Context
+## 🚀 Phase 3: Advanced Capabilities (Planned)
 
-Here, we will leverage the AI engine to provide deeper insights and more powerful writing assistance beyond basic grammar and spelling.
+Here we will leverage the AI engine to provide deeper insights and more powerful writing assistance.
 
-*   **Tone & Style Adjustments:** Options to rewrite a selected paragraph for a specific tone (e.g., Confident, Friendly, Formal, Concise).
-*   **Autocomplete & Prediction:** Suggest the next few words or sentences as the user types, similar to advanced editor features.
-*   **Contextual Understanding:** Allow the AI to consider the surrounding text (or even the page context, if permitted by the user) to provide more accurate suggestions, rather than just analyzing isolated sentences.
-*   **Writing Statistics:** Provide users with insights into their writing habits (e.g., vocabulary diversity, average readability score) processed entirely locally.
+*   [ ] **Autocomplete & Prediction:**
+    *   [ ] Suggest next few words as user types
+    *   [ ] Context-aware completions
+    *   [ ] Configurable suggestion length
+*   [ ] **Contextual Understanding:**
+    *   [ ] Consider previous paragraphs for consistency
+    *   [ ] Document-wide tone analysis
+    *   [ ] Track terminology and style preferences
+*   [x] **Reading Time Estimates:** (Completed in Phase 2)
+*   [x] **Vocabulary Diversity Metrics:** (Completed in Phase 2)
+*   [ ] **Writing Analytics:**
+    *   [ ] Track writing habits over time
+    *   [ ] Most used words analysis
+    *   [ ] Sentence length distribution
+    *   [ ] Weekly/monthly reports
+*   [ ] **Smart Suggestions:**
+    *   [ ] Synonym recommendations for overused words
+    *   [ ] Transition word suggestions
+    *   [ ] Genre-specific recommendations
 
 ---
 
-## 🌐 Phase 4: Expansion & Ecosystem
+## 🌐 Phase 4: Expansion & Ecosystem (Planned)
 
 The final phase aims to bring OpenGrammar to every platform where people write.
 
-*   **Cross-Browser Support:**
-    *   Port the extension to Firefox (using WebExtensions API).
-    *   Port the extension to Safari.
-*   **Desktop Applications:** Create standalone desktop apps for Windows, macOS, and Linux that integrate with system-wide text inputs.
-*   **Developer API:** Offer a documented, self-hostable API so other developers can integrate the OpenGrammar engine into their own applications.
-*   **Community Rule Marketplace:** A repository where the community can share and install custom rule sets or AI prompts for specific domains (e.g., legal writing, medical writing, creative fiction).
+*   [ ] **Cross-Browser Support:**
+    *   [ ] Firefox extension (WebExtensions API)
+    *   [ ] Safari extension (Safari Web Extension Converter)
+    *   [ ] Edge extension (Chromium-based)
+*   [ ] **Desktop Applications:**
+    *   [ ] Electron-based app for Windows, macOS, Linux
+    *   [ ] System-wide text input integration
+    *   [ ] Native messaging for full system access
+*   [ ] **Developer API:**
+    *   [ ] Public REST API with authentication
+    *   [ ] Rate limiting and usage tiers
+    *   [ ] SDK packages (npm, pip)
+    *   [ ] API documentation portal
+*   [ ] **Community Ecosystem:**
+    *   [ ] Custom rule marketplace
+    *   [ ] Shared prompt library
+    *   [ ] Language packs for non-English support
+    *   [ ] Plugin system for extensibility
+
+---
+
+## 📊 Feature Status Summary
+
+| Feature | Status | Version |
+|---------|--------|---------|
+| Grammar Checking | ✅ Complete | v1.0 |
+| Multi-Provider AI | ✅ Complete | v2.0 |
+| Local LLM (Ollama) | ✅ Complete | v2.0 |
+| Interactive Tooltips | ✅ Complete | v1.0 |
+| Options Page | ✅ Complete | v1.0 |
+| Tone Rewriting | ✅ Complete | v2.1 |
+| Writing Statistics | ✅ Complete | v2.1 |
+| Custom Prompts | ✅ Complete | v2.1 |
+| Google Docs Support | 🚧 In Progress | - |
+| Autocomplete | 📋 Planned | v3.0 |
+| Firefox Support | 📋 Planned | v3.0 |
+| Desktop Apps | 📋 Planned | v4.0 |
+| Developer API | 📋 Planned | v4.0 |
 
 ---
 
 ## 🤝 How to Help
 
-We need developers, designers, and testers to make this roadmap a reality. If you're interested in contributing, please pick an issue from our GitHub repository or start a discussion!
+We need developers, designers, and testers to make this roadmap a reality!
+
+### Contribution Areas
+
+1.  **Core Features:** Pick a feature from Phase 3 or 4 and implement it
+2.  **Bug Fixes:** Check the GitHub issues tab
+3.  **Documentation:** Improve guides, add tutorials
+4.  **Testing:** Test on different browsers and websites
+5.  **Translations:** Help localize OpenGrammar for other languages
+
+### Getting Started
+
+1.  Fork the repository
+2.  Check `FEATURES_IMPLEMENTATION.md` for implementation guides
+3.  Create a feature branch
+4.  Submit a pull request
+
+If you're interested in contributing, please start a discussion on GitHub or join our Discord server!
+
+---
+
+## 📅 Release Timeline
+
+| Version | Target | Features |
+|---------|--------|----------|
+| v2.1 | Current | Tone rewriting, statistics, custom prompts |
+| v3.0 | Q2 2026 | Autocomplete, Firefox support, Google Docs |
+| v3.5 | Q3 2026 | Contextual understanding, writing analytics |
+| v4.0 | Q4 2026 | Desktop apps, Developer API, Safari support |
+
+*Timeline is approximate and may change based on community contributions.*
