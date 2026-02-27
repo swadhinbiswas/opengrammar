@@ -80,7 +80,7 @@ export const PROVIDERS: ProviderConfig[] = [
     id: 'groq',
     name: 'Groq',
     baseUrl: 'https://api.groq.com/openai/v1',
-    models: ['llama-3.1-70b-versatile', 'llama-3.1-8b-instant', 'gemma2-9b-it'],
+    models: ['llama-3.1-70b-versatile', 'llama-3.1-8b-instant', 'gemma2-9b-it', 'mixtral-8x7b-32768'],
     requiresApiKey: true,
     description: 'Blazing fast inference',
   },

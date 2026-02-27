@@ -162,7 +162,7 @@ const checkGrammar = async (element: HTMLElement) => {
   if (!activeElements.has(element)) return;
 
   const text = extractText(element);
-  
+
   // Skip very short text
   if (!text || text.trim().length < 5) {
     // Clear highlights for short text
@@ -177,16 +177,22 @@ const checkGrammar = async (element: HTMLElement) => {
       text,
     });
 
-    if (response && response.issues) {
+    if (response?.error) {
+      console.warn('Grammar check error:', response.error);
+      // Don't show notification for every error - only show for critical issues
+      if (response.message?.includes('backend') || response.message?.includes('connect')) {
+        showNotification('Backend connection issue. Check settings.', 'warning');
+      }
+      return;
+    }
+
+    if (response?.issues) {
       highlightIssues(element, response.issues);
     }
-    
-    if (response && response.error) {
-      showNotification(response.error, 'error');
-    }
   } catch (err) {
-    console.error('Error checking grammar', err);
-    showNotification('Failed to check grammar. Is the backend running?', 'error');
+    // Silently handle errors - don't crash the extension
+    console.debug('Grammar check skipped:', err instanceof Error ? err.message : err);
+    // Don't show error notifications during normal typing - it's annoying
   }
 };
 
