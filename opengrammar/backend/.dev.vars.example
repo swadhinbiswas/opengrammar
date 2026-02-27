@@ -1,0 +1,20 @@
+# Backend Environment Configuration
+# Copy this file to .dev.vars for local development
+
+# Backend API URL (for extension to connect)
+# For local development: http://localhost:8787
+# For production: https://your-worker.your-subdomain.workers.dev
+BACKEND_URL="http://localhost:8787"
+
+# OpenAI API Key (for testing backend directly)
+# The extension will use user-provided keys
+# OPENAI_API_KEY=""
+
+# Optional: OpenRouter API Key (alternative to OpenAI)
+# OPENROUTER_API_KEY=""
+
+# Environment: development or production
+ENV="development"
+
+# Enable debug logging
+DEBUG="true"
