@@ -26,9 +26,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.type === 'GET_SELECTION') {
     // Get selected text from the current tab
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      chrome.tabs.sendMessage(tabs[0].id, { type: 'GET_SELECTED_TEXT' }, (response) => {
-        sendResponse(response);
-      });
+      const tab = tabs[0];
+      if (tab?.id) {
+        chrome.tabs.sendMessage(tab.id, { type: 'GET_SELECTED_TEXT' }, (response) => {
+          sendResponse(response);
+        });
+      } else {
+        sendResponse({ text: '' });
+      }
     });
     return true;
   }
@@ -60,10 +65,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 chrome.contextMenus.onClicked.addListener((info, tab) => {
   if (info.menuItemId === 'opengrammar-rewrite' && info.selectionText) {
     // Open rewrite popup with selected text
-    chrome.tabs.sendMessage(tab.id, {
-      type: 'OPEN_REWRITE',
-      text: info.selectionText,
-    });
+    if (tab?.id) {
+      chrome.tabs.sendMessage(tab.id, {
+        type: 'OPEN_REWRITE',
+        text: info.selectionText,
+      });
+    }
   }
 });
 
@@ -71,7 +78,10 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 chrome.commands.onCommand.addListener((command) => {
   if (command === 'rewrite-text') {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      chrome.tabs.sendMessage(tabs[0].id, { type: 'OPEN_REWRITE' });
+      const tab = tabs[0];
+      if (tab?.id) {
+        chrome.tabs.sendMessage(tab.id, { type: 'OPEN_REWRITE' });
+      }
     });
   }
 });

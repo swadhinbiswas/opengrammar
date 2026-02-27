@@ -14,13 +14,18 @@ const RewritePopup = () => {
   useEffect(() => {
     // Get selected text from page
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      chrome.tabs.sendMessage(tabs[0].id, { type: 'GET_SELECTION' }, (response) => {
-        if (response?.text) {
-          setSelectedText(response.text);
-        } else {
-          setError('No text selected. Please select text to rewrite.');
-        }
-      });
+      const tab = tabs[0];
+      if (tab?.id) {
+        chrome.tabs.sendMessage(tab.id, { type: 'GET_SELECTION' }, (response) => {
+          if (response?.text) {
+            setSelectedText(response.text);
+          } else {
+            setError('No text selected. Please select text to rewrite.');
+          }
+        });
+      } else {
+        setError('No active tab found.');
+      }
     });
   }, []);
 
@@ -63,11 +68,14 @@ const RewritePopup = () => {
 
   const handleApply = () => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      chrome.tabs.sendMessage(tabs[0].id, {
-        type: 'APPLY_REWRITE',
-        original: selectedText,
-        rewritten: rewrittenText,
-      });
+      const tab = tabs[0];
+      if (tab?.id) {
+        chrome.tabs.sendMessage(tab.id, {
+          type: 'APPLY_REWRITE',
+          original: selectedText,
+          rewritten: rewrittenText,
+        });
+      }
     });
   };
 
