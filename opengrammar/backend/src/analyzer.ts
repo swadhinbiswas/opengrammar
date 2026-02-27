@@ -1,5 +1,6 @@
 import type { Issue, CustomRule, LLMProvider } from './shared-types.js';
 import OpenAI from 'openai';
+import { Groq } from 'groq-sdk';
 
 export class RuleBasedAnalyzer {
   private static dictionary: Set<string> = new Set();
@@ -445,6 +446,69 @@ export class LLMAnalyzer {
     provider: LLMProvider = 'openai',
     baseUrl?: string
   ): Promise<Issue[]> {
+    try {
+      let issues: any[] = [];
+
+      // Use Groq SDK for Groq provider
+      if (provider === 'groq') {
+        issues = await this.analyzeWithGroq(text, apiKey, model);
+      } else {
+        // Use OpenAI SDK for other providers (OpenAI, OpenRouter, Together, Ollama, Custom)
+        issues = await this.analyzeWithOpenAI(text, apiKey, model, provider, baseUrl);
+      }
+
+      return issues;
+    } catch (error) {
+      console.error(`LLM Analysis Error (${provider}):`, error);
+      return [];
+    }
+  }
+
+  private static async analyzeWithGroq(
+    text: string,
+    apiKey: string,
+    model: string
+  ): Promise<Issue[]> {
+    const groq = new Groq({ apiKey });
+
+    const prompt = this.createGrammarPrompt(text);
+
+    const chatCompletion = await groq.chat.completions.create({
+      messages: [
+        { 
+          role: 'system', 
+          content: 'You are an expert grammar assistant. Return ONLY valid JSON.' 
+        },
+        { role: 'user', content: prompt }
+      ],
+      model: model,
+      response_format: { type: 'json_object' },
+      temperature: 0.3,
+    });
+
+    let content = chatCompletion.choices[0]?.message?.content;
+    if (!content) return [];
+
+    content = content.replace(/^```json\s*/, '').replace(/\s*```$/, '');
+    const result = JSON.parse(content);
+
+    return (result.issues || []).map((issue: any) => {
+      const index = text.indexOf(issue.original);
+      return {
+        ...issue,
+        offset: index !== -1 ? index : 0,
+        length: issue.original?.length || 0,
+      };
+    });
+  }
+
+  private static async analyzeWithOpenAI(
+    text: string,
+    apiKey: string,
+    model: string,
+    provider: LLMProvider,
+    baseUrl?: string
+  ): Promise<Issue[]> {
     const providerBaseUrl = baseUrl || this.getProviderBaseUrl(provider);
     
     const openai = new OpenAI({
@@ -454,35 +518,30 @@ export class LLMAnalyzer {
 
     const prompt = this.createGrammarPrompt(text);
 
-    try {
-      const completion = await openai.chat.completions.create({
-        messages: [
-          { role: 'system', content: 'You are an expert grammar assistant. Return ONLY valid JSON.' },
-          { role: 'user', content: prompt }
-        ],
-        model: model,
-        response_format: { type: 'json_object' },
-        temperature: 0.3,
-      });
+    const completion = await openai.chat.completions.create({
+      messages: [
+        { role: 'system', content: 'You are an expert grammar assistant. Return ONLY valid JSON.' },
+        { role: 'user', content: prompt }
+      ],
+      model: model,
+      response_format: { type: 'json_object' },
+      temperature: 0.3,
+    });
 
-      let content = completion.choices[0]?.message?.content;
-      if (!content) return [];
+    let content = completion.choices[0]?.message?.content;
+    if (!content) return [];
 
-      content = content.replace(/^```json\s*/, '').replace(/\s*```$/, '');
-      const result = JSON.parse(content);
+    content = content.replace(/^```json\s*/, '').replace(/\s*```$/, '');
+    const result = JSON.parse(content);
 
-      return (result.issues || []).map((issue: any) => {
-        const index = text.indexOf(issue.original);
-        return {
-          ...issue,
-          offset: index !== -1 ? index : 0,
-          length: issue.original?.length || 0,
-        };
-      });
-    } catch (error) {
-      console.error(`LLM Analysis Error (${provider}):`, error);
-      return [];
-    }
+    return (result.issues || []).map((issue: any) => {
+      const index = text.indexOf(issue.original);
+      return {
+        ...issue,
+        offset: index !== -1 ? index : 0,
+        length: issue.original?.length || 0,
+      };
+    });
   }
 
   private static getProviderBaseUrl(provider: LLMProvider): string {
