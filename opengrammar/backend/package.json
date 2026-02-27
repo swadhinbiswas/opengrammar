@@ -1,25 +1,26 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "OpenGrammar backend API",
+  "main": "src/index.ts",
   "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
     "@hono/zod-validator": "^0.7.6",
     "hono": "^4.11.10",
-    "openai": "^6.22.0",
+    "openai": "^4.22.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20260219.0",
     "@types/node": "^25.3.0",
-    "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
     "wrangler": "^4.66.0"
   }
