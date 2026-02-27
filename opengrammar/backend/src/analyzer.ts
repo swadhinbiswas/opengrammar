@@ -32,7 +32,333 @@ export class RuleBasedAnalyzer {
     issues.push(...this.checkRedundantPhrases(text));
     issues.push(...this.checkWeakWords(text));
     issues.push(...this.checkCliches(text));
+    issues.push(...this.checkBasicGrammar(text));
+    issues.push(...this.checkCommonMisspellings(text));
     issues.push(...this.checkCustomRules(text));
+
+    return issues;
+  }
+
+  /**
+   * Check basic grammar errors (subject-verb, pronouns, etc.)
+   */
+  private static checkBasicGrammar(text: string): Issue[] {
+    const issues: Issue[] = [];
+    
+    // Common grammar mistakes
+    const grammarRules: Array<{pattern: RegExp, suggestion: string, reason: string}> = [
+      {
+        pattern: /\b(me|him|her|them|us)\s+and\s+(I|he|she|they|we)\b/gi,
+        suggestion: '$2 and $1',
+        reason: 'Use subject pronouns (I, he, she, they, we) when they are part of the subject.'
+      },
+      {
+        pattern: /\b(I|he|she|they|we)\s+and\s+(me|him|her|them|us)\b/gi,
+        suggestion: '$2 and $1',
+        reason: 'Use object pronouns (me, him, her, them, us) when they are part of the object.'
+      },
+      {
+        pattern: /\bbuyed\b/gi,
+        suggestion: 'bought',
+        reason: '"Buyed" is not a word. The past tense of "buy" is "bought".'
+      },
+      {
+        pattern: /\brunned\b/gi,
+        suggestion: 'ran',
+        reason: '"Runned" is not a word. The past tense of "run" is "ran".'
+      },
+      {
+        pattern: /\bgoed\b/gi,
+        suggestion: 'went',
+        reason: '"Goed" is not a word. The past tense of "go" is "went".'
+      },
+      {
+        pattern: /\beated\b/gi,
+        suggestion: 'ate',
+        reason: '"Eated" is not a word. The past tense of "eat" is "ate".'
+      },
+      {
+        pattern: /\bseed\b/gi,
+        suggestion: 'saw',
+        reason: '"Seed" is not the past tense. The past tense of "see" is "saw".'
+      },
+      {
+        pattern: /\bcomed\b/gi,
+        suggestion: 'came',
+        reason: '"Comed" is not a word. The past tense of "come" is "came".'
+      },
+      {
+        pattern: /\btaked\b/gi,
+        suggestion: 'took',
+        reason: '"Taked" is not a word. The past tense of "take" is "took".'
+      },
+      {
+        pattern: /\bbringed\b/gi,
+        suggestion: 'brought',
+        reason: '"Bringed" is not a word. The past tense of "bring" is "brought".'
+      },
+      {
+        pattern: /\bthinked\b/gi,
+        suggestion: 'thought',
+        reason: '"Thinked" is not a word. The past tense of "think" is "thought".'
+      },
+      {
+        pattern: /\bknowed\b/gi,
+        suggestion: 'knew',
+        reason: '"Knowed" is not a word. The past tense of "know" is "knew".'
+      },
+      {
+        pattern: /\bhas\s+got\b/gi,
+        suggestion: 'has',
+        reason: '"Has got" is redundant. Use "has" instead.'
+      },
+      {
+        pattern: /\bhaving\s+got\b/gi,
+        suggestion: 'have',
+        reason: '"Having got" is awkward. Use "have" instead.'
+      },
+      {
+        pattern: /\bwanna\b/gi,
+        suggestion: 'want to',
+        reason: '"Wanna" is informal. Use "want to" in formal writing.'
+      },
+      {
+        pattern: /\bgotta\b/gi,
+        suggestion: 'have to',
+        reason: '"Gotta" is informal. Use "have to" in formal writing.'
+      },
+      {
+        pattern: /\bkinda\b/gi,
+        suggestion: 'kind of',
+        reason: '"Kinda" is informal. Use "kind of" in formal writing.'
+      },
+      {
+        pattern: /\bcould\b+of\b/gi,
+        suggestion: 'could have',
+        reason: '"Could of" is incorrect. Use "could have".'
+      },
+      {
+        pattern: /\bwould\b+of\b/gi,
+        suggestion: 'would have',
+        reason: '"Would of" is incorrect. Use "would have".'
+      },
+      {
+        pattern: /\bshould\b+of\b/gi,
+        suggestion: 'should have',
+        reason: '"Should of" is incorrect. Use "should have".'
+      },
+      {
+        pattern: /\bmight\b+of\b/gi,
+        suggestion: 'might have',
+        reason: '"Might of" is incorrect. Use "might have".'
+      },
+      {
+        pattern: /\bmust\b+of\b/gi,
+        suggestion: 'must have',
+        reason: '"Must of" is incorrect. Use "must have".'
+      },
+      {
+        pattern: /\balot\b/gi,
+        suggestion: 'a lot',
+        reason: '"Alot" is misspelled. Use "a lot" (two words).'
+      },
+      {
+        pattern: /\b alot\b/gi,
+        suggestion: ' a lot',
+        reason: '"Alot" is misspelled. Use "a lot" (two words).'
+      },
+      {
+        pattern: /\bshouldnt\b/gi,
+        suggestion: "shouldn't",
+        reason: 'Missing apostrophe in "shouldn\'t".'
+      },
+      {
+        pattern: /\bcouldnt\b/gi,
+        suggestion: "couldn't",
+        reason: 'Missing apostrophe in "couldn\'t".'
+      },
+      {
+        pattern: /\bwouldnt\b/gi,
+        suggestion: "wouldn't",
+        reason: 'Missing apostrophe in "wouldn\'t".'
+      },
+      {
+        pattern: /\bdidnt\b/gi,
+        suggestion: "didn't",
+        reason: 'Missing apostrophe in "didn\'t".'
+      },
+      {
+        pattern: /\bdoesnt\b/gi,
+        suggestion: "doesn't",
+        reason: 'Missing apostrophe in "doesn\'t".'
+      },
+      {
+        pattern: /\bisnt\b/gi,
+        suggestion: "isn't",
+        reason: 'Missing apostrophe in "isn\'t".'
+      },
+      {
+        pattern: /\barent\b/gi,
+        suggestion: "aren't",
+        reason: 'Missing apostrophe in "aren\'t".'
+      },
+      {
+        pattern: /\bwasnt\b/gi,
+        suggestion: "wasn't",
+        reason: 'Missing apostrophe in "wasn\'t".'
+      },
+      {
+        pattern: /\bwerent\b/gi,
+        suggestion: "weren't",
+        reason: 'Missing apostrophe in "weren\'t".'
+      },
+    ];
+
+    for (const rule of grammarRules) {
+      let match: RegExpExecArray | null;
+      while ((match = rule.pattern.exec(text)) !== null) {
+        issues.push({
+          type: 'grammar',
+          original: match[0],
+          suggestion: match[0].replace(rule.pattern, rule.suggestion),
+          reason: rule.reason,
+          offset: match.index,
+          length: match[0].length,
+        });
+      }
+    }
+
+    return issues;
+  }
+
+  /**
+   * Check common misspellings
+   */
+  private static checkCommonMisspellings(text: string): Issue[] {
+    const issues: Issue[] = [];
+    
+    const commonMisspellings: Record<string, string> = {
+      'teh': 'the',
+      'taht': 'that',
+      'waht': 'what',
+      'whta': 'what',
+      'hte': 'the',
+      'iwth': 'with',
+      'witht': 'with',
+      'adn': 'and',
+      'nad': 'and',
+      'abd': 'bad',
+      'becuase': 'because',
+      'becasue': 'because',
+      'beacuse': 'because',
+      'becomeing': 'becoming',
+      'begining': 'beginning',
+      'believeable': 'believable',
+      'buisness': 'business',
+      'calender': 'calendar',
+      'cant': "can't",
+      'collegue': 'colleague',
+      'comming': 'coming',
+      'completly': 'completely',
+      'definately': 'definitely',
+      'definitly': 'definitely',
+      'dissapear': 'disappear',
+      'dissapoint': 'disappoint',
+      'embarass': 'embarrass',
+      'enviroment': 'environment',
+      'existance': 'existence',
+      'experiance': 'experience',
+      'familar': 'familiar',
+      'finaly': 'finally',
+      'freind': 'friend',
+      'goverment': 'government',
+      'governer': 'governor',
+      'grammer': 'grammar',
+      'happend': 'happened',
+      'happenned': 'happened',
+      'harrass': 'harass',
+      'heighth': 'height',
+      'helpfull': 'helpful',
+      'immediatly': 'immediately',
+      'independant': 'independent',
+      'indispensible': 'indispensable',
+      'irresistable': 'irresistible',
+      'knowlege': 'knowledge',
+      'libary': 'library',
+      'lisence': 'license',
+      'maintainance': 'maintenance',
+      'millenium': 'millennium',
+      'minature': 'miniature',
+      'mischievious': 'mischievous',
+      'misspell': 'misspell',
+      'neccessary': 'necessary',
+      'necessery': 'necessary',
+      'noticable': 'noticeable',
+      'occassion': 'occasion',
+      'occured': 'occurred',
+      'occuring': 'occurring',
+      'occurence': 'occurrence',
+      'parliment': 'parliament',
+      'peice': 'piece',
+      'persistance': 'persistence',
+      'persue': 'pursue',
+      'posession': 'possession',
+      'potatos': 'potatoes',
+      'preceed': 'precede',
+      'presance': 'presence',
+      'privelege': 'privilege',
+      'publically': 'publicly',
+      'questionaire': 'questionnaire',
+      'realy': 'really',
+      'recieve': 'receive',
+      'recomend': 'recommend',
+      'refered': 'referred',
+      'refering': 'referring',
+      'relevent': 'relevant',
+      'reminisce': 'reminisce',
+      'repitition': 'repetition',
+      'resistence': 'resistance',
+      'seperate': 'separate',
+      'similer': 'similar',
+      'sincerly': 'sincerely',
+      'speach': 'speech',
+      'strenght': 'strength',
+      'succesful': 'successful',
+      'suprise': 'surprise',
+      'tendancy': 'tendency',
+      'therefor': 'therefore',
+      'tommorrow': 'tomorrow',
+      'tongue': 'tongue',
+      'truely': 'truly',
+      'unfortunatly': 'unfortunately',
+      'untill': 'until',
+      'unusuall': 'unusual',
+      'usefull': 'useful',
+      'vaccum': 'vacuum',
+      'vegatable': 'vegetable',
+      'visious': 'vicious',
+      'wether': 'whether',
+      'wich': 'which',
+      'writting': 'writing',
+      'yache': 'yacht',
+      'yeild': 'yield',
+      'yourselfs': 'yourselves',
+    };
+
+    for (const [wrong, correct] of Object.entries(commonMisspellings)) {
+      const regex = new RegExp(`\\b${wrong}\\b`, 'gi');
+      let match: RegExpExecArray | null;
+      while ((match = regex.exec(text)) !== null) {
+        issues.push({
+          type: 'spelling',
+          original: match[0],
+          suggestion: correct,
+          reason: `Misspelled word. The correct spelling is "${correct}".`,
+          offset: match.index,
+          length: match[0].length,
+        });
+      }
+    }
 
     return issues;
   }
