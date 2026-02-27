@@ -6,3 +6,12 @@ compatibility_flags = ["nodejs_compat"]
 [observability]
 enabled = true
 head_sampling_rate = 1
+
+# Development variables
+[vars]
+ENV = "development"
+DEBUG = true
+
+# Production environment
+[env.production]
+vars = { ENV = "production", DEBUG = false }
