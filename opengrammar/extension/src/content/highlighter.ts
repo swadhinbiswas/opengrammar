@@ -1,43 +1,132 @@
 import { Issue } from '../types';
 
-export interface TooltipPosition {
-  top: number;
-  left: number;
-  width: number;
+let currentTooltip: HTMLElement | null = null;
+
+/**
+ * Grammarly-style highlighter
+ * Shows underlines and clickable popups with suggestions
+ */
+export function highlightIssues(element: HTMLElement, issues: Issue[]) {
+  // Clear existing highlights
+  clearHighlights();
+
+  if (issues.length === 0) return;
+
+  // For input/textarea, show badge instead of inline highlights
+  if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+    showInputBadge(element, issues);
+    return;
+  }
+
+  // For contenteditable, create inline highlights
+  issues.forEach((issue, issueIndex) => {
+    if (issue.ignored) return;
+
+    try {
+      const range = findTextRange(element, issue.original, issue.offset);
+      if (range) {
+        createHighlight(range, issue, element, issueIndex);
+      }
+    } catch (e) {
+      console.debug('Could not create highlight:', issue, e);
+    }
+  });
 }
 
 /**
- * Creates an interactive tooltip for grammar issues
+ * Clear all OpenGrammar highlights and tooltips
  */
-export function createTooltip(
-  issue: Issue,
-  position: TooltipPosition,
-  onApply: (suggestion: string) => void,
-  onIgnore: (issueId: string) => void,
-  onAddToDictionary: (word: string) => void
-): HTMLElement {
+export function clearHighlights() {
+  // Remove all highlights
+  document.querySelectorAll('.opengrammar-highlight').forEach(el => el.remove());
+  // Remove all tooltips
+  document.querySelectorAll('.opengrammar-tooltip').forEach(el => el.remove());
+  currentTooltip = null;
+}
+
+/**
+ * Create a Grammarly-style underline highlight
+ */
+function createHighlight(range: Range, issue: Issue, element: HTMLElement, issueIndex: number) {
+  const rects = range.getClientRects();
+  
+  for (let i = 0; i < rects.length; i++) {
+    const rect = rects[i];
+    
+    // Create underline
+    const underline = document.createElement('div');
+    underline.className = 'opengrammar-highlight';
+    underline.style.cssText = `
+      position: absolute;
+      left: ${rect.left + window.scrollX}px;
+      top: ${rect.bottom + window.scrollY - 2}px;
+      width: ${rect.width}px;
+      height: 3px;
+      background-color: ${getColor(issue.type)};
+      cursor: pointer;
+      border-radius: 2px;
+      z-index: 10000;
+      transition: opacity 0.2s;
+    `;
+    
+    // Store issue data
+    (underline as any).__opengrammar_issue = issue;
+    (underline as any).__opengrammar_element = element;
+    
+    // Click to show tooltip
+    underline.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showTooltip(underline, issue, element);
+    });
+    
+    // Hover to show tooltip (after 500ms)
+    let hoverTimeout: any;
+    underline.addEventListener('mouseenter', () => {
+      hoverTimeout = setTimeout(() => {
+        showTooltip(underline, issue, element);
+      }, 500);
+    });
+    underline.addEventListener('mouseleave', () => {
+      if (hoverTimeout) clearTimeout(hoverTimeout);
+    });
+    
+    document.body.appendChild(underline);
+  }
+}
+
+/**
+ * Show Grammarly-style tooltip popup
+ */
+function showTooltip(anchor: HTMLElement, issue: Issue, element: HTMLElement) {
+  // Remove existing tooltip
+  if (currentTooltip) {
+    currentTooltip.remove();
+  }
+
+  const anchorRect = anchor.getBoundingClientRect();
+  
+  // Create tooltip
   const tooltip = document.createElement('div');
   tooltip.className = 'opengrammar-tooltip';
   tooltip.style.cssText = `
     position: absolute;
-    top: ${position.top + 8}px;
-    left: ${position.left}px;
-    max-width: 320px;
-    min-width: 280px;
+    left: ${Math.min(anchorRect.left + window.scrollX, window.innerWidth - 320)}px;
+    top: ${anchorRect.bottom + window.scrollY + 8}px;
+    width: 300px;
     background: #ffffff;
     border: 1px solid #e5e7eb;
     border-radius: 8px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
     z-index: 100001;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     font-size: 13px;
-    line-height: 1.5;
     overflow: hidden;
-    animation: opengrammar-fade-in 0.15s ease-out;
+    animation: opengrammar-slide-up 0.2s ease-out;
   `;
 
-  const typeColor = getTypeColor(issue.type);
-  
+  const typeColor = getColor(issue.type);
+  const typeLabel = issue.type.charAt(0).toUpperCase() + issue.type.slice(1);
+
   tooltip.innerHTML = `
     <div style="padding: 12px 14px; border-bottom: 1px solid #f3f4f6;">
       <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
@@ -48,24 +137,27 @@ export function createTooltip(
           border-radius: 50%;
           background: ${typeColor};
         "></span>
-        <span style="font-weight: 600; color: #1f2937; text-transform: capitalize;">${issue.type}</span>
+        <span style="font-weight: 600; color: #1f2937;">${typeLabel}</span>
       </div>
-      <div style="color: #6b7280; margin-bottom: 8px;">${escapeHtml(issue.reason)}</div>
+      <div style="color: #6b7280; margin-bottom: 10px; line-height: 1.4;">${escapeHtml(issue.reason)}</div>
       <div style="
-        background: #fef2f2;
-        border-left: 3px solid ${typeColor};
-        padding: 8px 10px;
-        border-radius: 0 4px 4px 0;
+        background: #f9fafb;
+        border-radius: 6px;
+        padding: 10px 12px;
       ">
-        <span style="color: #dc2626; text-decoration: line-through;">${escapeHtml(issue.original)}</span>
-        <span style="color: #9ca3af; margin: 0 6px;">→</span>
-        <span style="color: #059669; font-weight: 500;">${escapeHtml(issue.suggestion)}</span>
+        <div style="margin-bottom: 6px;">
+          <span style="color: #dc2626; text-decoration: line-through;">${escapeHtml(issue.original)}</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="color: #9ca3af;">→</span>
+          <span style="color: #059669; font-weight: 600;">${escapeHtml(issue.suggestion)}</span>
+        </div>
       </div>
     </div>
-    <div style="display: flex; border-top: 1px solid #f3f4f6;">
-      <button class="opengrammar-apply-btn" style="
+    <div style="display: flex; border-top: 1px solid #e5e7eb;">
+      <button class="og-apply-btn" style="
         flex: 1;
-        padding: 10px 14px;
+        padding: 10px;
         background: #2563eb;
         color: white;
         border: none;
@@ -74,42 +166,42 @@ export function createTooltip(
         font-weight: 500;
         transition: background 0.15s;
       ">
-        Apply
+        ✓ Apply
       </button>
-      <button class="opengrammar-ignore-btn" style="
+      <button class="og-ignore-btn" style="
         flex: 1;
-        padding: 10px 14px;
+        padding: 10px;
         background: #ffffff;
         color: #6b7280;
         border: none;
-        border-left: 1px solid #f3f4f6;
+        border-left: 1px solid #e5e7eb;
         cursor: pointer;
         font-size: 13px;
         transition: background 0.15s;
       ">
-        Ignore
-      </button>
-      <button class="opengrammar-dictionary-btn" style="
-        flex: 1;
-        padding: 10px 14px;
-        background: #ffffff;
-        color: #6b7280;
-        border: none;
-        border-left: 1px solid #f3f4f6;
-        cursor: pointer;
-        font-size: 13px;
-        transition: background 0.15s;
-      ">
-        Add to Dictionary
+        ✕ Ignore
       </button>
     </div>
   `;
 
-  // Add hover effects
-  const applyBtn = tooltip.querySelector('.opengrammar-apply-btn') as HTMLButtonElement;
-  const ignoreBtn = tooltip.querySelector('.opengrammar-ignore-btn') as HTMLButtonElement;
-  const dictionaryBtn = tooltip.querySelector('.opengrammar-dictionary-btn') as HTMLButtonElement;
+  // Add event listeners
+  const applyBtn = tooltip.querySelector('.og-apply-btn') as HTMLButtonElement;
+  const ignoreBtn = tooltip.querySelector('.og-ignore-btn') as HTMLButtonElement;
 
+  applyBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    applySuggestion(element, issue);
+    hideTooltip();
+  });
+
+  ignoreBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    ignoreIssue(issue);
+    hideTooltip();
+    anchor.style.opacity = '0.3';
+  });
+
+  // Button hover effects
   applyBtn.addEventListener('mouseenter', () => {
     applyBtn.style.background = '#1d4ed8';
   });
@@ -124,213 +216,82 @@ export function createTooltip(
     ignoreBtn.style.background = '#ffffff';
   });
 
-  dictionaryBtn.addEventListener('mouseenter', () => {
-    dictionaryBtn.style.background = '#f9fafb';
-  });
-  dictionaryBtn.addEventListener('mouseleave', () => {
-    dictionaryBtn.style.background = '#ffffff';
-  });
-
-  // Event listeners
-  applyBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    onApply(issue.suggestion);
-  });
-
-  ignoreBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const issueId = issue.id || `${issue.type}-${issue.offset}-${issue.original}`;
-    onIgnore(issueId);
-  });
-
-  dictionaryBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    // Extract the misspelled word from original
-    const word = issue.original.trim().split(/\s+/)[0];
-    if (word) {
-      onAddToDictionary(word);
+  // Close tooltip when clicking outside
+  const closeOnOutsideClick = (e: MouseEvent) => {
+    if (!tooltip.contains(e.target as Node) && !anchor.contains(e.target as Node)) {
+      hideTooltip();
+      document.removeEventListener('click', closeOnOutsideClick);
     }
-  });
+  };
 
-  return tooltip;
+  setTimeout(() => {
+    document.addEventListener('click', closeOnOutsideClick);
+  }, 100);
+
+  document.body.appendChild(tooltip);
+  currentTooltip = tooltip;
 }
 
 /**
- * Main highlighter function with interactive tooltips
+ * Hide current tooltip
  */
-export function highlightIssues(element: HTMLElement, issues: Issue[]) {
-  // Clear existing highlights
-  const existingOverlay = document.getElementById('opengrammar-overlay');
-  if (existingOverlay) existingOverlay.remove();
+function hideTooltip() {
+  if (currentTooltip) {
+    currentTooltip.remove();
+    currentTooltip = null;
+  }
+}
 
-  // Remove any existing tooltips
-  document.querySelectorAll('.opengrammar-tooltip').forEach((el) => el.remove());
-
-  if (issues.length === 0) return;
-
-  const overlay = document.createElement('div');
-  overlay.id = 'opengrammar-overlay';
-  overlay.style.position = 'absolute';
-  overlay.style.pointerEvents = 'none';
-  overlay.style.top = '0';
-  overlay.style.left = '0';
-  overlay.style.width = '100%';
-  overlay.style.height = '100%';
-  overlay.style.zIndex = '99999';
-
-  document.body.appendChild(overlay);
-
-  // Handle input/textarea differently
+/**
+ * Apply suggestion to text
+ */
+function applySuggestion(element: HTMLElement, issue: Issue) {
   if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-    showFloatingIndicator(element, issues, overlay);
-    return;
+    const input = element as HTMLInputElement | HTMLTextAreaElement;
+    const text = input.value;
+    const before = text.substring(0, issue.offset);
+    const after = text.substring(issue.offset + issue.length);
+    input.value = before + issue.suggestion + after;
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  } else if (element.isContentEditable) {
+    // For contenteditable, we need to find and replace the text
+    const range = findTextRange(element, issue.original, issue.offset);
+    if (range) {
+      range.deleteContents();
+      range.insertNode(document.createTextNode(issue.suggestion));
+      element.dispatchEvent(new Event('input', { bubbles: true }));
+    }
   }
 
-  // For contenteditable elements, create interactive highlights
-  issues.forEach((issue) => {
-    if (issue.ignored) return; // Skip ignored issues
+  // Trigger re-analysis
+  setTimeout(() => {
+    element.dispatchEvent(new Event('input', { bubbles: true }));
+  }, 100);
+}
 
-    try {
-      const range = findRange(element, issue.original, issue.offset);
-      if (range) {
-        const rects = range.getClientRects();
-        for (let i = 0; i < rects.length; i++) {
-          const rect = rects[i];
-          const highlight = createHighlight(
-            rect,
-            issue,
-            element,
-            range,
-            overlay
-          );
-          overlay.appendChild(highlight);
-        }
-      }
-    } catch (e) {
-      console.warn('Could not highlight issue:', issue, e);
+/**
+ * Ignore an issue
+ */
+function ignoreIssue(issue: Issue) {
+  chrome.storage.sync.get(['ignoredIssues'], (result) => {
+    const ignoredIssues = result.ignoredIssues || [];
+    const issueId = `${issue.type}-${issue.offset}-${issue.original}`;
+    if (!ignoredIssues.includes(issueId)) {
+      ignoredIssues.push(issueId);
+      chrome.storage.sync.set({ ignoredIssues });
     }
   });
 }
 
 /**
- * Creates an interactive highlight element
+ * Show badge for input/textarea elements
  */
-function createHighlight(
-  rect: DOMRect,
-  issue: Issue,
-  element: HTMLElement,
-  range: Range,
-  overlay: HTMLElement
-): HTMLElement {
-  const highlight = document.createElement('div');
-  highlight.className = 'opengrammar-highlight';
-  highlight.style.cssText = `
-    position: absolute;
-    left: ${rect.left + window.scrollX}px;
-    top: ${rect.bottom + window.scrollY - 2}px;
-    width: ${rect.width}px;
-    height: 3px;
-    background-color: ${getColor(issue.type)};
-    opacity: 0.8;
-    cursor: pointer;
-    border-radius: 2px;
-    transition: opacity 0.15s, height 0.15s;
-  `;
-
-  let tooltip: HTMLElement | null = null;
-  let tooltipTimeout: ReturnType<typeof setTimeout> | null = null;
-
-  const showTooltip = () => {
-    if (tooltip) return;
-
-    const position = {
-      top: rect.bottom + window.scrollY,
-      left: Math.min(rect.left + window.scrollX, window.innerWidth - 340),
-      width: rect.width,
-    };
-
-    tooltip = createTooltip(
-      issue,
-      position,
-      // On Apply
-      (suggestion) => {
-        applySuggestion(element, range, suggestion, issue);
-        hideTooltip();
-        // Re-analyze after applying
-        element.dispatchEvent(new Event('input', { bubbles: true }));
-      },
-      // On Ignore
-      (issueId) => {
-        ignoreIssue(issueId);
-        hideTooltip();
-        highlight.style.opacity = '0.3';
-        highlight.style.textDecoration = 'line-through';
-      },
-      // On Add to Dictionary
-      (word) => {
-        addToDictionary(word);
-        hideTooltip();
-      }
-    );
-
-    document.body.appendChild(tooltip);
-
-    // Close tooltip when clicking outside
-    const closeOnOutsideClick = (e: MouseEvent) => {
-      if (tooltip && !tooltip.contains(e.target as Node)) {
-        hideTooltip();
-        document.removeEventListener('click', closeOnOutsideClick);
-      }
-    };
-    setTimeout(() => {
-      document.addEventListener('click', closeOnOutsideClick);
-    }, 100);
-  };
-
-  const hideTooltip = () => {
-    if (tooltip) {
-      tooltip.remove();
-      tooltip = null;
-    }
-    if (tooltipTimeout) {
-      clearTimeout(tooltipTimeout);
-      tooltipTimeout = null;
-    }
-  };
-
-  highlight.addEventListener('mouseenter', () => {
-    tooltipTimeout = setTimeout(showTooltip, 200);
-  });
-
-  highlight.addEventListener('mouseleave', () => {
-    if (tooltipTimeout) {
-      clearTimeout(tooltipTimeout);
-      tooltipTimeout = null;
-    }
-    setTimeout(() => {
-      if (tooltip && !tooltip.matches(':hover')) {
-        hideTooltip();
-      }
-    }, 100);
-  });
-
-  highlight.addEventListener('click', (e) => {
-    e.stopPropagation();
-    showTooltip();
-  });
-
-  return highlight;
-}
-
-/**
- * Shows a floating indicator for input/textarea elements
- */
-function showFloatingIndicator(element: HTMLElement, issues: Issue[], overlay: HTMLElement) {
+function showInputBadge(element: HTMLElement, issues: Issue[]) {
   const rect = element.getBoundingClientRect();
-  const indicator = document.createElement('div');
-  indicator.className = 'opengrammar-indicator';
-  indicator.textContent = `${issues.length}`;
-  indicator.style.cssText = `
+  
+  const badge = document.createElement('div');
+  badge.className = 'opengrammar-badge';
+  badge.style.cssText = `
     position: absolute;
     left: ${rect.right + window.scrollX - 30}px;
     top: ${rect.top + window.scrollY + 10}px;
@@ -344,172 +305,49 @@ function showFloatingIndicator(element: HTMLElement, issues: Issue[], overlay: H
     justify-content: center;
     font-size: 12px;
     font-weight: bold;
-    z-index: 100000;
+    z-index: 10000;
     cursor: pointer;
     box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
-    transition: transform 0.15s, box-shadow 0.15s;
+    transition: transform 0.2s;
   `;
-
-  indicator.addEventListener('mouseenter', () => {
-    indicator.style.transform = 'scale(1.1)';
-    indicator.style.boxShadow = '0 4px 12px rgba(239, 68, 68, 0.5)';
+  
+  badge.textContent = issues.length.toString();
+  
+  badge.addEventListener('mouseenter', () => {
+    badge.style.transform = 'scale(1.1)';
   });
-
-  indicator.addEventListener('mouseleave', () => {
-    indicator.style.transform = 'scale(1)';
-    indicator.style.boxShadow = '0 2px 8px rgba(239, 68, 68, 0.4)';
+  badge.addEventListener('mouseleave', () => {
+    badge.style.transform = 'scale(1)';
   });
-
-  // Show tooltip on click
-  indicator.addEventListener('click', (e) => {
+  
+  badge.addEventListener('click', (e) => {
     e.stopPropagation();
-    
-    // Remove existing tooltips
-    document.querySelectorAll('.opengrammar-tooltip').forEach((el) => el.remove());
-
-    const position = {
-      top: rect.bottom + window.scrollY,
-      left: rect.right + window.scrollX - 320,
-      width: 320,
-    };
-
-    // Show first issue or summary
-    const summaryIssue: Issue = {
-      type: 'style',
-      original: `${issues.length} issue${issues.length > 1 ? 's' : ''} found`,
-      suggestion: 'Review suggestions',
-      reason: `Found ${issues.filter(i => i.type === 'grammar').length} grammar, ${issues.filter(i => i.type === 'spelling').length} spelling, and ${issues.filter(i => i.type === 'clarity' || i.type === 'style').length} style issues.`,
-      offset: 0,
-      length: 0,
-    };
-
-    const tooltip = createTooltip(
-      summaryIssue,
-      position,
-      () => {},
-      () => {},
-      () => {}
-    );
-
-    // Add issue list
-    const issueList = document.createElement('div');
-    issueList.style.cssText = `
-      max-height: 200px;
-      overflow-y: auto;
-      padding: 8px 0;
-      border-top: 1px solid #f3f4f6;
-    `;
-
-    issues.slice(0, 5).forEach((issue, idx) => {
-      const issueItem = document.createElement('div');
-      issueItem.style.cssText = `
-        padding: 8px 14px;
-        cursor: pointer;
-        transition: background 0.1s;
-      `;
-      issueItem.addEventListener('mouseenter', () => {
-        issueItem.style.background = '#f9fafb';
-      });
-      issueItem.addEventListener('mouseleave', () => {
-        issueItem.style.background = 'transparent';
-      });
-      issueItem.innerHTML = `
-        <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
-          <span style="color: ${getTypeColor(issue.type)}; font-weight: 600; text-transform: capitalize;">${issue.type}</span>
-          <span style="color: #9ca3af;">•</span>
-          <span style="color: #6b7280;">${escapeHtml(issue.original.substring(0, 30))}${issue.original.length > 30 ? '...' : ''}</span>
-        </div>
-      `;
-      issueList.appendChild(issueItem);
-    });
-
-    if (issues.length > 5) {
-      const moreItem = document.createElement('div');
-      moreItem.style.cssText = `
-        padding: 8px 14px;
-        color: #6b7280;
-        font-style: italic;
-      `;
-      moreItem.textContent = `+ ${issues.length - 5} more issues...`;
-      issueList.appendChild(moreItem);
-    }
-
-    tooltip.appendChild(issueList);
-    document.body.appendChild(tooltip);
-  });
-
-  overlay.appendChild(indicator);
-}
-
-/**
- * Applies a suggestion to the text
- */
-function applySuggestion(element: HTMLElement, range: Range, suggestion: string, issue: Issue) {
-  if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-    const inputElement = element as HTMLInputElement | HTMLTextAreaElement;
-    const text = inputElement.value;
-    const before = text.substring(0, issue.offset);
-    const after = text.substring(issue.offset + issue.length);
-    inputElement.value = before + suggestion + after;
-    inputElement.dispatchEvent(new Event('input', { bubbles: true }));
-  } else if (element.isContentEditable) {
-    // For contenteditable, use the range to replace text
-    range.deleteContents();
-    range.insertNode(document.createTextNode(suggestion));
-    element.dispatchEvent(new Event('input', { bubbles: true }));
-  }
-}
-
-/**
- * Ignores an issue (stores in chrome.storage)
- */
-function ignoreIssue(issueId: string) {
-  chrome.storage.sync.get(['ignoredIssues'], (result) => {
-    const ignoredIssues = result.ignoredIssues || [];
-    if (!ignoredIssues.includes(issueId)) {
-      ignoredIssues.push(issueId);
-      chrome.storage.sync.set({ ignoredIssues });
+    // Show first issue as tooltip
+    if (issues.length > 0) {
+      showTooltip(badge, issues[0], element);
     }
   });
+  
+  document.body.appendChild(badge);
 }
 
 /**
- * Adds a word to the user's dictionary
- */
-function addToDictionary(word: string) {
-  chrome.storage.sync.get(['dictionary'], (result) => {
-    const dictionary = result.dictionary || [];
-    if (!dictionary.includes(word.toLowerCase())) {
-      dictionary.push(word.toLowerCase());
-      chrome.storage.sync.set({ dictionary });
-    }
-  });
-}
-
-/**
- * Gets color based on issue type
+ * Get color based on issue type
  */
 function getColor(type: string): string {
   switch (type) {
-    case 'grammar': return '#ef4444';
-    case 'spelling': return '#ef4444';
-    case 'clarity': return '#f59e0b';
-    case 'style': return '#3b82f6';
+    case 'grammar': return '#ef4444'; // Red
+    case 'spelling': return '#ef4444'; // Red
+    case 'clarity': return '#f59e0b'; // Amber
+    case 'style': return '#3b82f6'; // Blue
     default: return '#ef4444';
   }
 }
 
 /**
- * Gets type color for indicators
+ * Find text range in DOM
  */
-function getTypeColor(type: string): string {
-  return getColor(type);
-}
-
-/**
- * Finds a range in the DOM for highlighting
- */
-function findRange(root: HTMLElement, textToFind: string, startOffset: number): Range | null {
+function findTextRange(root: HTMLElement, textToFind: string, startOffset: number): Range | null {
   if (root.tagName === 'TEXTAREA' || root.tagName === 'INPUT') {
     return null;
   }
@@ -545,10 +383,34 @@ function findRange(root: HTMLElement, textToFind: string, startOffset: number): 
 }
 
 /**
- * Escapes HTML to prevent XSS
+ * Escape HTML to prevent XSS
  */
 function escapeHtml(text: string): string {
   const div = document.createElement('div');
   div.textContent = text;
   return div.innerHTML;
+}
+
+// Add CSS animation
+if (!document.getElementById('opengrammar-styles')) {
+  const style = document.createElement('style');
+  style.id = 'opengrammar-styles';
+  style.textContent = `
+    @keyframes opengrammar-slide-up {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes opengrammar-fade-in {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  `;
+  document.head.appendChild(style);
 }

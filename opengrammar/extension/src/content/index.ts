@@ -179,10 +179,6 @@ const checkGrammar = async (element: HTMLElement) => {
 
     if (response?.error) {
       console.warn('Grammar check error:', response.error);
-      // Don't show notification for every error - only show for critical issues
-      if (response.message?.includes('backend') || response.message?.includes('connect')) {
-        showNotification('Backend connection issue. Check settings.', 'warning');
-      }
       return;
     }
 
@@ -192,7 +188,6 @@ const checkGrammar = async (element: HTMLElement) => {
   } catch (err) {
     // Silently handle errors - don't crash the extension
     console.debug('Grammar check skipped:', err instanceof Error ? err.message : err);
-    // Don't show error notifications during normal typing - it's annoying
   }
 };
 
