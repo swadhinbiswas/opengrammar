@@ -3,15 +3,20 @@
   "version": "1.0.0",
   "description": "OpenGrammar backend API",
   "main": "src/index.ts",
+  "type": "module",
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy",
+    "dev:node": "tsx watch src/index.ts",
+    "deploy": "wrangler deploy --env production",
+    "deploy:vercel": "vercel --prod",
+    "deploy:render": "git push render main",
+    "deploy:railway": "railway up",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
   "dependencies": {
     "@hono/zod-validator": "^0.7.6",
     "groq-sdk": "^0.5.0",
@@ -22,7 +27,11 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20260219.0",
     "@types/node": "^25.3.0",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "wrangler": "^4.66.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }

@@ -133,27 +133,27 @@ export class RuleBasedAnalyzer {
         reason: '"Kinda" is informal. Use "kind of" in formal writing.'
       },
       {
-        pattern: /\bcould\b+of\b/gi,
+        pattern: /\bcould\s+of\b/gi,
         suggestion: 'could have',
         reason: '"Could of" is incorrect. Use "could have".'
       },
       {
-        pattern: /\bwould\b+of\b/gi,
+        pattern: /\bwould\s+of\b/gi,
         suggestion: 'would have',
         reason: '"Would of" is incorrect. Use "would have".'
       },
       {
-        pattern: /\bshould\b+of\b/gi,
+        pattern: /\bshould\s+of\b/gi,
         suggestion: 'should have',
         reason: '"Should of" is incorrect. Use "should have".'
       },
       {
-        pattern: /\bmight\b+of\b/gi,
+        pattern: /\bmight\s+of\b/gi,
         suggestion: 'might have',
         reason: '"Might of" is incorrect. Use "might have".'
       },
       {
-        pattern: /\bmust\b+of\b/gi,
+        pattern: /\bmust\s+of\b/gi,
         suggestion: 'must have',
         reason: '"Must of" is incorrect. Use "must have".'
       },
