@@ -18,8 +18,20 @@ jobs:
       - name: Static Analysis Review
         run: |
           echo "🔍 SARAS AI Reviewer is analyzing changes..."
-          cd opengrammar/backend && bun x tsc --noEmit
-          cd ../extension && bun x tsc --noEmit
+          
+          echo "Installing Shared dependencies..."
+          cd opengrammar/shared && bun install
+          
+          echo "Installing Backend dependencies..."
+          cd ../backend && bun install
+          echo "Type checking Backend..."
+          bun x tsc --noEmit
+          
+          echo "Installing Extension dependencies..."
+          cd ../extension && bun install
+          echo "Type checking Extension..."
+          bun x tsc --noEmit
+          
           echo "✅ Static analysis passed. No type errors found."
 
       - name: Automated Review Comment
