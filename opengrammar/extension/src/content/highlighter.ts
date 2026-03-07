@@ -125,7 +125,7 @@ function wrapTextWithHighlight(
         });
         span.addEventListener("mouseleave", (e) => {
           e.stopPropagation();
-          span.style.background = "transparent";
+          span.style.background = getInlineBackground(issue.type);
         });
 
         // Click to show tooltip
@@ -166,7 +166,7 @@ function wrapTextWithHighlight(
               highlightSpan.style.background = getHoverBackground(issue.type);
             });
             highlightSpan.addEventListener("mouseleave", () => {
-              highlightSpan.style.background = "transparent";
+              highlightSpan.style.background = getInlineBackground(issue.type);
             });
             highlightSpan.addEventListener("click", (e) => {
               e.stopPropagation();
@@ -191,13 +191,13 @@ function getHoverBackground(type: string): string {
   switch (type) {
     case "grammar":
     case "spelling":
-      return "rgba(239, 68, 68, 0.1)";
+      return "rgba(239, 68, 68, 0.2)";
     case "clarity":
-      return "rgba(245, 158, 11, 0.1)";
+      return "rgba(245, 158, 11, 0.25)";
     case "style":
-      return "rgba(59, 130, 246, 0.1)";
+      return "rgba(59, 130, 246, 0.2)";
     default:
-      return "rgba(239, 68, 68, 0.1)";
+      return "rgba(239, 68, 68, 0.2)";
   }
 }
 
@@ -248,12 +248,12 @@ export function clearHighlights() {
   uiActive = false;
 }
 
+/**
+ * Update positions of floating UI elements (badge, assistant, mirror)
+ */
 export function refreshFloatingDecorations() {
   if (assistantBubble && inputMirrorTarget) {
-    const summary = assistantBubble.querySelector('[data-og-summary="true"]') as HTMLElement | null;
-    if (summary && assistantBubble.dataset.issueSummary) {
-      summary.textContent = assistantBubble.dataset.issueSummary;
-    }
+    // Re-position bubble
   }
 
   if (inputMirrorOverlay && inputMirrorTarget) {
@@ -270,54 +270,59 @@ export function refreshFloatingDecorations() {
   });
 }
 
+function destroyInputMirror() {
+  cleanupInputMirror?.();
+  cleanupInputMirror = null;
+  inputMirrorOverlay?.remove();
+  inputMirrorOverlay = null;
+  inputMirrorContent = null;
+  inputMirrorTarget = null;
+}
+
 function showAssistantBubble(element: HTMLElement, issues: Issue[]) {
   if (assistantBubble) {
     assistantBubble.remove();
     assistantBubble = null;
   }
 
-  const summary = summarizeIssues(issues);
   const bubble = document.createElement("button");
   bubble.className = "opengrammar-assistant";
   bubble.type = "button";
   bubble.style.cssText = `
     position: fixed;
-    right: 16px;
+    right: 24px;
+    bottom: 24px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     padding: 0;
-    padding: 10px 12px;
     border-radius: 999px;
-    background: rgba(17, 24, 39, 0.94);
     background: rgba(17, 24, 39, 0.96);
-    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.22);
     box-shadow: 0 10px 28px rgba(15, 23, 42, 0.26);
     z-index: 2147483646;
     cursor: pointer;
     pointer-events: auto;
-    text-align: left;
     backdrop-filter: blur(10px);
+    border: none;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   `;
 
-    <span style="display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:999px;background:linear-gradient(135deg,#6d5efc,#1d4ed8);font-size:15px;font-weight:700;box-shadow:inset 0 1px 0 rgba(255,255,255,0.2);">G</span>
-    <span data-og-count="true" style="position:absolute;top:-2px;right:-2px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:#ef4444;color:white;font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(239,68,68,0.35);">${issues.length}</span>
+  bubble.innerHTML = `
+    <span style="position:relative;display:flex;align-items:center;justify-content:center;">
+      <span style="display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:999px;background:linear-gradient(135deg,#6d5efc,#1d4ed8);font-size:15px;font-weight:700;color:white;box-shadow:inset 0 1px 0 rgba(255,255,255,0.2);">G</span>
+      <span style="position:absolute;top:-2px;right:-2px;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:#ef4444;color:white;font-size:10px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(239,68,68,0.35);">${issues.length}</span>
     </span>
   `;
-  bubble.title = summary || `${issues.length} issue${issues.length === 1 ? '' : 's'} found`;
-  bubble.dataset.issueSummary = summary || 'Click to review suggestions';
 
   bubble.addEventListener("mouseenter", () => {
-    const count = assistantBubble.querySelector('[data-og-count="true"]') as HTMLElement | null;
-    if (count && assistantBubble.dataset.issueCount) {
-      count.textContent = assistantBubble.dataset.issueCount;
-    }
-    bubble.style.transform = "translateY(0) scale(1)";
+    bubble.style.transform = "scale(1.1) rotate(5deg)";
+  });
+  bubble.addEventListener("mouseleave", () => {
+    bubble.style.transform = "scale(1) rotate(0deg)";
   });
 
-  bubble.dataset.issueCount = String(issues.length);
   bubble.addEventListener("mousedown", (e) => {
     e.preventDefault();
   });
@@ -338,19 +343,6 @@ function showAssistantBubble(element: HTMLElement, issues: Issue[]) {
 
   document.body.appendChild(bubble);
   assistantBubble = bubble;
-}
-
-function summarizeIssues(issues: Issue[]): string {
-  const counts = issues.reduce<Record<string, number>>((acc, issue) => {
-    acc[issue.type] = (acc[issue.type] || 0) + 1;
-    return acc;
-  }, {});
-
-  const ordered: Array<Issue["type"]> = ["grammar", "spelling", "clarity", "style"];
-  return ordered
-    .filter((type) => counts[type])
-    .map((type) => `${counts[type]} ${type}`)
-    .join(" • ");
 }
 
 function showInputMirror(element: HTMLElement, issues: Issue[]) {
@@ -397,35 +389,27 @@ function showInputMirror(element: HTMLElement, issues: Issue[]) {
   const sync = () => syncInputMirrorScroll(element);
   input.addEventListener('scroll', sync, { passive: true });
 
-  inputMirrorOverlay = overlay;
-  inputMirrorContent = content;
-  positionInputMirror(element);
-  syncInputMirrorScroll(element);
-
   cleanupInputMirror = () => {
     input.removeEventListener('scroll', sync);
     input.style.color = input.dataset.ogOriginalColor || '';
     input.style.webkitTextFillColor = '';
   };
-}
 
-function destroyInputMirror() {
-  cleanupInputMirror?.();
-  cleanupInputMirror = null;
-  inputMirrorOverlay?.remove();
-  inputMirrorOverlay = null;
-  inputMirrorContent = null;
-  inputMirrorTarget = null;
+  inputMirrorOverlay = overlay;
+  inputMirrorContent = content;
+  positionInputMirror(element);
+  syncInputMirrorScroll(element);
 }
 
 function copyTypographyStyles(element: HTMLElement, overlay: HTMLElement, content: HTMLElement) {
   const styles = window.getComputedStyle(element);
   const target = element as HTMLInputElement | HTMLTextAreaElement;
 
-  overlay.style.left = `${element.getBoundingClientRect().left}px`;
-  overlay.style.top = `${element.getBoundingClientRect().top}px`;
-  overlay.style.width = `${element.getBoundingClientRect().width}px`;
-  overlay.style.height = `${element.getBoundingClientRect().height}px`;
+  const rect = element.getBoundingClientRect();
+  overlay.style.left = `${rect.left}px`;
+  overlay.style.top = `${rect.top}px`;
+  overlay.style.width = `${rect.width}px`;
+  overlay.style.height = `${rect.height}px`;
   overlay.style.borderRadius = styles.borderRadius;
 
   content.style.font = styles.font;
@@ -732,52 +716,14 @@ function applySuggestion(
     // Focus back on the input element
     input.focus();
 
-    // Show success on badge: green checkmark, then fade away
-    document.querySelectorAll(".opengrammar-badge").forEach((b) => {
-      const badge = b as HTMLElement;
-      badge.textContent = "\u2713";
-      badge.style.background = "linear-gradient(135deg, #10b981, #059669)";
-      badge.style.boxShadow = "0 2px 8px rgba(16, 185, 129, 0.5)";
-      setTimeout(() => {
-        badge.style.opacity = "0";
-        badge.style.transform = "scale(0.8)";
-        badge.style.transition = "opacity 0.3s, transform 0.3s";
-        setTimeout(() => badge.remove(), 300);
-      }, 600);
-    });
-
     // Trigger re-analysis
     input.dispatchEvent(new Event("input", { bubbles: true }));
   } else if (element.isContentEditable) {
-    // Replace the highlighted span with corrected text + green success flash
-    const parent = highlightEl.parentNode;
-    if (parent) {
-      const successSpan = document.createElement("span");
-      successSpan.className = "opengrammar-success";
-      successSpan.textContent = issue.suggestion;
-      successSpan.style.cssText = `
-        background: rgba(16, 185, 129, 0.15);
-        border-bottom: 2px solid #10b981;
-        border-radius: 2px;
-        padding-bottom: 1px;
-        transition: background 0.5s, border-color 0.5s;
-      `;
-      parent.replaceChild(successSpan, highlightEl);
-
-      // Fade out the green highlight then unwrap to plain text
-      requestAnimationFrame(() => {
-        setTimeout(() => {
-          successSpan.style.background = "transparent";
-          successSpan.style.borderColor = "transparent";
-          setTimeout(() => {
-            const textNode = document.createTextNode(issue.suggestion);
-            if (successSpan.parentNode) {
-              successSpan.parentNode.replaceChild(textNode, successSpan);
-              textNode.parentNode?.normalize();
-            }
-          }, 500);
-        }, 50);
-      });
+    // Replace the highlighted span with corrected text
+    const textNode = document.createTextNode(issue.suggestion);
+    if (highlightEl.parentNode) {
+      highlightEl.parentNode.replaceChild(textNode, highlightEl);
+      textNode.parentNode?.normalize();
     }
 
     // Trigger re-analysis
@@ -813,23 +759,16 @@ function ignoreIssue(issue: Issue, highlightEl: HTMLElement) {
 
   // For inline highlights (contenteditable)
   if (highlightEl.classList.contains("opengrammar-highlight")) {
-    highlightEl.style.borderBottom = "none";
-    highlightEl.style.background = "transparent";
-    highlightEl.classList.remove("opengrammar-highlight");
-    highlightEl.classList.add("opengrammar-ignored");
+    const parent = highlightEl.parentNode;
+    if (parent) {
+      parent.replaceChild(document.createTextNode(highlightEl.textContent || ""), highlightEl);
+      parent.normalize();
+    }
   }
 
-  // For badge (textarea/input) - show success then fade
+  // For badge (textarea/input)
   if (highlightEl.classList.contains("opengrammar-badge")) {
-    highlightEl.textContent = "\u2713";
-    highlightEl.style.background = "linear-gradient(135deg, #10b981, #059669)";
-    highlightEl.style.boxShadow = "0 2px 8px rgba(16, 185, 129, 0.5)";
-    setTimeout(() => {
-      highlightEl.style.opacity = "0";
-      highlightEl.style.transform = "scale(0.8)";
-      highlightEl.style.transition = "opacity 0.3s, transform 0.3s";
-      setTimeout(() => highlightEl.remove(), 300);
-    }, 600);
+    highlightEl.remove();
   }
 }
 
@@ -971,7 +910,6 @@ function showIssuePanel(
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     font-size: 14px;
     overflow: hidden;
-    animation: og-panel-in 0.15s ease-out;
   `;
 
   const typeColor = getColor(issue.type);
@@ -980,12 +918,6 @@ function showIssuePanel(
   const hasMultiple = issues.length > 1;
 
   panel.innerHTML = `
-    <style>
-      @keyframes og-panel-in {
-        from { opacity: 0; transform: translateY(-4px); }
-        to { opacity: 1; transform: translateY(0); }
-      }
-    </style>
     ${
       hasMultiple
         ? `
@@ -1056,18 +988,11 @@ function showIssuePanel(
     ".og-suggestion-click",
   ) as HTMLElement;
 
-  // Clicking the green suggestion text also applies the fix (Grammarly-style)
   if (suggestionEl) {
     suggestionEl.addEventListener("click", (e) => {
       e.stopPropagation();
       applySuggestion(element, issue, anchor);
       hideTooltip();
-    });
-    suggestionEl.addEventListener("mouseenter", () => {
-      suggestionEl.style.background = "#dcfce7";
-    });
-    suggestionEl.addEventListener("mouseleave", () => {
-      suggestionEl.style.background = "#f0fdf4";
     });
   }
 
@@ -1083,20 +1008,6 @@ function showIssuePanel(
     e.preventDefault();
     ignoreIssue(issue, anchor);
     hideTooltip();
-  });
-
-  // Hover effects
-  applyBtn.addEventListener("mouseenter", () => {
-    applyBtn.style.background = "#1d4ed8";
-  });
-  applyBtn.addEventListener("mouseleave", () => {
-    applyBtn.style.background = "#2563eb";
-  });
-  ignoreBtn.addEventListener("mouseenter", () => {
-    ignoreBtn.style.background = "#f9fafb";
-  });
-  ignoreBtn.addEventListener("mouseleave", () => {
-    ignoreBtn.style.background = "#ffffff";
   });
 
   // Navigation for multiple issues
@@ -1147,13 +1058,13 @@ function showIssuePanel(
 function getColor(type: string): string {
   switch (type) {
     case "grammar":
-      return "#ef4444"; // Red
+      return "#ef4444";
     case "spelling":
-      return "#ef4444"; // Red
+      return "#ef4444";
     case "clarity":
-      return "#f59e0b"; // Amber
+      return "#f59e0b";
     case "style":
-      return "#3b82f6"; // Blue
+      return "#3b82f6";
     default:
       return "#ef4444";
   }

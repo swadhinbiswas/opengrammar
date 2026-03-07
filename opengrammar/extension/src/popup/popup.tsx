@@ -19,30 +19,25 @@ const Popup = () => {
     enabled: true,
     apiKey: '',
     model: 'gpt-4o-mini',
-  providerModelMemory: Record<string, string>;
-    backendUrl: '',
+    backendUrl: 'http://localhost:8787',
     provider: 'openai',
     customBaseUrl: '',
     backendHealthy: true,
-  const [providerModelMemory, setProviderModelMemory] = useState<Record<string, string>>({});
   });
+  const [providerModelMemory, setProviderModelMemory] = useState<Record<string, string>>({});
   const [showApiKey, setShowApiKey] = useState(false);
   const [loading, setLoading] = useState(true);
-      ['enabled', 'apiKey', 'model', 'backendUrl', 'provider', 'customBaseUrl', 'backendHealthy', 'providerModelMemory'],
+  const [providers, setProviders] = useState<ProviderConfig[]>([]);
   const [availableModels, setAvailableModels] = useState<string[]>([]);
-        const memory = (result.providerModelMemory || {}) as Record<string, string>;
-        const selectedProvider = result.provider || 'openai';
-        const rememberedModel = memory[selectedProvider];
   const [fetchingModels, setFetchingModels] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
 
-          model: rememberedModel || result.model || 'gpt-4o-mini',
+  useEffect(() => {
     loadSettings();
-          provider: selectedProvider,
+    loadProviders();
   }, []);
 
   useEffect(() => {
-        setProviderModelMemory(memory);
     if (settings.provider) {
       loadModels();
     }
@@ -50,23 +45,22 @@ const Popup = () => {
 
   const loadSettings = () => {
     chrome.storage.sync.get(
-      ['enabled', 'apiKey', 'model', 'backendUrl', 'provider', 'customBaseUrl', 'backendHealthy'],
-    const nextModelMemory = {
-      ...providerModelMemory,
-      ...(newSettings.provider ? { [newSettings.provider]: newSettings.model } : {}),
-    };
-    setProviderModelMemory(nextModelMemory);
+      ['enabled', 'apiKey', 'model', 'backendUrl', 'provider', 'customBaseUrl', 'backendHealthy', 'providerModelMemory'],
       (result) => {
+        const memory = (result.providerModelMemory || {}) as Record<string, string>;
+        const selectedProvider = result.provider || 'openai';
+        const rememberedModel = memory[selectedProvider];
+        
         setSettings({
           enabled: result.enabled !== false,
           apiKey: result.apiKey || '',
-          model: result.model || 'gpt-4o-mini',
+          model: rememberedModel || result.model || 'gpt-4o-mini',
           backendUrl: result.backendUrl || 'http://localhost:8787',
-          provider: result.provider || 'openai',
+          provider: selectedProvider,
           customBaseUrl: result.customBaseUrl || '',
-        providerModelMemory: nextModelMemory,
           backendHealthy: result.backendHealthy !== false,
         });
+        setProviderModelMemory(memory);
         setLoading(false);
       }
     );
@@ -74,8 +68,7 @@ const Popup = () => {
 
   const loadProviders = async () => {
     try {
-    const rememberedModel = providerModelMemory[provider];
-    saveSettings({ provider, model: rememberedModel || getDefaultModel(provider) });
+      const response = await chrome.runtime.sendMessage({ type: 'GET_PROVIDERS' });
       if (response.providers) {
         setProviders(response.providers);
       }
@@ -106,6 +99,13 @@ const Popup = () => {
   const saveSettings = (updates: Partial<Settings>) => {
     const newSettings = { ...settings, ...updates };
     setSettings(newSettings);
+
+    const nextModelMemory = {
+      ...providerModelMemory,
+      ...(newSettings.provider ? { [newSettings.provider]: newSettings.model } : {}),
+    };
+    setProviderModelMemory(nextModelMemory);
+
     chrome.storage.sync.set(
       {
         enabled: newSettings.enabled,
@@ -114,6 +114,7 @@ const Popup = () => {
         backendUrl: newSettings.backendUrl,
         provider: newSettings.provider,
         customBaseUrl: newSettings.customBaseUrl,
+        providerModelMemory: nextModelMemory,
       },
       () => {
         console.log('Settings saved');
@@ -123,7 +124,8 @@ const Popup = () => {
 
   const handleProviderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const provider = e.target.value;
-    saveSettings({ provider, model: getDefaultModel(provider) });
+    const rememberedModel = providerModelMemory[provider];
+    saveSettings({ provider, model: rememberedModel || getDefaultModel(provider) });
   };
 
   const getDefaultModel = (provider: string): string => {
@@ -190,7 +192,7 @@ const Popup = () => {
 
           <div className="memory-card">
             <div>
-              <strong>Remembered</strong>
+              <strong>Active AI</strong>
               <span>{selectedProvider?.name || 'OpenAI'} · {settings.model}</span>
             </div>
             <span className={`status-dot ${settings.backendHealthy ? 'healthy' : 'unhealthy'}`}></span>
@@ -309,7 +311,7 @@ const Popup = () => {
                 <label>
                   <span className="setting-label with-icon"><Sparkles size={14} /> Backend URL</span>
                   <span className="setting-hint">
-                    Auto-saved in browser. Default is localhost.
+                    Default is http://localhost:8787
                   </span>
                 </label>
                 <input
