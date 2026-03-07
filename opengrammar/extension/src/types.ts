@@ -24,6 +24,17 @@ export interface Issue {
   length: number;
   id?: string;
   ignored?: boolean;
+  confidence?: number;
+  priority?: number;
+  source?: 'rule' | 'llm' | 'context';
+}
+
+export interface IgnoredIssue {
+  id: string;
+  type: Issue['type'];
+  original: string;
+  suggestion: string;
+  ignoredAt: number;
 }
 
 export interface AnalyzeRequest {
@@ -33,6 +44,17 @@ export interface AnalyzeRequest {
   provider?: LLMProvider;
   baseUrl?: string;
   ignoredIssues?: string[];
+  dictionary?: string[];
+  context?: AnalysisContext;
+}
+
+export interface AnalysisContext {
+  domain?: string;
+  editorType?: string;
+  activeSentence?: string;
+  previousText?: string;
+  nextText?: string;
+  fullTextExcerpt?: string;
 }
 
 export interface AnalyzeResponse {
@@ -41,6 +63,7 @@ export interface AnalyzeResponse {
     textLength: number;
     issuesCount: number;
     processingTimeMs: number;
+    contextUsed?: boolean;
     model?: string;
     provider?: string;
   };
@@ -68,4 +91,53 @@ export interface RewriteResponse {
   rewritten: string;
   tone: string;
   error?: string;
+}
+
+export interface AutocompleteRequest {
+  text: string;
+  cursor: number;
+  apiKey?: string;
+  model?: string;
+  provider?: LLMProvider;
+  baseUrl?: string;
+  context?: AnalysisContext;
+}
+
+export interface AutocompleteResponse {
+  suggestion: string;
+  confidence: number;
+  replaceStart: number;
+  replaceEnd: number;
+  source: 'heuristic' | 'llm';
+  error?: string;
+}
+
+export interface EditorContext {
+  text: string;
+  issues: Issue[];
+  sourceTabId?: number;
+  capturedAt: number;
+}
+
+export interface RewriteContext {
+  selectedText: string;
+  sourceTabId?: number;
+  capturedAt: number;
+}
+
+export type AnalyticsEventType =
+  | 'analysis_runs'
+  | 'issues_found'
+  | 'suggestions_applied'
+  | 'suggestions_ignored'
+  | 'autocomplete_shown'
+  | 'autocomplete_accepted'
+  | 'rewrite_opened'
+  | 'rewrite_applied';
+
+export interface AnalyticsSummary {
+  totals: Record<AnalyticsEventType, number>;
+  domains: Record<string, number>;
+  providers: Record<string, number>;
+  lastUpdatedAt?: number;
 }
