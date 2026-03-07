@@ -1,0 +1,21 @@
+name: Show and Tell
+description: Share something cool you've built or done with OpenGrammar.
+title: "[SHOW] "
+labels: ["showcase"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Show off your work! Let us know what you've achieved.
+  - type: textarea
+    id: showcase
+    attributes:
+      label: What did you build/do?
+      description: Describe your project, integration, or unique setup.
+    validations:
+      required: true
+  - type: textarea
+    id: link
+    attributes:
+      label: Links/Screenshots
+      description: Provide a link to your repository, a demo, or upload screenshots.
