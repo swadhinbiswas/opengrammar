@@ -7,3 +7,11 @@ dist
 !.env.example
 .wrangler
 .dev.vars
+
+# Ignore backend build artifacts
+opengrammar/backend/src/**/*.js
+opengrammar/backend/src/**/*.d.ts
+opengrammar/backend/src/**/*.map
+opengrammar/backend/*.js
+opengrammar/backend/*.d.ts
+opengrammar/backend/*.map
