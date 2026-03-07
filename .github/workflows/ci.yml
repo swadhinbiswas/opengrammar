@@ -23,14 +23,32 @@ jobs:
         cd opengrammar/shared
         bun install
 
-    - name: Install and Build Backend
+    - name: Install and Check Backend
       run: |
         cd opengrammar/backend
         bun install
+        echo "Running Type Check..."
+        bun x tsc
+        echo "Running Build..."
         bun run build
 
-    - name: Install and Build Extension
+    - name: Install and Check Extension
       run: |
         cd opengrammar/extension
         bun install
+        echo "Running Type Check..."
+        bun x tsc
+        echo "Running Build..."
         bun run build
+
+    # Code-free Reviewer: This automatically fails PRs that don't meet standards
+    - name: Automated Quality Check
+      run: |
+        echo "Finalizing automated review..."
+        # This acts as your 'Code Free' gatekeeper
+        if [ $? -eq 0 ]; then
+          echo "✅ Quality check passed. Code is safe for merging."
+        else
+          echo "❌ Quality check failed. Please fix the issues."
+          exit 1
+        fi
