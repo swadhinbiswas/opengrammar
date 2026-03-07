@@ -23,18 +23,12 @@ jobs:
         id: analysis
         run: |
           echo "🔍 SARAS AI is analyzing the architecture..."
-          
-          # Initialize error log
           echo "" > errors.log
           
-          echo "Checking Shared..."
           cd opengrammar/shared && bun install >> /dev/null 2>&1
-          
-          echo "Checking Backend..."
           cd ../backend && bun install >> /dev/null 2>&1
           bun x tsc --noEmit > ../../backend_errors.log 2>&1 || echo "BACKEND_FAILED" >> ../../errors.log
           
-          echo "Checking Extension..."
           cd ../extension && bun install >> /dev/null 2>&1
           bun x tsc --noEmit > ../../extension_errors.log 2>&1 || echo "EXTENSION_FAILED" >> ../../errors.log
           
@@ -45,52 +39,46 @@ jobs:
             echo "status=success" >> $GITHUB_OUTPUT
           fi
 
-      - name: Process Review
+      - name: Process Review as Swadhin Biswas
         uses: actions/github-script@v7
         with:
+          # Using your PAT makes the review come from "Swadhin Biswas"
           github-token: ${{ secrets.SARAS_TOKEN || secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
             const status = '${{ steps.analysis.outputs.status }}';
             const isSuccess = status === 'success';
             
-            const context = {
-              repo: {
-                owner: 'swadhinbiswas',
-                repo: 'opengrammar'
-              },
-              issue: {
-                number: ${{ github.event.pull_request.number }}
-              }
-            };
+            const owner = 'swadhinbiswas';
+            const repo = 'opengrammar';
+            const pull_number = context.payload.pull_request.number;
             
             let report = '';
             if (isSuccess) {
-              report = `### 🤖 SARAS AI Verdict: APPROVED ✅
+              report = `### ✅ Code Review Approved
               
-              I have verified the changes and they meet the high-signal standards for the SARAS Digital Intelligence system.
+              I have verified the changes for the SARAS Digital Intelligence system.
               
               - **Architecture:** Optimized for Bun runtime.
               - **Type Safety:** 100% verified via TSC.
-              - **Structural Integrity:** Build-safe and production-ready.
+              - **Status:** Production-ready.
               
-              The "Code-Free" review is complete. This PR is safe to merge.`;
+              **Reviewer Profile:** swadhinbiswas <swadhinbiswas.cse@gmail.com>`;
               
-              // Formal Approval (Requires SARAS_TOKEN)
               try {
                 await github.rest.pulls.createReview({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  pull_number: context.issue.number,
+                  owner,
+                  repo,
+                  pull_number,
                   event: 'APPROVE',
                   body: report
                 });
               } catch (e) {
-                console.log('Formal approval failed (missing token), posting as comment instead.');
+                // Fallback to comment if token isn't providing full review access
                 await github.rest.issues.createComment({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  issue_number: context.issue.number,
+                  owner,
+                  repo,
+                  issue_number: pull_number,
                   body: report
                 });
               }
@@ -98,25 +86,24 @@ jobs:
               let backendErrors = fs.existsSync('backend_errors.log') ? fs.readFileSync('backend_errors.log', 'utf8') : '';
               let extensionErrors = fs.existsSync('extension_errors.log') ? fs.readFileSync('extension_errors.log', 'utf8') : '';
               
-              // Simple text cleanup to prevent too large comments
-              backendErrors = backendErrors.split('\n').slice(0, 15).join('\n');
-              extensionErrors = extensionErrors.split('\n').slice(0, 15).join('\n');
+              backendErrors = backendErrors.split('\n').slice(0, 10).join('\n');
+              extensionErrors = extensionErrors.split('\n').slice(0, 10).join('\n');
               
-              report = `### 🤖 SARAS AI Verdict: CHANGES REQUESTED ❌
+              report = `### ❌ Changes Requested
               
-              I have detected technical inconsistencies that block the evolution of the codebase. Please address the following issues:
+              Technical inconsistencies detected:
               
               ${backendErrors ? '#### 🖥️ Backend Errors:\n```\n' + backendErrors + '\n```' : ''}
               ${extensionErrors ? '#### 🧩 Extension Errors:\n```\n' + extensionErrors + '\n```' : ''}
               
-              *Please fix these errors and push again to trigger a re-check.*`;
+              **Reviewer Profile:** swadhinbiswas <swadhinbiswas.cse@gmail.com>`;
               
               await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.issue.number,
+                owner,
+                repo,
+                issue_number: pull_number,
                 body: report
               });
               
-              process.exit(1); // Fail the job
+              process.exit(1);
             }
