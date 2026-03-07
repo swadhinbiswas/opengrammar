@@ -2,7 +2,15 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
 import { RuleBasedAnalyzer, LLMAnalyzer } from './analyzer.js';
-import type { AnalyzeRequest, AnalyzeResponse, LLMProvider } from './shared-types.js';
+import OpenAI from 'openai';
+import type {
+  AnalysisContext,
+  AnalyzeRequest,
+  AnalyzeResponse,
+  AutocompleteRequest,
+  LLMProvider,
+  Issue,
+} from './shared-types.js';
 import { PROVIDERS } from './shared-types.js';
 
 const app = new Hono();
@@ -79,7 +87,7 @@ app.post('/analyze', async (c) => {
   
   try {
     const body: AnalyzeRequest = await c.req.json();
-    const { text, apiKey, model, provider, baseUrl } = body;
+    const { text, apiKey, model, provider, baseUrl, context } = body;
 
     // Validate input
     if (!text || typeof text !== 'string') {
@@ -91,7 +99,8 @@ app.post('/analyze', async (c) => {
     }
 
     // Run rule-based analysis (always)
-    let issues = RuleBasedAnalyzer.analyze(text);
+    const ruleIssues = RuleBasedAnalyzer.analyze(text);
+    let issues = enrichIssues(ruleIssues, 'rule', text, context);
 
     // Run LLM analysis if API key provided or using local Ollama
     if (apiKey || provider === 'ollama') {
@@ -102,14 +111,17 @@ app.post('/analyze', async (c) => {
           apiKey || '', 
           model || 'gpt-3.5-turbo',
           llmProvider,
-          baseUrl
+          baseUrl,
+          context
         );
-        issues = [...issues, ...llmIssues];
+        issues = [...issues, ...enrichIssues(llmIssues, 'llm', text, context)];
       } catch (llmError) {
         console.error('LLM analysis failed:', llmError);
         // Continue with rule-based results only
       }
     }
+
+    issues = dedupeAndRankIssues(issues, text, context);
 
     const duration = Date.now() - startTime;
     
@@ -119,6 +131,7 @@ app.post('/analyze', async (c) => {
         textLength: text.length,
         issuesCount: issues.length,
         processingTimeMs: duration,
+        ...(context && { contextUsed: true }),
         ...(model && { model }),
         ...(provider && { provider }),
       },
@@ -130,6 +143,38 @@ app.post('/analyze', async (c) => {
     return c.json({ 
       error: 'Failed to analyze text', 
       message: error instanceof Error ? error.message : 'Unknown error'
+    }, 500);
+  }
+});
+
+// Autocomplete / next-word suggestions
+app.post('/autocomplete', async (c) => {
+  try {
+    const body: AutocompleteRequest = await c.req.json();
+    const { text, cursor, apiKey, model, provider, baseUrl, context } = body;
+
+    if (typeof text !== 'string') {
+      return c.json({ error: 'Text is required' }, 400);
+    }
+
+    const safeCursor = Math.max(0, Math.min(cursor ?? text.length, text.length));
+    const providerId = (provider || 'openai') as LLMProvider;
+
+    if (apiKey || providerId === 'ollama') {
+      const completion = await getLlmAutocomplete(text, safeCursor, apiKey || '', model, providerId, baseUrl, context);
+      return c.json(completion);
+    }
+
+    return c.json(getHeuristicAutocomplete(text, safeCursor));
+  } catch (error) {
+    console.error('Autocomplete error:', error);
+    return c.json({
+      suggestion: '',
+      confidence: 0,
+      replaceStart: 0,
+      replaceEnd: 0,
+      source: 'heuristic',
+      error: error instanceof Error ? error.message : 'Unknown error',
     }, 500);
   }
 });
@@ -214,6 +259,163 @@ function getProviderBaseUrl(provider: string): string {
     custom: '',
   };
   return urls[provider as string] ?? urls.openai;
+}
+
+function enrichIssues(issues: Issue[], source: Issue['source'], text: string, context?: AnalysisContext): Issue[] {
+  return issues.map((issue) => {
+    const confidence = getConfidence(issue, source, context);
+    const priority = getPriority(issue, confidence, text, context);
+    return {
+      ...issue,
+      source,
+      confidence,
+      priority,
+      id: issue.id || `${source}-${issue.type}-${issue.offset}-${issue.original}`,
+    };
+  });
+}
+
+function dedupeAndRankIssues(issues: Issue[], text: string, context?: AnalysisContext): Issue[] {
+  const deduped = new Map<string, Issue>();
+
+  for (const issue of issues) {
+    const key = `${issue.type}|${issue.offset}|${issue.original.toLowerCase()}|${issue.suggestion.toLowerCase()}`;
+    const existing = deduped.get(key);
+    if (!existing || (issue.priority || 0) > (existing.priority || 0)) {
+      deduped.set(key, issue);
+    }
+  }
+
+  return Array.from(deduped.values()).sort((a, b) => {
+    const priorityDiff = (b.priority || 0) - (a.priority || 0);
+    if (priorityDiff !== 0) return priorityDiff;
+    const confidenceDiff = (b.confidence || 0) - (a.confidence || 0);
+    if (confidenceDiff !== 0) return confidenceDiff;
+    return a.offset - b.offset;
+  });
+}
+
+function getConfidence(issue: Issue, source: Issue['source'], context?: AnalysisContext): number {
+  const baseByType: Record<Issue['type'], number> = {
+    spelling: 0.96,
+    grammar: 0.9,
+    clarity: 0.82,
+    style: 0.78,
+  };
+
+  let confidence = baseByType[issue.type];
+
+  if (source === 'llm') confidence -= 0.04;
+  if (/consider/i.test(issue.suggestion) || /consider/i.test(issue.reason)) confidence -= 0.08;
+  if (issue.original.length <= 2) confidence -= 0.05;
+  if (context?.activeSentence && context.activeSentence.includes(issue.original)) confidence += 0.03;
+
+  return Math.max(0.5, Math.min(0.99, Number(confidence.toFixed(2))));
+}
+
+function getPriority(issue: Issue, confidence: number, text: string, context?: AnalysisContext): number {
+  const severityWeight: Record<Issue['type'], number> = {
+    spelling: 1,
+    grammar: 0.95,
+    clarity: 0.8,
+    style: 0.72,
+  };
+
+  let priority = confidence * 100 * severityWeight[issue.type];
+
+  const occurrenceCount = issue.original ? text.toLowerCase().split(issue.original.toLowerCase()).length - 1 : 1;
+  if (occurrenceCount > 1) priority += Math.min(occurrenceCount * 2, 8);
+  if (context?.fullTextExcerpt && context.fullTextExcerpt.toLowerCase().includes(issue.original.toLowerCase())) {
+    priority += 4;
+  }
+
+  return Number(priority.toFixed(2));
+}
+
+async function getLlmAutocomplete(
+  text: string,
+  cursor: number,
+  apiKey: string,
+  model: string | undefined,
+  provider: LLMProvider,
+  baseUrl?: string,
+  context?: AnalysisContext,
+) {
+  const openai = new OpenAI({
+    apiKey: apiKey || 'ollama',
+    baseURL: baseUrl || getProviderBaseUrl(provider),
+  });
+
+  const prefix = text.slice(0, cursor);
+  const suffix = text.slice(cursor);
+
+  const completion = await openai.chat.completions.create({
+    messages: [
+      {
+        role: 'system',
+        content: 'You are a writing assistant. Predict the next short continuation for the user. Return ONLY JSON with keys suggestion and confidence. Keep suggestion under 12 words and do not repeat the existing text.'
+      },
+      {
+        role: 'user',
+        content: JSON.stringify({
+          prefix: prefix.slice(-400),
+          suffix: suffix.slice(0, 120),
+          context,
+        }),
+      },
+    ],
+    model: model || 'gpt-4o-mini',
+    response_format: { type: 'json_object' },
+    max_tokens: 80,
+    temperature: 0.5,
+  });
+
+  const content = completion.choices[0]?.message?.content || '{"suggestion":"","confidence":0.5}';
+  const parsed = JSON.parse(content.replace(/^```json\s*/, '').replace(/\s*```$/, ''));
+
+  return {
+    suggestion: typeof parsed.suggestion === 'string' ? parsed.suggestion.trim() : '',
+    confidence: typeof parsed.confidence === 'number' ? Math.max(0, Math.min(1, parsed.confidence)) : 0.72,
+    replaceStart: cursor,
+    replaceEnd: cursor,
+    source: 'llm' as const,
+  };
+}
+
+function getHeuristicAutocomplete(text: string, cursor: number) {
+  const prefix = text.slice(0, cursor);
+  const trimmed = prefix.trimEnd();
+  const lower = trimmed.toLowerCase();
+
+  const patternSuggestions: Array<{ pattern: RegExp; suggestion: string }> = [
+    { pattern: /thank you for$/i, suggestion: ' your time.' },
+    { pattern: /i look forward to$/i, suggestion: ' hearing from you.' },
+    { pattern: /please let me know if$/i, suggestion: ' you have any questions.' },
+    { pattern: /in conclusion[,]?$/i, suggestion: ' this approach provides a stronger outcome.' },
+    { pattern: /for example[,]?$/i, suggestion: ' this can improve clarity and consistency.' },
+    { pattern: /i hope you are$/i, suggestion: ' doing well.' },
+  ];
+
+  for (const entry of patternSuggestions) {
+    if (entry.pattern.test(lower)) {
+      return {
+        suggestion: entry.suggestion,
+        confidence: 0.66,
+        replaceStart: cursor,
+        replaceEnd: cursor,
+        source: 'heuristic' as const,
+      };
+    }
+  }
+
+  const endsWithSentence = /[.!?]$/.test(trimmed);
+  return {
+    suggestion: endsWithSentence ? ' This helps keep the writing clear.' : '',
+    confidence: endsWithSentence ? 0.42 : 0,
+    replaceStart: cursor,
+    replaceEnd: cursor,
+    source: 'heuristic' as const,
+  };
 }
 
 export default app;
