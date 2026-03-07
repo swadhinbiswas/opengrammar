@@ -58,6 +58,17 @@
             <span class="toggle-slider"></span>
           </label>
         </div>
+
+        <div class="setting-group">
+          <label class="toggle-setting">
+            <div class="toggle-info">
+              <span class="setting-label">Autocomplete suggestions</span>
+              <span class="setting-description">Show next-phrase completions and accept with Tab</span>
+            </div>
+            <input type="checkbox" id="autocompleteEnabled" class="toggle-input">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
       </section>
 
       <!-- API Settings -->
@@ -185,6 +196,36 @@
           <button id="resetSettings" class="btn-danger">
             Reset All Settings
           </button>
+        </div>
+      </section>
+
+      <section class="settings-section">
+        <h2>Analytics & Sync</h2>
+        <p class="section-description">
+          Usage totals are stored in synced browser storage so they can follow you across signed-in Chrome profiles.
+        </p>
+
+        <div class="analytics-grid" id="analyticsGrid">
+          <div class="analytics-card"><span class="analytics-value" id="metricAnalyses">0</span><span class="analytics-label">Analyses</span></div>
+          <div class="analytics-card"><span class="analytics-value" id="metricIssues">0</span><span class="analytics-label">Issues Found</span></div>
+          <div class="analytics-card"><span class="analytics-value" id="metricApplied">0</span><span class="analytics-label">Applied</span></div>
+          <div class="analytics-card"><span class="analytics-value" id="metricAutocomplete">0</span><span class="analytics-label">Autocomplete Accepted</span></div>
+        </div>
+
+        <div class="analytics-subsections">
+          <div>
+            <h3>Top Domains</h3>
+            <div id="topDomains" class="analytics-list"></div>
+          </div>
+          <div>
+            <h3>Top Providers</h3>
+            <div id="topProviders" class="analytics-list"></div>
+          </div>
+        </div>
+
+        <div class="analytics-actions">
+          <span id="analyticsUpdated" class="setting-description">Last updated: never</span>
+          <button id="clearAnalytics" class="btn-secondary">Clear Analytics</button>
         </div>
       </section>
 
