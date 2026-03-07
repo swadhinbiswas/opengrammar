@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
+import { ChevronDown, Gauge, Languages, PenSquare, Settings2, Sparkles } from 'lucide-react';
 import './popup.css';
 import type { ProviderConfig } from '../types';
 
@@ -18,23 +19,30 @@ const Popup = () => {
     enabled: true,
     apiKey: '',
     model: 'gpt-4o-mini',
+  providerModelMemory: Record<string, string>;
     backendUrl: '',
     provider: 'openai',
     customBaseUrl: '',
     backendHealthy: true,
+  const [providerModelMemory, setProviderModelMemory] = useState<Record<string, string>>({});
   });
   const [showApiKey, setShowApiKey] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [providers, setProviders] = useState<ProviderConfig[]>([]);
+      ['enabled', 'apiKey', 'model', 'backendUrl', 'provider', 'customBaseUrl', 'backendHealthy', 'providerModelMemory'],
   const [availableModels, setAvailableModels] = useState<string[]>([]);
+        const memory = (result.providerModelMemory || {}) as Record<string, string>;
+        const selectedProvider = result.provider || 'openai';
+        const rememberedModel = memory[selectedProvider];
   const [fetchingModels, setFetchingModels] = useState(false);
+  const [showAdvanced, setShowAdvanced] = useState(false);
 
-  useEffect(() => {
+          model: rememberedModel || result.model || 'gpt-4o-mini',
     loadSettings();
-    loadProviders();
+          provider: selectedProvider,
   }, []);
 
   useEffect(() => {
+        setProviderModelMemory(memory);
     if (settings.provider) {
       loadModels();
     }
@@ -43,14 +51,20 @@ const Popup = () => {
   const loadSettings = () => {
     chrome.storage.sync.get(
       ['enabled', 'apiKey', 'model', 'backendUrl', 'provider', 'customBaseUrl', 'backendHealthy'],
+    const nextModelMemory = {
+      ...providerModelMemory,
+      ...(newSettings.provider ? { [newSettings.provider]: newSettings.model } : {}),
+    };
+    setProviderModelMemory(nextModelMemory);
       (result) => {
         setSettings({
           enabled: result.enabled !== false,
           apiKey: result.apiKey || '',
           model: result.model || 'gpt-4o-mini',
-          backendUrl: result.backendUrl || '',
+          backendUrl: result.backendUrl || 'http://localhost:8787',
           provider: result.provider || 'openai',
           customBaseUrl: result.customBaseUrl || '',
+        providerModelMemory: nextModelMemory,
           backendHealthy: result.backendHealthy !== false,
         });
         setLoading(false);
@@ -60,7 +74,8 @@ const Popup = () => {
 
   const loadProviders = async () => {
     try {
-      const response = await chrome.runtime.sendMessage({ type: 'GET_PROVIDERS' });
+    const rememberedModel = providerModelMemory[provider];
+    saveSettings({ provider, model: rememberedModel || getDefaultModel(provider) });
       if (response.providers) {
         setProviders(response.providers);
       }
@@ -116,6 +131,14 @@ const Popup = () => {
     return providerConfig?.models[0] || 'gpt-4o-mini';
   };
 
+  const openRewritePage = () => {
+    chrome.runtime.sendMessage({ type: 'OPEN_REWRITE_PAGE' });
+  };
+
+  const openStatsPage = () => {
+    chrome.runtime.sendMessage({ type: 'OPEN_STATS_PAGE' });
+  };
+
   if (loading) {
     return (
       <div className="container loading">
@@ -131,12 +154,7 @@ const Popup = () => {
     <div className="container">
       <header>
         <div className="logo">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M12 19l7-7 3 3-7 7-3-3z"/>
-            <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
-            <path d="M2 2l7.586 7.586"/>
-            <circle cx="11" cy="11" r="2"/>
-          </svg>
+          <div className="logo-mark">G</div>
           <h1>OpenGrammar</h1>
         </div>
         <span className={`status-badge ${settings.enabled ? 'enabled' : 'disabled'}`}>
@@ -159,6 +177,25 @@ const Popup = () => {
         </div>
 
         <div className={`settings-content ${!settings.enabled ? 'disabled' : ''}`}>
+          <div className="quick-actions">
+            <button onClick={openRewritePage} className="btn-secondary-action">
+              <PenSquare size={14} />
+              Rewrite
+            </button>
+            <button onClick={openStatsPage} className="btn-secondary-action">
+              <Gauge size={14} />
+              Stats
+            </button>
+          </div>
+
+          <div className="memory-card">
+            <div>
+              <strong>Remembered</strong>
+              <span>{selectedProvider?.name || 'OpenAI'} · {settings.model}</span>
+            </div>
+            <span className={`status-dot ${settings.backendHealthy ? 'healthy' : 'unhealthy'}`}></span>
+          </div>
+
           <div className="setting-group">
             <label>
               <span className="setting-label">AI Provider</span>
@@ -239,42 +276,58 @@ const Popup = () => {
             </select>
           </div>
 
-          {settings.provider === 'custom' && (
-            <div className="setting-group">
-              <label>
-                <span className="setting-label">Custom Base URL</span>
-              </label>
-              <input
-                type="url"
-                value={settings.customBaseUrl}
-                onChange={(e) => saveSettings({ customBaseUrl: e.target.value })}
-                placeholder="https://your-api.com/v1"
-                className="text-input"
-              />
+          <button
+            type="button"
+            className="advanced-toggle"
+            onClick={() => setShowAdvanced((prev) => !prev)}
+          >
+            <span className="advanced-toggle-left">
+              <Settings2 size={14} />
+              Advanced
+            </span>
+            <ChevronDown size={14} className={showAdvanced ? 'rotated' : ''} />
+          </button>
+
+          {showAdvanced && (
+            <div className="advanced-panel">
+              {settings.provider === 'custom' && (
+                <div className="setting-group compact-group">
+                  <label>
+                    <span className="setting-label with-icon"><Languages size={14} /> Custom Base URL</span>
+                  </label>
+                  <input
+                    type="url"
+                    value={settings.customBaseUrl}
+                    onChange={(e) => saveSettings({ customBaseUrl: e.target.value })}
+                    placeholder="https://your-api.com/v1"
+                    className="text-input"
+                  />
+                </div>
+              )}
+
+              <div className="setting-group compact-group">
+                <label>
+                  <span className="setting-label with-icon"><Sparkles size={14} /> Backend URL</span>
+                  <span className="setting-hint">
+                    Auto-saved in browser. Default is localhost.
+                  </span>
+                </label>
+                <input
+                  type="url"
+                  value={settings.backendUrl}
+                  onChange={(e) => saveSettings({ backendUrl: e.target.value })}
+                  placeholder="http://localhost:8787"
+                  className="text-input"
+                />
+                <div className="backend-status">
+                  <span className={`status-dot ${settings.backendHealthy ? 'healthy' : 'unhealthy'}`}></span>
+                  <span className="status-text">
+                    {settings.backendHealthy ? 'Connected' : 'Not connected'}
+                  </span>
+                </div>
+              </div>
             </div>
           )}
-
-          <div className="setting-group">
-            <label>
-              <span className="setting-label">Backend URL</span>
-              <span className="setting-hint">
-                {settings.backendUrl || 'Using localhost (dev)'}
-              </span>
-            </label>
-            <input
-              type="url"
-              value={settings.backendUrl}
-              onChange={(e) => saveSettings({ backendUrl: e.target.value })}
-              placeholder="https://your-backend.workers.dev"
-              className="text-input"
-            />
-            <div className="backend-status">
-              <span className={`status-dot ${settings.backendHealthy ? 'healthy' : 'unhealthy'}`}></span>
-              <span className="status-text">
-                {settings.backendHealthy ? 'Connected' : 'Not connected'}
-              </span>
-            </div>
-          </div>
         </div>
       </main>
 
