@@ -1,0 +1,18 @@
+[pr_reviewer]
+# General settings for the reviewer
+require_score_review = true
+require_tests_review = true
+require_security_review = true
+num_code_suggestions = 5
+inline_code_comments = true
+
+[pr_description]
+# Settings for the auto-generated description
+publish_labels = true
+use_semantic_title = true
+add_line_break_after_each_section = true
+
+[pr_code_suggestions]
+# Settings for code suggestions
+max_context_tokens = 8000
+summarize_fine_grained = true
