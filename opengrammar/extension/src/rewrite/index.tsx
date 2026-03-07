@@ -10,22 +10,16 @@ const RewritePopup = () => {
   const [rewrittenText, setRewrittenText] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [applySuccess, setApplySuccess] = useState('');
 
   useEffect(() => {
-    // Get selected text from page
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      const tab = tabs[0];
-      if (tab?.id) {
-        chrome.tabs.sendMessage(tab.id, { type: 'GET_SELECTION' }, (response) => {
-          if (response?.text) {
-            setSelectedText(response.text);
-          } else {
-            setError('No text selected. Please select text to rewrite.');
-          }
-        });
-      } else {
-        setError('No active tab found.');
+    chrome.runtime.sendMessage({ type: 'GET_REWRITE_CONTEXT' }, (response) => {
+      if (response?.selectedText) {
+        setSelectedText(response.selectedText);
+        return;
       }
+
+      setError('No text selected. Select text first, then open Rewrite.');
     });
   }, []);
 
@@ -67,16 +61,21 @@ const RewritePopup = () => {
   };
 
   const handleApply = () => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      const tab = tabs[0];
-      if (tab?.id) {
-        chrome.tabs.sendMessage(tab.id, {
-          type: 'APPLY_REWRITE',
-          original: selectedText,
-          rewritten: rewrittenText,
-        });
-      }
-    });
+    setApplySuccess('');
+    chrome.runtime.sendMessage(
+      {
+        type: 'APPLY_REWRITE_TO_SOURCE',
+        original: selectedText,
+        rewritten: rewrittenText,
+      },
+      (response) => {
+        if (response?.success) {
+          setApplySuccess('Applied to the original editor.');
+        } else {
+          setError(response?.error || 'Failed to apply rewrite.');
+        }
+      },
+    );
   };
 
   const handleCopy = () => {
@@ -105,6 +104,7 @@ const RewritePopup = () => {
           <div className="error-message">{error}</div>
         ) : (
           <>
+            {applySuccess && <div className="success-message">{applySuccess}</div>}
             <div className="tone-selector">
               <label>Choose Tone:</label>
               <div className="tone-grid">

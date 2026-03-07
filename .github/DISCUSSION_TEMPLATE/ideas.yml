@@ -1,0 +1,22 @@
+name: Ideas
+description: Share your innovative ideas or brainstorm new features for OpenGrammar.
+title: "[IDEA] "
+labels: ["idea", "brainstorming"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        We love hearing new ideas! Please describe your concept below.
+  - type: textarea
+    id: idea
+    attributes:
+      label: Description
+      description: What is your idea?
+      placeholder: Ex. Integrate with local LLMs via Ollama...
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Potential Impact
+      description: How would this change help the users or the project?

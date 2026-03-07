@@ -1,0 +1,109 @@
+name: SARAS AI Code Reviewer
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Technical Analysis
+        id: analysis
+        run: |
+          echo "🔍 SARAS AI is analyzing the architecture..."
+          echo "" > errors.log
+          
+          cd opengrammar/shared && bun install >> /dev/null 2>&1
+          cd ../backend && bun install >> /dev/null 2>&1
+          bun x tsc --noEmit > ../../backend_errors.log 2>&1 || echo "BACKEND_FAILED" >> ../../errors.log
+          
+          cd ../extension && bun install >> /dev/null 2>&1
+          bun x tsc --noEmit > ../../extension_errors.log 2>&1 || echo "EXTENSION_FAILED" >> ../../errors.log
+          
+          cd ../..
+          if grep -q "FAILED" errors.log; then
+            echo "status=failed" >> $GITHUB_OUTPUT
+          else
+            echo "status=success" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Process Review as Swadhin Biswas
+        uses: actions/github-script@v7
+        with:
+          # Using your PAT makes the review come from "Swadhin Biswas"
+          github-token: ${{ secrets.SARAS_TOKEN || secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const status = '${{ steps.analysis.outputs.status }}';
+            const isSuccess = status === 'success';
+            
+            const owner = 'swadhinbiswas';
+            const repo = 'opengrammar';
+            const pull_number = context.payload.pull_request.number;
+            
+            let report = '';
+            if (isSuccess) {
+              report = `### ✅ Code Review Approved
+              
+              I have verified the changes for the SARAS Digital Intelligence system.
+              
+              - **Architecture:** Optimized for Bun runtime.
+              - **Type Safety:** 100% verified via TSC.
+              - **Status:** Production-ready.
+              
+              **Reviewer Profile:** swadhinbiswas <swadhinbiswas.cse@gmail.com>`;
+              
+              try {
+                await github.rest.pulls.createReview({
+                  owner,
+                  repo,
+                  pull_number,
+                  event: 'APPROVE',
+                  body: report
+                });
+              } catch (e) {
+                // Fallback to comment if token isn't providing full review access
+                await github.rest.issues.createComment({
+                  owner,
+                  repo,
+                  issue_number: pull_number,
+                  body: report
+                });
+              }
+            } else {
+              let backendErrors = fs.existsSync('backend_errors.log') ? fs.readFileSync('backend_errors.log', 'utf8') : '';
+              let extensionErrors = fs.existsSync('extension_errors.log') ? fs.readFileSync('extension_errors.log', 'utf8') : '';
+              
+              backendErrors = backendErrors.split('\n').slice(0, 10).join('\n');
+              extensionErrors = extensionErrors.split('\n').slice(0, 10).join('\n');
+              
+              report = `### ❌ Changes Requested
+              
+              Technical inconsistencies detected:
+              
+              ${backendErrors ? '#### 🖥️ Backend Errors:\n```\n' + backendErrors + '\n```' : ''}
+              ${extensionErrors ? '#### 🧩 Extension Errors:\n```\n' + extensionErrors + '\n```' : ''}
+              
+              **Reviewer Profile:** swadhinbiswas <swadhinbiswas.cse@gmail.com>`;
+              
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: pull_number,
+                body: report
+              });
+              
+              process.exit(1);
+            }

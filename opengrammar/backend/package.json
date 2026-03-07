@@ -5,19 +5,22 @@
   "main": "src/index.ts",
   "type": "module",
   "scripts": {
-    "dev": "wrangler dev",
-    "dev:node": "tsx watch src/index.ts",
+    "dev": "bun --hot server-bun.ts",
+    "start": "bun server-bun.ts",
+    "dev:node": "tsx watch server-node.ts",
+    "start:node": "tsx server-node.ts",
     "deploy": "wrangler deploy --env production",
     "deploy:vercel": "vercel --prod",
     "deploy:render": "git push render main",
     "deploy:railway": "railway up",
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "bun test"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@hono/node-server": "^1.19.9",
     "@hono/zod-validator": "^0.7.6",
     "groq-sdk": "^0.5.0",
     "hono": "^4.11.10",
@@ -26,6 +29,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20260219.0",
+    "@types/bun": "^1.3.10",
     "@types/node": "^25.3.0",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",

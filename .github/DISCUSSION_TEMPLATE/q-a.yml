@@ -1,0 +1,22 @@
+name: Q&A
+description: Ask a question about how to use OpenGrammar or get help with setup.
+title: "[Q&A] "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please describe what you are trying to achieve or what you are having trouble with.
+  - type: textarea
+    id: question
+    attributes:
+      label: Your Question
+      description: What would you like to know?
+      placeholder: Ex. How do I change the default backend URL?
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Provide any background information or details about your environment (OS, Browser, etc.)

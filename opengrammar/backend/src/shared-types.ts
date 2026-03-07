@@ -7,6 +7,18 @@ export interface Issue {
   length: number;
   id?: string;
   ignored?: boolean;
+  confidence?: number;
+  priority?: number;
+  source?: 'rule' | 'llm' | 'context';
+}
+
+export interface AnalysisContext {
+  domain?: string;
+  editorType?: string;
+  activeSentence?: string;
+  previousText?: string;
+  nextText?: string;
+  fullTextExcerpt?: string;
 }
 
 export interface AnalyzeRequest {
@@ -17,6 +29,8 @@ export interface AnalyzeRequest {
   baseUrl?: string;
   ignoredIssues?: string[];
   customRules?: CustomRule[];
+  dictionary?: string[];
+  context?: AnalysisContext;
 }
 
 export interface CustomRule {
@@ -31,6 +45,7 @@ export interface AnalysisMetadata {
   textLength: number;
   issuesCount: number;
   processingTimeMs: number;
+  contextUsed?: boolean;
   model?: string;
   provider?: string;
 }
@@ -40,6 +55,25 @@ export interface AnalyzeResponse {
   metadata?: AnalysisMetadata;
   error?: string;
   message?: string;
+}
+
+export interface AutocompleteRequest {
+  text: string;
+  cursor: number;
+  apiKey?: string;
+  model?: string;
+  provider?: LLMProvider;
+  baseUrl?: string;
+  context?: AnalysisContext;
+}
+
+export interface AutocompleteResponse {
+  suggestion: string;
+  confidence: number;
+  replaceStart: number;
+  replaceEnd: number;
+  source: 'heuristic' | 'llm';
+  error?: string;
 }
 
 export type LLMProvider = 

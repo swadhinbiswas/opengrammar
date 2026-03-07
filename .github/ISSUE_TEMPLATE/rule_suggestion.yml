@@ -1,0 +1,38 @@
+name: Grammar Rule Suggestion
+description: Suggest a new grammar, spelling, or style rule for OpenGrammar.
+title: "[RULE] "
+labels: ["enhancement", "grammar-rule"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Help us expand our local rule library!
+  - type: textarea
+    id: mistake
+    attributes:
+      label: Incorrect Text
+      description: What is the mistake or the phrase to be improved?
+      placeholder: Ex. "at this point in time"
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: Suggested Correction
+      description: What should it be changed to?
+      placeholder: Ex. "now"
+    validations:
+      required: true
+  - type: textarea
+    id: reason
+    attributes:
+      label: Reason / Explanation
+      description: Why is this an error or how does the change improve the writing?
+      placeholder: Ex. "Redundant phrase. 'Now' is more concise."
+    validations:
+      required: true
+  - type: textarea
+    id: examples
+    attributes:
+      label: Example Sentences
+      description: Provide one or two sentences showing the rule in action.

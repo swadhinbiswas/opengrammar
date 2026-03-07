@@ -239,3 +239,9 @@ body {
   font-size: 13px;
   color: var(--text-secondary);
 }
+
+.sync-caption {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}

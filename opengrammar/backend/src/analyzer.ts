@@ -1,4 +1,4 @@
-import type { Issue, CustomRule, LLMProvider } from './shared-types.js';
+import type { AnalysisContext, Issue, CustomRule, LLMProvider } from './shared-types.js';
 import OpenAI from 'openai';
 import { Groq } from 'groq-sdk';
 
@@ -770,17 +770,18 @@ export class LLMAnalyzer {
     apiKey: string, 
     model: string = 'gpt-3.5-turbo',
     provider: LLMProvider = 'openai',
-    baseUrl?: string
+    baseUrl?: string,
+    context?: AnalysisContext
   ): Promise<Issue[]> {
     try {
       let issues: any[] = [];
 
       // Use Groq SDK for Groq provider
       if (provider === 'groq') {
-        issues = await this.analyzeWithGroq(text, apiKey, model);
+        issues = await this.analyzeWithGroq(text, apiKey, model, context);
       } else {
         // Use OpenAI SDK for other providers (OpenAI, OpenRouter, Together, Ollama, Custom)
-        issues = await this.analyzeWithOpenAI(text, apiKey, model, provider, baseUrl);
+        issues = await this.analyzeWithOpenAI(text, apiKey, model, provider, baseUrl, context);
       }
 
       return issues;
@@ -793,11 +794,12 @@ export class LLMAnalyzer {
   private static async analyzeWithGroq(
     text: string,
     apiKey: string,
-    model: string
+    model: string,
+    context?: AnalysisContext
   ): Promise<Issue[]> {
     const groq = new Groq({ apiKey });
 
-    const prompt = this.createGrammarPrompt(text);
+    const prompt = this.createGrammarPrompt(text, context);
 
     const chatCompletion = await groq.chat.completions.create({
       messages: [
@@ -833,7 +835,8 @@ export class LLMAnalyzer {
     apiKey: string,
     model: string,
     provider: LLMProvider,
-    baseUrl?: string
+    baseUrl?: string,
+    context?: AnalysisContext
   ): Promise<Issue[]> {
     const providerBaseUrl = baseUrl || this.getProviderBaseUrl(provider);
     
@@ -842,7 +845,7 @@ export class LLMAnalyzer {
       baseURL: providerBaseUrl,
     });
 
-    const prompt = this.createGrammarPrompt(text);
+    const prompt = this.createGrammarPrompt(text, context);
 
     const completion = await openai.chat.completions.create({
       messages: [
@@ -882,11 +885,18 @@ export class LLMAnalyzer {
     return urls[provider as string] ?? urls.openai;
   }
 
-  private static createGrammarPrompt(text: string): string {
+  private static createGrammarPrompt(text: string, context?: AnalysisContext): string {
+    const contextBlock = context
+      ? `\nCONTEXT:\n- Domain: ${context.domain || 'unknown'}\n- Editor type: ${context.editorType || 'generic'}\n- Active sentence: ${context.activeSentence || 'n/a'}\n- Previous text: ${context.previousText || 'n/a'}\n- Next text: ${context.nextText || 'n/a'}\n- Document excerpt: ${context.fullTextExcerpt || 'n/a'}\n`
+      : '';
+
     return `Analyze this text for grammar, spelling, clarity, and style issues.
+
+Use the additional context to improve consistency, tone, and document-level suggestions when available.
 
 TEXT:
 ${text}
+${contextBlock}
 
 Return JSON:
 {

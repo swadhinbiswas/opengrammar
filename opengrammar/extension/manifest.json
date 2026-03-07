@@ -36,6 +36,13 @@
         "mac": "Command+Shift+R"
       },
       "description": "Open rewrite tool"
+    },
+    "open-stats": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S",
+        "mac": "Command+Shift+S"
+      },
+      "description": "Open writing statistics"
     }
   },
   "content_scripts": [
@@ -43,12 +50,13 @@
       "matches": ["<all_urls>"],
       "js": ["src/content/index.ts"],
       "run_at": "document_idle",
+      "all_frames": true,
       "css": []
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": ["assets/*"],
+      "resources": ["assets/*", "src/rewrite/index.html", "src/stats/index.html"],
       "matches": ["<all_urls>"]
     }
   ],

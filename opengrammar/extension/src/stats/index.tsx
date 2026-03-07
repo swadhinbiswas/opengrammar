@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { calculateWritingStats, getReadabilityLevel, type WritingStats } from './writing-stats';
 import './stats.css';
+import type { AnalyticsSummary } from '../types';
 
 const StatsPopup = () => {
   const [stats, setStats] = useState<WritingStats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [analytics, setAnalytics] = useState<AnalyticsSummary | null>(null);
 
   useEffect(() => {
     loadStats();
@@ -15,6 +17,8 @@ const StatsPopup = () => {
     try {
       // Get active element's text
       const response = await chrome.runtime.sendMessage({ type: 'GET_ACTIVE_TEXT' });
+      const analyticsResponse = await chrome.runtime.sendMessage({ type: 'GET_ANALYTICS_SUMMARY' });
+      setAnalytics(analyticsResponse);
       
       if (response?.text) {
         const calculatedStats = calculateWritingStats(response.text, response.issues);
@@ -134,6 +138,21 @@ const StatsPopup = () => {
                 <IssueCard type="style" count={stats.styleIssues} color="#3b82f6" />
               )}
             </div>
+          </section>
+        )}
+
+        {analytics && (
+          <section className="stats-section">
+            <h2>Synced Usage</h2>
+            <div className="stats-grid">
+              <StatCard label="Analyses" value={analytics.totals.analysis_runs || 0} />
+              <StatCard label="Suggestions Applied" value={analytics.totals.suggestions_applied || 0} />
+              <StatCard label="Autocomplete Accepted" value={analytics.totals.autocomplete_accepted || 0} />
+              <StatCard label="Rewrites Applied" value={analytics.totals.rewrite_applied || 0} />
+            </div>
+            <p className="sync-caption">
+              Synced activity {analytics.lastUpdatedAt ? `updated ${new Date(analytics.lastUpdatedAt).toLocaleString()}` : 'has not been recorded yet'}.
+            </p>
           </section>
         )}
       </main>

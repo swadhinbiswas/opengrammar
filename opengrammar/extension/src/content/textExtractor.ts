@@ -4,6 +4,11 @@
  */
 export function extractText(element: HTMLElement): string {
   if (!element) return '';
+
+  if (window.location.hostname.includes('docs.google.com')) {
+    const docsText = extractGoogleDocsText(element);
+    if (docsText) return docsText;
+  }
   
   if (element.tagName === 'INPUT') {
     return (element as HTMLInputElement).value;
@@ -35,10 +40,37 @@ export function getElementFromTarget(target: EventTarget | null): HTMLElement | 
   if (!target) return null;
   
   if (target instanceof HTMLElement) {
+    if (window.location.hostname.includes('docs.google.com')) {
+      const docsTarget = target.closest('[contenteditable="true"], [role="textbox"], .kix-appview-editor') as HTMLElement | null;
+      if (docsTarget) return docsTarget;
+    }
+
     return target;
   }
   
   return null;
+}
+
+function extractGoogleDocsText(element: HTMLElement): string {
+  const docsRoot =
+    element.closest('[role="textbox"]') ||
+    element.closest('.kix-appview-editor') ||
+    document.querySelector('[role="textbox"]') ||
+    document.querySelector('.kix-appview-editor');
+
+  if (!docsRoot) return '';
+
+  const wordNodes = docsRoot.querySelectorAll('.kix-wordhtmlgenerator-word-node, .kix-lineview-text-block');
+  if (wordNodes.length > 0) {
+    return Array.from(wordNodes)
+      .map((node) => (node.textContent || '').trim())
+      .filter(Boolean)
+      .join(' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  return docsRoot.textContent?.replace(/\s+/g, ' ').trim() || '';
 }
 
 /**

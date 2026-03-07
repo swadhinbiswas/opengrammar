@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenGrammar | The Free, Privacy-First Grammarly Alternative</title>
+    <meta name="description" content="OpenGrammar is a powerful, open-source, and self-hostable browser extension for grammar, spelling, and tone adjustments. Complete privacy and zero monthly fees.">
+    <meta name="keywords" content="OpenGrammar, Grammarly alternative, open source grammar checker, privacy writing assistant, AI writer">
+    <meta name="author" content="OpenGrammar Community">
+    <meta property="og:title" content="OpenGrammar | Privacy-First Writing Assistant">
+    <meta property="og:description" content="Take back your privacy. OpenGrammar offers local grammar checking and bring-your-own-AI capabilities with zero monthly fees.">
+    <meta property="og:type" content="website">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(90deg, #3B82F6, #8B5CF6);
+        }
+        .hero-pattern {
+            background-color: #f8fafc;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-gray-900 bg-white">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-2">
+                    <img src="logo.svg" alt="OpenGrammar Logo" class="h-8 w-8">
+                    <span class="font-bold text-xl tracking-tight text-gray-900">OpenGrammar</span>
+                </div>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#features" class="text-gray-600 hover:text-blue-600 font-medium transition">Features</a>
+                    <a href="#how-it-works" class="text-gray-600 hover:text-blue-600 font-medium transition">How it Works</a>
+                    <a href="https://github.com" target="_blank" class="text-gray-600 hover:text-blue-600 font-medium transition">GitHub</a>
+                    <a href="#get-started" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full font-medium transition shadow-lg shadow-blue-500/30">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-pattern pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="text-center max-w-3xl mx-auto">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-sm font-semibold mb-6">
+                    <span class="flex h-2 w-2 rounded-full bg-blue-600"></span>
+                    v2.1 Now Available
+                </div>
+                <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 leading-tight">
+                    Write with confidence.<br>
+                    <span class="gradient-text">Keep your privacy.</span>
+                </h1>
+                <p class="text-xl text-gray-600 mb-10 leading-relaxed">
+                    OpenGrammar is the free, open-source Grammarly alternative. Run local rule-based checks offline, or plug in your own AI API key for advanced edits without paying monthly subscriptions.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#get-started" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full font-bold text-lg transition shadow-xl shadow-blue-600/20 flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        Download Extension
+                    </a>
+                    <a href="https://github.com" target="_blank" class="bg-white hover:bg-gray-50 text-gray-800 border border-gray-200 px-8 py-4 rounded-full font-bold text-lg transition shadow-sm flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
+                        View Source
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Mockup image -->
+            <div class="mt-16 relative max-w-5xl mx-auto rounded-xl shadow-2xl overflow-hidden border border-gray-200">
+                <div class="bg-gray-100 px-4 py-3 border-b border-gray-200 flex items-center gap-2">
+                    <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                </div>
+                <div class="bg-white p-8">
+                    <p class="text-lg text-gray-700 leading-relaxed font-serif">
+                        Most popular grammar assistants require you to send every keystroke to their servers and <span class="border-b-2 border-red-400 pb-1 cursor-pointer hover:bg-red-50 relative group">charge a hefty monthly fee<div class="absolute bottom-full left-0 mb-2 hidden group-hover:block w-48 bg-white border shadow-lg rounded p-2 text-sm z-10"><span class="block text-red-600 font-bold mb-1">Cliché</span>Consider "are expensive" instead.</div></span> for advanced features. OpenGrammar changes that. The core engine runs locally in your browser, checking for passive voice and <span class="border-b-2 border-blue-400 pb-1 cursor-pointer hover:bg-blue-50 relative group">repetition<div class="absolute bottom-full left-0 mb-2 hidden group-hover:block w-48 bg-white border shadow-lg rounded p-2 text-sm z-10"><span class="block text-blue-600 font-bold mb-1">Repetition</span>You used this word 3 times recently.</div></span> without needing a server.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Everything you need, nothing you don't.</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Designed for developers, writers, and privacy advocates who want complete control over their writing environment.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-10">
+                <!-- Feature 1 -->
+                <div class="p-6 rounded-2xl border border-gray-100 hover:shadow-xl transition duration-300 bg-gray-50">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Absolute Privacy</h3>
+                    <p class="text-gray-600">No databases, no user accounts. The local engine runs offline. AI requests are sent to a stateless edge function and immediately forgotten.</p>
+                </div>
+                <!-- Feature 2 -->
+                <div class="p-6 rounded-2xl border border-gray-100 hover:shadow-xl transition duration-300 bg-gray-50">
+                    <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Bring Your Own AI</h3>
+                    <p class="text-gray-600">Paste in your API key for OpenAI, Groq, OpenRouter, or Together. Pay fractions of a cent per month directly to the provider instead of a $12/mo subscription.</p>
+                </div>
+                <!-- Feature 3 -->
+                <div class="p-6 rounded-2xl border border-gray-100 hover:shadow-xl transition duration-300 bg-gray-50">
+                    <div class="w-12 h-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Self-Hostable Backend</h3>
+                    <p class="text-gray-600">Don't want to use our proxy? Deploy your own Cloudflare Worker or Vercel Edge function in a single command. You own the entire infrastructure.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works -->
+    <section id="how-it-works" class="py-20 bg-gray-50 border-t border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <div class="lg:w-1/2">
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Dual-Engine Architecture</h2>
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">1</div>
+                            <div>
+                                <h4 class="text-lg font-bold">Local Rules Engine</h4>
+                                <p class="text-gray-600">Checks for passive voice, repeated words, and overly long sentences right in your browser. Fast, free, and completely offline.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold">2</div>
+                            <div>
+                                <h4 class="text-lg font-bold">AI Processing</h4>
+                                <p class="text-gray-600">For complex grammar, tone rewriting, and clarity suggestions, text is sent securely to an LLM using your personal API key.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold">3</div>
+                            <div>
+                                <h4 class="text-lg font-bold">Contextual UI</h4>
+                                <p class="text-gray-600">See red, yellow, and blue underlines as you type. Click to accept suggestions, ignore them, or add words to your custom dictionary.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2">
+                    <div class="bg-white p-6 rounded-2xl shadow-xl border border-gray-100">
+                        <div class="flex justify-between items-center mb-6 border-b pb-4">
+                            <h3 class="font-bold text-gray-800">Writing Statistics</h3>
+                            <span class="text-sm text-gray-500">Document Analysis</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="bg-blue-50 p-4 rounded-lg">
+                                <div class="text-sm text-gray-500 mb-1">Words</div>
+                                <div class="text-2xl font-bold text-blue-700">1,248</div>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg">
+                                <div class="text-sm text-gray-500 mb-1">Reading Time</div>
+                                <div class="text-2xl font-bold text-purple-700">4 min</div>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="font-medium">Readability Score</span>
+                                <span class="text-green-600 font-bold">Excellent (78)</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-green-500 h-2 rounded-full" style="width: 78%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Getting Started -->
+    <section id="get-started" class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6">Ready to take back control?</h2>
+            <p class="text-xl text-gray-600 mb-10">Start writing better today without sacrificing your privacy or your wallet.</p>
+            
+            <div class="bg-gray-900 rounded-2xl text-left p-6 shadow-2xl text-gray-300 font-mono text-sm overflow-x-auto mx-auto max-w-2xl">
+                <div class="flex gap-2 mb-4">
+                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                </div>
+                <p><span class="text-blue-400"># 1. Clone the repository</span></p>
+                <p class="mb-4 text-white">git clone https://github.com/yourusername/opengrammar.git</p>
+                
+                <p><span class="text-blue-400"># 2. Build the extension</span></p>
+                <p class="text-white">cd opengrammar/extension</p>
+                <p class="text-white">npm install</p>
+                <p class="mb-4 text-white">npm run build</p>
+
+                <p><span class="text-blue-400"># 3. Load unpacked in Chrome</span></p>
+                <p class="text-gray-400">Go to chrome://extensions, enable Developer Mode, and select the dist/ folder.</p>
+            </div>
+            
+            <div class="mt-10">
+                <a href="https://github.com" class="text-blue-600 font-bold hover:underline inline-flex items-center gap-1">
+                    Read the full developer documentation <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center gap-2 mb-4 md:mb-0">
+                <img src="logo.svg" alt="OpenGrammar Logo" class="h-6 w-6 opacity-80">
+                <span class="text-xl font-bold text-white opacity-90">OpenGrammar</span>
+            </div>
+            <p class="text-gray-500 text-sm text-center md:text-left">
+                Released under the Apache 2.0 License. Open-source and free forever.
+            </p>
+            <div class="mt-4 md:mt-0 flex gap-6">
+                <a href="#" class="text-gray-400 hover:text-white transition">GitHub</a>
+                <a href="#" class="text-gray-400 hover:text-white transition">Discord</a>
+                <a href="#" class="text-gray-400 hover:text-white transition">Documentation</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

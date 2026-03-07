@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenGrammar Test Page</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 24px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+        h2 {
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 16px;
+            font-family: inherit;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+        input[type="text"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        .editable {
+            min-height: 150px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 16px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .editable:focus {
+            border-color: #2563eb;
+        }
+        .instructions {
+            background: #e7f3ff;
+            border-left: 4px solid #2563eb;
+            padding: 16px;
+            margin-bottom: 24px;
+            border-radius: 0 6px 6px 0;
+        }
+        .instructions h3 {
+            margin: 0 0 8px 0;
+            color: #2563eb;
+        }
+        .instructions ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .instructions li {
+            margin-bottom: 4px;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 12px;
+        }
+        .status.ok {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+        .status.error {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+        .test-text {
+            color: #666;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🪶 OpenGrammar Test Page</h1>
+    
+    <div class="instructions">
+        <h3>How to Test</h3>
+        <ul>
+            <li>Type in any of the text areas below</li>
+            <li>The extension should detect grammar and spelling errors</li>
+            <li>Look for <strong>wavy underlines</strong> (red for grammar/spelling, amber for clarity, blue for style)</li>
+            <li>Click on underlined text to see suggestions</li>
+            <li>Try the test sentences provided below each input</li>
+        </ul>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 1: Simple Input Field</h2>
+        <label for="test-input">Type here:</label>
+        <input type="text" id="test-input" placeholder="Start typing...">
+        <p class="test-text">Try: "teh quick brown fox jump over the lazy dog" (should show spelling errors)</p>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 2: Textarea</h2>
+        <label for="test-textarea">Type here:</label>
+        <textarea id="test-textarea" placeholder="Start typing..."></textarea>
+        <p class="test-text">Try: "Me and him went to the store. We utilize big words very good."</p>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 3: Content Editable (Rich Text)</h2>
+        <label for="test-editable">Type here:</label>
+        <div id="test-editable" class="editable" contenteditable="true" placeholder="Start typing..."></div>
+        <p class="test-text">Try: "Their going to love this. Its a amazing tool which helps writers."</p>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 4: All Grammar Rules</h2>
+        <label for="test-all">Comprehensive test:</label>
+        <textarea id="test-all" placeholder="Start typing..."></textarea>
+        <p class="test-text">Try: "Teh cat runned away. Me and her dont care. It's been raining alot. We should of went. Their are less people now. Your welcome. I wanna go. Alot of things. The book was wrote by him. Mistakes were made."</p>
+    </div>
+
+    <script>
+        // Log when content changes for debugging
+        document.querySelectorAll('input, textarea, [contenteditable]').forEach(el => {
+            el.addEventListener('input', (e) => {
+                console.log('[Test Page] Input event:', e.target.tagName, e.target.value?.substring(0, 50));
+            });
+            
+            el.addEventListener('focus', (e) => {
+                console.log('[Test Page] Focus event:', e.target.tagName);
+            });
+        });
+
+        console.log('[Test Page] Loaded. OpenGrammar extension should activate on these fields.');
+    </script>
+</body>
+</html>

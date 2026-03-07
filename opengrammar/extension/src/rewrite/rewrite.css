@@ -52,6 +52,15 @@ body {
   font-size: 13px;
 }
 
+.success-message {
+  padding: 12px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+  color: #059669;
+  font-size: 13px;
+}
+
 /* Tone Selector */
 .tone-selector label {
   display: block;
