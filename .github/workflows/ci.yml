@@ -13,19 +13,24 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
+    - name: Set up Bun
+      uses: oven-sh/setup-bun@v1
       with:
-        node-version: '20'
+        bun-version: latest
+
+    - name: Install and Build Shared
+      run: |
+        cd opengrammar/shared
+        bun install
 
     - name: Install and Build Backend
       run: |
         cd opengrammar/backend
-        npm install
-        npm run build
+        bun install
+        bun run build
 
     - name: Install and Build Extension
       run: |
         cd opengrammar/extension
-        npm install
-        npm run build
+        bun install
+        bun run build

@@ -14,21 +14,15 @@ GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-# Check if Node.js is installed
-if ! command -v node &> /dev/null; then
-    echo -e "${RED}Error: Node.js is not installed${NC}"
-    echo "Please install Node.js v18 or newer"
+# Check if Bun is installed
+if ! command -v bun &> /dev/null; then
+    echo -e "${RED}Error: Bun is not installed${NC}"
+    echo "Please install Bun: https://bun.sh"
     exit 1
 fi
 
-# Check Node version
-NODE_VERSION=$(node -v | cut -d'v' -f2 | cut -d'.' -f1)
-if [ "$NODE_VERSION" -lt 18 ]; then
-    echo -e "${RED}Error: Node.js v18 or newer is required${NC}"
-    exit 1
-fi
-
-echo -e "${BLUE}✓ Node.js version check passed${NC}"
+BUN_VERSION=$(bun -v)
+echo -e "${BLUE}✓ Bun version $BUN_VERSION check passed${NC}"
 echo ""
 
 # Get script directory
@@ -41,19 +35,19 @@ echo "-------------------------------------------------"
 cd backend
 
 if [ ! -d "node_modules" ]; then
-    echo "Installing backend dependencies..."
-    npm install
+    echo "Installing backend dependencies with Bun..."
+    bun install
 fi
 
 # Check if wrangler is logged in
-if ! npx wrangler whoami &> /dev/null; then
+if ! bun x wrangler whoami &> /dev/null; then
     echo -e "${RED}Error: Not logged in to Cloudflare${NC}"
-    echo "Run: npx wrangler login"
+    echo "Run: bun x wrangler login"
     exit 1
 fi
 
 echo "Deploying to production..."
-DEPLOY_OUTPUT=$(npx wrangler deploy --env production 2>&1)
+DEPLOY_OUTPUT=$(bun x wrangler deploy --env production 2>&1)
 echo "$DEPLOY_OUTPUT"
 
 # Extract backend URL from deploy output
@@ -74,12 +68,12 @@ echo "------------------------------------"
 cd "$SCRIPT_DIR/extension"
 
 if [ ! -d "node_modules" ]; then
-    echo "Installing extension dependencies..."
-    npm install
+    echo "Installing extension dependencies with Bun..."
+    bun install
 fi
 
 echo "Building extension..."
-npm run build
+bun run build
 
 echo -e "${GREEN}✓ Extension built successfully${NC}"
 echo ""
