@@ -1,4 +1,4 @@
-import { Issue } from '../types';
+import type { AnalyticsSummary, IgnoredIssue } from '../types';
 
 interface Settings {
   enabled: boolean;
@@ -7,17 +7,10 @@ interface Settings {
   backendUrl: string;
   checkAsYouType: boolean;
   showNotifications: boolean;
+  autocompleteEnabled: boolean;
   disabledDomains: string[];
   dictionary: string[];
   ignoredIssues: IgnoredIssue[];
-}
-
-interface IgnoredIssue {
-  id: string;
-  type: string;
-  original: string;
-  suggestion: string;
-  ignoredAt: number;
 }
 
 // DOM Elements
@@ -25,6 +18,7 @@ const elements = {
   enabled: document.getElementById('enabled') as HTMLInputElement,
   checkAsYouType: document.getElementById('checkAsYouType') as HTMLInputElement,
   showNotifications: document.getElementById('showNotifications') as HTMLInputElement,
+  autocompleteEnabled: document.getElementById('autocompleteEnabled') as HTMLInputElement,
   apiKey: document.getElementById('apiKey') as HTMLInputElement,
   toggleApiKey: document.getElementById('toggleApiKey') as HTMLButtonElement,
   model: document.getElementById('model') as HTMLSelectElement,
@@ -42,6 +36,14 @@ const elements = {
   importData: document.getElementById('importData') as HTMLButtonElement,
   importFile: document.getElementById('importFile') as HTMLInputElement,
   resetSettings: document.getElementById('resetSettings') as HTMLButtonElement,
+  metricAnalyses: document.getElementById('metricAnalyses') as HTMLElement,
+  metricIssues: document.getElementById('metricIssues') as HTMLElement,
+  metricApplied: document.getElementById('metricApplied') as HTMLElement,
+  metricAutocomplete: document.getElementById('metricAutocomplete') as HTMLElement,
+  topDomains: document.getElementById('topDomains') as HTMLElement,
+  topProviders: document.getElementById('topProviders') as HTMLElement,
+  analyticsUpdated: document.getElementById('analyticsUpdated') as HTMLElement,
+  clearAnalytics: document.getElementById('clearAnalytics') as HTMLButtonElement,
   version: document.getElementById('version') as HTMLElement,
 };
 
@@ -52,10 +54,13 @@ let settings: Settings = {
   backendUrl: '',
   checkAsYouType: true,
   showNotifications: true,
+  autocompleteEnabled: true,
   disabledDomains: [],
   dictionary: [],
   ignoredIssues: [],
 };
+
+let analyticsSummary: AnalyticsSummary | null = null;
 
 /**
  * Initialize the options page
@@ -67,6 +72,7 @@ async function initialize() {
   renderDictionary();
   renderIgnoredIssues();
   checkBackendHealth();
+  await loadAnalytics();
   
   console.log('OpenGrammar options page initialized');
 }
@@ -77,7 +83,7 @@ async function initialize() {
 async function loadSettings() {
   return new Promise<void>((resolve) => {
     chrome.storage.sync.get(
-      ['enabled', 'apiKey', 'model', 'backendUrl', 'checkAsYouType', 'showNotifications', 'disabledDomains', 'dictionary', 'ignoredIssues'],
+      ['enabled', 'apiKey', 'model', 'backendUrl', 'checkAsYouType', 'showNotifications', 'autocompleteEnabled', 'disabledDomains', 'dictionary', 'ignoredIssues'],
       (result) => {
         settings = {
           enabled: result.enabled !== false,
@@ -86,15 +92,17 @@ async function loadSettings() {
           backendUrl: result.backendUrl || '',
           checkAsYouType: result.checkAsYouType !== false,
           showNotifications: result.showNotifications !== false,
+          autocompleteEnabled: result.autocompleteEnabled !== false,
           disabledDomains: result.disabledDomains || [],
           dictionary: result.dictionary || [],
-          ignoredIssues: result.ignoredIssues || [],
+          ignoredIssues: normalizeIgnoredIssues(result.ignoredIssues),
         };
         
         // Update UI
         elements.enabled.checked = settings.enabled;
         elements.checkAsYouType.checked = settings.checkAsYouType;
         elements.showNotifications.checked = settings.showNotifications;
+        elements.autocompleteEnabled.checked = settings.autocompleteEnabled;
         elements.apiKey.value = settings.apiKey;
         elements.model.value = settings.model;
         elements.backendUrl.value = settings.backendUrl;
@@ -103,6 +111,40 @@ async function loadSettings() {
       }
     );
   });
+}
+
+function normalizeIgnoredIssues(value: unknown): IgnoredIssue[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value
+    .map((entry) => {
+      if (typeof entry === 'string') {
+        return {
+          id: entry,
+          type: 'grammar',
+          original: entry,
+          suggestion: '',
+          ignoredAt: Date.now(),
+        } as IgnoredIssue;
+      }
+
+      if (
+        entry &&
+        typeof entry === 'object' &&
+        'id' in entry &&
+        'type' in entry &&
+        'original' in entry &&
+        'suggestion' in entry &&
+        'ignoredAt' in entry
+      ) {
+        return entry as IgnoredIssue;
+      }
+
+      return null;
+    })
+    .filter((entry): entry is IgnoredIssue => Boolean(entry));
 }
 
 /**
@@ -118,6 +160,7 @@ async function saveSettings() {
         backendUrl: settings.backendUrl,
         checkAsYouType: settings.checkAsYouType,
         showNotifications: settings.showNotifications,
+        autocompleteEnabled: settings.autocompleteEnabled,
         disabledDomains: settings.disabledDomains,
         dictionary: settings.dictionary,
         ignoredIssues: settings.ignoredIssues,
@@ -147,6 +190,11 @@ function setupEventListeners() {
   
   elements.showNotifications.addEventListener('change', () => {
     settings.showNotifications = elements.showNotifications.checked;
+    saveSettings();
+  });
+
+  elements.autocompleteEnabled.addEventListener('change', () => {
+    settings.autocompleteEnabled = elements.autocompleteEnabled.checked;
     saveSettings();
   });
   
@@ -194,6 +242,7 @@ function setupEventListeners() {
   elements.importData.addEventListener('click', () => elements.importFile.click());
   elements.importFile.addEventListener('change', importData);
   elements.resetSettings.addEventListener('click', resetSettings);
+  elements.clearAnalytics.addEventListener('click', clearAnalytics);
 }
 
 /**
@@ -454,8 +503,53 @@ async function resetSettings() {
     renderDomainList();
     renderDictionary();
     renderIgnoredIssues();
+    await loadAnalytics();
     alert('Settings reset to defaults.');
   }
+}
+
+async function loadAnalytics() {
+  try {
+    analyticsSummary = await chrome.runtime.sendMessage({ type: 'GET_ANALYTICS_SUMMARY' });
+    renderAnalytics();
+  } catch (error) {
+    console.error('Failed to load analytics', error);
+  }
+}
+
+function renderAnalytics() {
+  const summary = analyticsSummary;
+  if (!summary) return;
+
+  elements.metricAnalyses.textContent = `${summary.totals.analysis_runs || 0}`;
+  elements.metricIssues.textContent = `${summary.totals.issues_found || 0}`;
+  elements.metricApplied.textContent = `${summary.totals.suggestions_applied || 0}`;
+  elements.metricAutocomplete.textContent = `${summary.totals.autocomplete_accepted || 0}`;
+  elements.analyticsUpdated.textContent = `Last updated: ${summary.lastUpdatedAt ? new Date(summary.lastUpdatedAt).toLocaleString() : 'never'}`;
+
+  renderAnalyticsList(elements.topDomains, Object.entries(summary.domains || {}));
+  renderAnalyticsList(elements.topProviders, Object.entries(summary.providers || {}));
+}
+
+function renderAnalyticsList(container: HTMLElement, entries: Array<[string, number]>) {
+  const top = entries.sort((a, b) => b[1] - a[1]).slice(0, 5);
+  if (top.length === 0) {
+    container.innerHTML = '<div class="empty-state">No synced activity yet</div>';
+    return;
+  }
+
+  container.innerHTML = top
+    .map(([label, value]) => `<div class="analytics-row"><span>${escapeHtml(label)}</span><strong>${value}</strong></div>`)
+    .join('');
+}
+
+async function clearAnalytics() {
+  if (!confirm('Clear synced analytics for this profile?')) {
+    return;
+  }
+
+  await chrome.runtime.sendMessage({ type: 'CLEAR_ANALYTICS' });
+  await loadAnalytics();
 }
 
 /**
