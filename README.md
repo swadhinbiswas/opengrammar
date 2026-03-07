@@ -92,11 +92,17 @@ npm run build
 
 This will create a `dist/` folder. Load this folder into Chrome following the user instructions above.
 
-## 🤝 Contributing
+## 🤝 Contributing & Help Needed
 
-OpenGrammar is a community effort! Whether you want to add new local grammar rules, improve the highlighting logic in rich text editors, or fix bugs, we welcome your contributions. 
+**We need your help to make OpenGrammar the best open-source writing assistant!**
 
-Please check out our `ROADMAP.md` to see what we are currently working on.
+One of our primary goals is to build the most comprehensive library of local (offline) grammar and style rules. You don't need to be a developer to help—if you have a good eye for grammar, you can contribute!
+
+- **📚 Add Grammar Rules:** Help us expand our `analyzer-simple.ts` with more regex-based rules for common mistakes, style improvements, and clarity checks. See [GRAMMAR_RULES.md](./GRAMMAR_RULES.md) for a guide on how to add them.
+- **🐛 Report Bugs:** Found a website where the highlighting is wonky? Open an issue!
+- **💡 Suggest Features:** Have an idea for a cool new feature? Let's discuss it in the Discussions tab.
+
+Please check out our [CONTRIBUTING.md](./CONTRIBUTING.md) and `ROADMAP.md` for more details.
 
 ## 📄 License
 
