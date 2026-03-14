@@ -3,6 +3,11 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: ["main"]
+    paths:
+      - 'index.html'
+      - 'logo.svg'
+      - 'docs/**'
+      - '.github/workflows/deploy-pages.yml'
   workflow_dispatch:
 
 permissions:
@@ -23,16 +28,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
-      
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Only upload the root files (index.html, logo.svg)
+          # Upload root files and docs folder
           path: '.'
-          pattern: '{index.html,logo.svg}'
+          pattern: |
+            index.html
+            logo.svg
+            docs/**
 
       - name: Deploy to GitHub Pages
         id: deployment
