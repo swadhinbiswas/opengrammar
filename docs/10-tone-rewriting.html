@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎨 Tone Rewriting Guide | OpenGrammar</title>
+    <meta name="description" content="OpenGrammar Documentation">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd',
+                            400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb',
+                            700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a',
+                        },
+                        dark: {
+                            50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1',
+                            400: '#94a3b8', 500: '#64748b', 600: '#475569',
+                            700: '#334155', 800: '#1e293b', 900: '#0f172a', 950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        .dark ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    </style>
+</head>
+<body class="font-sans antialiased bg-white dark:bg-dark-950 text-gray-900 dark:text-gray-100">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/80 dark:bg-dark-900/80 backdrop-blur-md border-b border-gray-200 dark:border-dark-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="../index.html" class="flex items-center gap-2">
+                    <img src="../logo.svg" alt="OpenGrammar Logo" class="h-8 w-8">
+                    <span class="font-bold text-xl tracking-tight">OpenGrammar Docs</span>
+                </a>
+                <div class="flex items-center gap-4">
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-dark-800 hover:bg-gray-200 dark:hover:bg-dark-700" aria-label="Toggle dark mode">
+                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                        </svg>
+                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                    </button>
+                    <a href="../index.html" class="text-sm font-medium hover:text-primary-600 dark:hover:text-primary-400">Back to Docs</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <article class="prose prose-lg dark:prose-invert max-w-none">
+            <h1 class="text-4xl font-bold mb-6">🎨 Tone Rewriting Guide</h1>
+
+<p class="mb-4">Master the art of rewriting text in different tones with OpenGrammar.</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📋 Overview</h2>
+
+<p class="mb-4">Tone rewriting allows you to transform your text into different styles while preserving the original meaning.</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🎭 Available Tones</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">1. Formal 🎩</h3>
+
+<p class="mb-4"><strong>Use for:</strong> Academic writing, business proposals, official communications</p>
+
+<p class="mb-4"><strong>Characteristics:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Professional vocabulary</li>
+<li class="mb-2">Complete sentences</li>
+<li class="mb-2">Proper grammar</li>
+<li class="mb-2">Respectful language</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Examples:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Input:  "hey whats up"
+<p class="mb-4">Output: "Greetings, how are you?"</p>
+
+<p class="mb-4">Input:  "i wanna talk bout the thing"</p>
+<p class="mb-4">Output: "I would like to discuss the matter"</p>
+
+<p class="mb-4">Input:  "gonna need this asap"</p>
+<p class="mb-4">Output: "I will require this as soon as possible"</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h3 class="text-xl font-bold mt-6 mb-3">2. Casual 😊</h3>
+
+<p class="mb-4"><strong>Use for:</strong> Social media, text messages, informal emails</p>
+
+<p class="mb-4"><strong>Characteristics:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Relaxed language</li>
+<li class="mb-2">Contractions</li>
+<li class="mb-2">Slang (appropriate)</li>
+<li class="mb-2">Friendly tone</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Examples:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Input:  "Greetings, how are you?"
+<p class="mb-4">Output: "Hey, what's up?"</p>
+
+<p class="mb-4">Input:  "I would like to discuss the matter"</p>
+<p class="mb-4">Output: "I wanna talk about the thing"</p>
+
+<p class="mb-4">Input:  "Thank you for your assistance"</p>
+<p class="mb-4">Output: "Thanks for your help!"</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h3 class="text-xl font-bold mt-6 mb-3">3. Professional 💼</h3>
+
+<p class="mb-4"><strong>Use for:</strong> Work emails, business communication, reports</p>
+
+<p class="mb-4"><strong>Characteristics:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Business appropriate</li>
+<li class="mb-2">Clear and direct</li>
+<li class="mb-2">Polite but efficient</li>
+<li class="mb-2">Industry standard</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Examples:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Input:  "hey can we meet tmrw"
+<p class="mb-4">Output: "Hello, could we schedule a meeting for tomorrow?"</p>
+
+<p class="mb-4">Input:  "i need this done fast"</p>
+<p class="mb-4">Output: "I would appreciate your prompt attention to this matter"</p>
+
+<p class="mb-4">Input:  "whats the status on that thing"</p>
+<p class="mb-4">Output: "Could you please provide an update on the project?"</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h3 class="text-xl font-bold mt-6 mb-3">4. Friendly 🤗</h3>
+
+<p class="mb-4"><strong>Use for:</strong> Social interactions, customer service, team communication</p>
+
+<p class="mb-4"><strong>Characteristics:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Warm and welcoming</li>
+<li class="mb-2">Positive language</li>
+<li class="mb-2">Emotionally aware</li>
+<li class="mb-2">Approachable</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Examples:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Input:  "send me the file"
+<p class="mb-4">Output: "Could you please send me the file? Thanks!"</p>
+
+<p class="mb-4">Input:  "this is wrong"</p>
+<p class="mb-4">Output: "I think there might be a small issue here"</p>
+
+<p class="mb-4">Input:  "i need help"</p>
+<p class="mb-4">Output: "I could really use your help with this!"</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h3 class="text-xl font-bold mt-6 mb-3">5. Concise ⚡</h3>
+
+<p class="mb-4"><strong>Use for:</strong> Quick messages, summaries, bullet points</p>
+
+<p class="mb-4"><strong>Characteristics:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Brief and direct</li>
+<li class="mb-2">No unnecessary words</li>
+<li class="mb-2">Clear meaning</li>
+<li class="mb-2">Efficient</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Examples:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Input:  "I was wondering if you might be able to help me with this"
+<p class="mb-4">Output: "Can you help with this?"</p>
+
+<p class="mb-4">Input:  "In order to achieve our goals, we need to"</p>
+<p class="mb-4">Output: "To achieve our goals, we"</p>
+
+<p class="mb-4">Input:  "Due to the fact that it was raining"</p>
+<p class="mb-4">Output: "Because it was raining"</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h3 class="text-xl font-bold mt-6 mb-3">6. Detailed 📚</h3>
+
+<p class="mb-4"><strong>Use for:</strong> Explanations, documentation, comprehensive guides</p>
+
+<p class="mb-4"><strong>Characteristics:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Thorough explanations</li>
+<li class="mb-2">Complete information</li>
+<li class="mb-2">Context provided</li>
+<li class="mb-2">Elaborate</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Examples:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Input:  "Go to settings"
+<p class="mb-4">Output: "Navigate to the settings menu by clicking on the gear icon in the top-right corner"</p>
+
+<p class="mb-4">Input:  "Click save"</p>
+<p class="mb-4">Output: "After making your changes, click the 'Save' button to store your preferences"</p>
+
+<p class="mb-4">Input:  "Restart the app"</p>
+<p class="mb-4">Output: "Close the application completely and then launch it again to apply the changes"</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h3 class="text-xl font-bold mt-6 mb-3">7. Persuasive 💪</h3>
+
+<p class="mb-4"><strong>Use for:</strong> Sales copy, pitches, proposals, marketing</p>
+
+<p class="mb-4"><strong>Characteristics:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Compelling language</li>
+<li class="mb-2">Benefit-focused</li>
+<li class="mb-2">Call to action</li>
+<li class="mb-2">Convincing</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Examples:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Input:  "Try our product"
+<p class="mb-4">Output: "Experience the difference with our revolutionary solution"</p>
+
+<p class="mb-4">Input:  "This is good"</p>
+<p class="mb-4">Output: "This exceptional tool will transform your workflow"</p>
+
+<p class="mb-4">Input:  "Buy now"</p>
+<p class="mb-4">Output: "Start your journey to success today"</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h3 class="text-xl font-bold mt-6 mb-3">8. Neutral 😐</h3>
+
+<p class="mb-4"><strong>Use for:</strong> General communication, factual content, balanced writing</p>
+
+<p class="mb-4"><strong>Characteristics:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Balanced tone</li>
+<li class="mb-2">Unbiased language</li>
+<li class="mb-2">Objective</li>
+<li class="mb-2">Moderate</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Examples:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Input:  "This is absolutely the best thing ever!"
+<p class="mb-4">Output: "This is a very good option"</p>
+
+<p class="mb-4">Input:  "This is terrible"</p>
+<p class="mb-4">Output: "This has some drawbacks"</p>
+
+<p class="mb-4">Input:  "You must do this"</p>
+<p class="mb-4">Output: "It is recommended to do this"</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🚀 How to Use</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Method 1: Right-Click Menu</h3>
+
+<li class="mb-2"><strong>Select Text</strong></li>
+<p class="mb-4">   - Highlight the text you want to rewrite</p>
+<p class="mb-4">   - Any text on any webpage</p>
+
+<li class="mb-2"><strong>Right-Click</strong></li>
+<p class="mb-4">   - Open context menu</p>
+<p class="mb-4">   - Choose "Rewrite with OpenGrammar"</p>
+
+<li class="mb-2"><strong>Choose Tone</strong></li>
+<p class="mb-4">   - Click on desired tone button</p>
+<p class="mb-4">   - See preview instantly</p>
+
+<li class="mb-2"><strong>Apply or Copy</strong></li>
+<p class="mb-4">   - Click "Apply" to replace</p>
+<p class="mb-4">   - Click "Copy" to clipboard</p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Method 2: Keyboard Shortcut</h3>
+
+<li class="mb-2"><strong>Select Text</strong></li>
+<li class="mb-2"><strong>Press Shortcut</strong></li>
+<p class="mb-4">   - Windows/Linux: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Shift+R</code></p>
+<p class="mb-4">   - Mac: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Cmd+Shift+R</code></p>
+
+<li class="mb-2"><strong>Choose Tone</strong></li>
+<li class="mb-2"><strong>Apply Changes</strong></li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Method 3: Extension Popup</h3>
+
+<li class="mb-2"><strong>Click Extension Icon</strong></li>
+<li class="mb-2"><strong>Select "Rewrite Text"</strong></li>
+<li class="mb-2"><strong>Enter or Paste Text</strong></li>
+<li class="mb-2"><strong>Choose Tone</strong></li>
+<li class="mb-2"><strong>Get Result</strong></li>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">💡 Best Practices</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">✅ Do's</h3>
+
+<li class="mb-2"><strong>Select Complete Thoughts</strong></li>
+<p class="mb-4">   - Full sentences work best</p>
+<p class="mb-4">   - Complete phrases</p>
+<p class="mb-4">   - Logical units</p>
+
+<li class="mb-2"><strong>Review Before Applying</strong></li>
+<p class="mb-4">   - Check the rewritten text</p>
+<p class="mb-4">   - Ensure meaning is preserved</p>
+<p class="mb-4">   - Verify tone is appropriate</p>
+
+<li class="mb-2"><strong>Try Multiple Tones</strong></li>
+<p class="mb-4">   - Compare different versions</p>
+<p class="mb-4">   - Find the best fit</p>
+<p class="mb-4">   - Learn from variations</p>
+
+<li class="mb-2"><strong>Use Context-Appropriate Tones</strong></li>
+<p class="mb-4">   - Formal for work</p>
+<p class="mb-4">   - Casual for friends</p>
+<p class="mb-4">   - Professional for business</p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">❌ Don'ts</h3>
+
+<li class="mb-2"><strong>Don't Rewrite Single Words</strong></li>
+<p class="mb-4">   - Select phrases or sentences</p>
+<p class="mb-4">   - Words lack context</p>
+<p class="mb-4">   - Results may be odd</p>
+
+<li class="mb-2"><strong>Don't Overuse</strong></li>
+<p class="mb-4">   - Keep your voice</p>
+<p class="mb-4">   - Don't lose authenticity</p>
+<p class="mb-4">   - Use as aid, not crutch</p>
+
+<li class="mb-2"><strong>Don't Apply Blindly</strong></li>
+<p class="mb-4">   - Review changes</p>
+<p class="mb-4">   - Understand modifications</p>
+<p class="mb-4">   - Learn from suggestions</p>
+
+<li class="mb-2"><strong>Don't Mix Inappropriate Tones</strong></li>
+<p class="mb-4">   - No casual in formal docs</p>
+<p class="mb-4">   - No formal in text messages</p>
+<p class="mb-4">   - Match the situation</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📊 Comparison Table</h2>
+
+<p class="mb-4"><tr><td> Original </td></tr> Formal <tr><td> Casual </td></tr> Professional |</p>
+<p class="mb-4"><tr><td>----------</td></tr>--------<tr><td>--------</td></tr>--------------|</p>
+<p class="mb-4"><tr><td> "hey" </td></tr> "Greetings" <tr><td> "Hey!" </td></tr> "Hello" |</p>
+<p class="mb-4"><tr><td> "wanna" </td></tr> "would like to" <tr><td> "wanna" </td></tr> "would like to" |</p>
+<p class="mb-4"><tr><td> "talk bout" </td></tr> "discuss" <tr><td> "chat about" </td></tr> "discuss" |</p>
+<p class="mb-4"><tr><td> "ASAP" </td></tr> "at your earliest convenience" <tr><td> "quick" </td></tr> "promptly" |</p>
+<p class="mb-4"><tr><td> "fix this" </td></tr> "rectify this matter" <tr><td> "fix this" </td></tr> "address this issue" |</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🎯 Use Cases</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Email Writing</h3>
+
+<p class="mb-4"><strong>Scenario:</strong> Writing to a professor</p>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Original: "hey i need help with the assignment"
+
+<p class="mb-4">Formal: "Dear Professor, I would appreciate your assistance with the assignment"</p>
+
+<p class="mb-4">Professional: "Hello, I'm writing to request help with the assignment"</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Social Media</h3>
+
+<p class="mb-4"><strong>Scenario:</strong> Posting about a product</p>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Original: "This product is good"
+
+<p class="mb-4">Friendly: "I absolutely love this product! 😊"</p>
+
+<p class="mb-4">Persuasive: "This amazing product will change your life!"</p>
+
+<p class="mb-4">Casual: "This product is pretty cool!"</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Business Communication</h3>
+
+<p class="mb-4"><strong>Scenario:</strong> Requesting a meeting</p>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Original: "can we meet tmrw"
+
+<p class="mb-4">Professional: "Could we schedule a meeting for tomorrow?"</p>
+
+<p class="mb-4">Formal: "I would like to request a meeting at your earliest convenience tomorrow"</p>
+
+<p class="mb-4">Concise: "Meeting tomorrow?"</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Customer Service</h3>
+
+<p class="mb-4"><strong>Scenario:</strong> Responding to complaint</p>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Original: "we'll fix it"
+
+<p class="mb-4">Friendly: "We'd be happy to fix this for you right away!"</p>
+
+<p class="mb-4">Professional: "We will resolve this issue promptly"</p>
+
+<p class="mb-4">Formal: "We shall rectify this matter at our earliest convenience"</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🔧 Advanced Tips</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">1. Combine Tones</h3>
+
+<p class="mb-4">Some situations need mixed tones:</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Professional + Friendly = Warm but business-appropriate</li>
+<li class="mb-2">Formal + Concise = Direct but polite</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">2. Iterative Refinement</h3>
+
+<li class="mb-2">First pass: Get general tone</li>
+<li class="mb-2">Second pass: Refine specific parts</li>
+<li class="mb-2">Third pass: Polish final version</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">3. Learn Patterns</h3>
+
+<p class="mb-4">Notice how tones change:</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Word choices</li>
+<li class="mb-2">Sentence structure</li>
+<li class="mb-2">Level of detail</li>
+<li class="mb-2">Formality markers</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">4. Save Favorites</h3>
+
+<p class="mb-4">Keep a list of good rewrites:</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Common phrases you use</li>
+<li class="mb-2">Email templates</li>
+<li class="mb-2">Standard responses</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🆘 Troubleshooting</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Problem: Rewrites Are Too Different</h3>
+
+<p class="mb-4"><strong>Solution:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Try "Neutral" tone first</li>
+<li class="mb-2">Use shorter text selections</li>
+<li class="mb-2">Review and edit manually</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Problem: Meaning Is Lost</h3>
+
+<p class="mb-4"><strong>Solution:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Provide more context</li>
+<li class="mb-2">Use complete sentences</li>
+<li class="mb-2">Try different tone</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Problem: Tone Not Appropriate</h3>
+
+<p class="mb-4"><strong>Solution:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Choose different tone</li>
+<li class="mb-2">Combine tones manually</li>
+<li class="mb-2">Edit the result</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Problem: Slow Response</h3>
+
+<p class="mb-4"><strong>Solution:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Check internet connection</li>
+<li class="mb-2">Verify API key is valid</li>
+<li class="mb-2">Try smaller text selection</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📚 Related Documentation</h2>
+
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><a href="09-using-opengrammar.md" class="text-blue-600 dark:text-blue-400 hover:underline">Using OpenGrammar</a> - Complete user guide</li>
+<li class="mb-2"><a href="07-ai-providers.md" class="text-blue-600 dark:text-blue-400 hover:underline">AI Providers</a> - Configure AI</li>
+<li class="mb-2"><a href="12-keyboard-shortcuts.md" class="text-blue-600 dark:text-blue-400 hover:underline">Keyboard Shortcuts</a> - All shortcuts</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<p class="mb-4"><strong>Happy Rewriting! ✨</strong></p>
+
+<p class="mb-4">Master tone rewriting to communicate more effectively in any situation!</p>
+
+        </article>
+        
+        <!-- Back to Top -->
+        <div class="mt-12 pt-8 border-t border-gray-200 dark:border-dark-700">
+            <a href="#" class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:underline">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                </svg>
+                Back to top
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-50 dark:bg-dark-900 border-t border-gray-200 dark:border-dark-700 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <img src="../logo.svg" alt="OpenGrammar Logo" class="h-6 w-6">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">© 2026 OpenGrammar. Apache 2.0 License</span>
+                </div>
+                <div class="flex gap-6">
+                    <a href="https://github.com/swadhinbiswas/opengrammar" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">GitHub</a>
+                    <a href="../index.html" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">Home</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Theme Script -->
+    <script>
+        const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        if (theme === 'dark') document.documentElement.classList.add('dark');
+        
+        function updateThemeIcons() {
+            const isDark = document.documentElement.classList.contains('dark');
+            document.getElementById('theme-toggle-light-icon').classList.toggle('hidden', !isDark);
+            document.getElementById('theme-toggle-dark-icon').classList.toggle('hidden', isDark);
+        }
+        updateThemeIcons();
+        
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            updateThemeIcons();
+        });
+    </script>
+</body>
+</html>

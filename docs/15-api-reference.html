@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔌 API Reference | OpenGrammar</title>
+    <meta name="description" content="OpenGrammar Documentation">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd',
+                            400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb',
+                            700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a',
+                        },
+                        dark: {
+                            50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1',
+                            400: '#94a3b8', 500: '#64748b', 600: '#475569',
+                            700: '#334155', 800: '#1e293b', 900: '#0f172a', 950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        .dark ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    </style>
+</head>
+<body class="font-sans antialiased bg-white dark:bg-dark-950 text-gray-900 dark:text-gray-100">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/80 dark:bg-dark-900/80 backdrop-blur-md border-b border-gray-200 dark:border-dark-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="../index.html" class="flex items-center gap-2">
+                    <img src="../logo.svg" alt="OpenGrammar Logo" class="h-8 w-8">
+                    <span class="font-bold text-xl tracking-tight">OpenGrammar Docs</span>
+                </a>
+                <div class="flex items-center gap-4">
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-dark-800 hover:bg-gray-200 dark:hover:bg-dark-700" aria-label="Toggle dark mode">
+                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                        </svg>
+                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                    </button>
+                    <a href="../index.html" class="text-sm font-medium hover:text-primary-600 dark:hover:text-primary-400">Back to Docs</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <article class="prose prose-lg dark:prose-invert max-w-none">
+            <h1 class="text-4xl font-bold mb-6">🔌 API Reference</h1>
+
+<p class="mb-4">Complete API documentation for OpenGrammar backend.</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📋 Overview</h2>
+
+<p class="mb-4">OpenGrammar provides a RESTful API for grammar checking, tone rewriting, and writing analysis.</p>
+
+<p class="mb-4"><strong>Base URL:</strong> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">http://localhost:8787</code> (local) or your deployed URL</p>
+
+<p class="mb-4"><strong>Content Type:</strong> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">application/json</code></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🔑 Authentication</h2>
+
+<p class="mb-4">Most endpoints don't require authentication for basic usage. However, AI-powered features require API keys configured in environment variables or passed in requests.</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📤 Endpoints</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Health Check</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2"><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">GET /health</code></h4>
+
+<p class="mb-4">Check server health and status.</p>
+
+<p class="mb-4"><strong>Request:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>curl http://localhost:8787/health
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>Response (200 OK):</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>{
+<p class="mb-4">  "status": "healthy",</p>
+<p class="mb-4">  "timestamp": "2026-03-14T12:00:00.000Z",</p>
+<p class="mb-4">  "environment": "production",</p>
+<p class="mb-4">  "version": "2.1.0"</p>
+<p class="mb-4">}</p>
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>Response Fields:</strong></p>
+<p class="mb-4"><tr><td> Field </td></tr> Type <tr><td> Description </td></tr></p>
+<p class="mb-4"><tr><td>-------</td></tr>------<tr><td>-------------</td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">status</code> </td></tr> string <tr><td> Server status (<code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">healthy</code>, <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">unhealthy</code>) </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">timestamp</code> </td></tr> string <tr><td> ISO 8601 timestamp </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">environment</code> </td></tr> string <tr><td> Environment name </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">version</code> </td></tr> string <tr><td> API version </td></tr></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h3 class="text-xl font-bold mt-6 mb-3">List Providers</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2"><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">GET /providers</code></h4>
+
+<p class="mb-4">Get list of available AI providers.</p>
+
+<p class="mb-4"><strong>Request:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>curl http://localhost:8787/providers
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>Response (200 OK):</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>{
+<p class="mb-4">  "providers": [</p>
+<p class="mb-4">    {</p>
+<p class="mb-4">      "id": "groq",</p>
+<p class="mb-4">      "name": "Groq",</p>
+<p class="mb-4">      "description": "Fast inference with free tier",</p>
+<p class="mb-4">      "models": ["llama-3.1-70b-versatile", "llama-3.1-8b-instant"],</p>
+<p class="mb-4">      "requiresApiKey": true,</p>
+<p class="mb-4">      "defaultModel": "llama-3.1-70b-versatile"</p>
+<p class="mb-4">    },</p>
+<p class="mb-4">    {</p>
+<p class="mb-4">      "id": "openai",</p>
+<p class="mb-4">      "name": "OpenAI",</p>
+<p class="mb-4">      "description": "Best quality grammar checking",</p>
+<p class="mb-4">      "models": ["gpt-4o-mini", "gpt-4o", "gpt-3.5-turbo"],</p>
+<p class="mb-4">      "requiresApiKey": true,</p>
+<p class="mb-4">      "defaultModel": "gpt-4o-mini"</p>
+<p class="mb-4">    },</p>
+<p class="mb-4">    {</p>
+<p class="mb-4">      "id": "ollama",</p>
+<p class="mb-4">      "name": "Ollama (Local)",</p>
+<p class="mb-4">      "description": "Run models locally",</p>
+<p class="mb-4">      "models": ["qwen2.5:1.5b", "phi4-mini:3.8b"],</p>
+<p class="mb-4">      "requiresApiKey": false,</p>
+<p class="mb-4">      "defaultModel": "qwen2.5:1.5b"</p>
+<p class="mb-4">    }</p>
+<p class="mb-4">  ]</p>
+<p class="mb-4">}</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h3 class="text-xl font-bold mt-6 mb-3">List Models</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2"><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">POST /models</code></h4>
+
+<p class="mb-4">Get available models for a specific provider.</p>
+
+<p class="mb-4"><strong>Request:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>curl -X POST http://localhost:8787/models \
+<p class="mb-4">  -H "Content-Type: application/json" \</p>
+<p class="mb-4">  -d '{</p>
+<p class="mb-4">    "provider": "groq"</p>
+<p class="mb-4">  }'</p>
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>Response (200 OK):</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>{
+<p class="mb-4">  "provider": "groq",</p>
+<p class="mb-4">  "models": [</p>
+<p class="mb-4">    {</p>
+<p class="mb-4">      "id": "llama-3.1-70b-versatile",</p>
+<p class="mb-4">      "name": "Llama 3.1 70B",</p>
+<p class="mb-4">      "description": "Best for grammar checking",</p>
+<p class="mb-4">      "contextWindow": 128000,</p>
+<p class="mb-4">      "speed": "fast",</p>
+<p class="mb-4">      "quality": "excellent"</p>
+<p class="mb-4">    },</p>
+<p class="mb-4">    {</p>
+<p class="mb-4">      "id": "llama-3.1-8b-instant",</p>
+<p class="mb-4">      "name": "Llama 3.1 8B",</p>
+<p class="mb-4">      "description": "Fast inference",</p>
+<p class="mb-4">      "contextWindow": 128000,</p>
+<p class="mb-4">      "speed": "very fast",</p>
+<p class="mb-4">      "quality": "good"</p>
+<p class="mb-4">    }</p>
+<p class="mb-4">  ]</p>
+<p class="mb-4">}</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h3 class="text-xl font-bold mt-6 mb-3">Analyze Text</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2"><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">POST /analyze</code></h4>
+
+<p class="mb-4">Analyze text for grammar, spelling, and style issues.</p>
+
+<p class="mb-4"><strong>Request:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>curl -X POST http://localhost:8787/analyze \
+<p class="mb-4">  -H "Content-Type: application/json" \</p>
+<p class="mb-4">  -d '{</p>
+<p class="mb-4">    "text": "me and him went to the store and buyed milks",</p>
+<p class="mb-4">    "provider": "groq",</p>
+<p class="mb-4">    "model": "llama-3.1-70b-versatile",</p>
+<p class="mb-4">    "apiKey": "gsk_xxx",</p>
+<p class="mb-4">    "options": {</p>
+<p class="mb-4">      "checkGrammar": true,</p>
+<p class="mb-4">      "checkSpelling": true,</p>
+<p class="mb-4">      "checkStyle": true,</p>
+<p class="mb-4">      "checkClarity": true</p>
+<p class="mb-4">    }</p>
+<p class="mb-4">  }'</p>
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>Request Fields:</strong></p>
+<p class="mb-4"><tr><td> Field </td></tr> Type <tr><td> Required </td></tr> Description |</p>
+<p class="mb-4"><tr><td>-------</td></tr>------<tr><td>----------</td></tr>-------------|</p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">text</code> </td></tr> string <tr><td> Yes </td></tr> Text to analyze (max 50,000 chars) |</p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">provider</code> </td></tr> string <tr><td> No </td></tr> AI provider (default: rule-based only) |</p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">model</code> </td></tr> string <tr><td> No </td></tr> Model to use |</p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">apiKey</code> </td></tr> string <tr><td> No </td></tr> API key (if not set in env) |</p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">options</code> </td></tr> object <tr><td> No </td></tr> Analysis options |</p>
+
+<p class="mb-4"><strong>Response (200 OK):</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>{
+<p class="mb-4">  "issues": [</p>
+<p class="mb-4">    {</p>
+<p class="mb-4">      "type": "grammar",</p>
+<p class="mb-4">      "severity": "error",</p>
+<p class="mb-4">      "original": "me and him",</p>
+<p class="mb-4">      "suggestion": "he and I",</p>
+<p class="mb-4">      "reason": "Subject pronoun error. Use subject pronouns for the subject of a sentence.",</p>
+<p class="mb-4">      "offset": 0,</p>
+<p class="mb-4">      "length": 9,</p>
+<p class="mb-4">      "category": "grammar"</p>
+<p class="mb-4">    },</p>
+<p class="mb-4">    {</p>
+<p class="mb-4">      "type": "spelling",</p>
+<p class="mb-4">      "severity": "error",</p>
+<p class="mb-4">      "original": "buyed",</p>
+<p class="mb-4">      "suggestion": "bought",</p>
+<p class="mb-4">      "reason": "Irregular verb form. The past tense of 'buy' is 'bought'.",</p>
+<p class="mb-4">      "offset": 38,</p>
+<p class="mb-4">      "length": 5,</p>
+<p class="mb-4">      "category": "spelling"</p>
+<p class="mb-4">    }</p>
+<p class="mb-4">  ],</p>
+<p class="mb-4">  "metadata": {</p>
+<p class="mb-4">    "textLength": 49,</p>
+<p class="mb-4">    "issuesCount": 2,</p>
+<p class="mb-4">    "processingTimeMs": 245,</p>
+<p class="mb-4">    "provider": "groq",</p>
+<p class="mb-4">    "model": "llama-3.1-70b-versatile",</p>
+<p class="mb-4">    "ruleBasedCount": 0,</p>
+<p class="mb-4">    "aiBasedCount": 2</p>
+<p class="mb-4">  }</p>
+<p class="mb-4">}</p>
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>Response Fields:</strong></p>
+<p class="mb-4"><tr><td> Field </td></tr> Type <tr><td> Description </td></tr></p>
+<p class="mb-4"><tr><td>-------</td></tr>------<tr><td>-------------</td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">issues</code> </td></tr> array <tr><td> List of detected issues </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">metadata</code> </td></tr> object <tr><td> Analysis metadata </td></tr></p>
+
+<p class="mb-4"><strong>Issue Object:</strong></p>
+<p class="mb-4"><tr><td> Field </td></tr> Type <tr><td> Description </td></tr></p>
+<p class="mb-4"><tr><td>-------</td></tr>------<tr><td>-------------</td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">type</code> </td></tr> string <tr><td> Issue type (<code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">grammar</code>, <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">spelling</code>, <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">style</code>, <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">clarity</code>) </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">severity</code> </td></tr> string <tr><td> Severity (<code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">error</code>, <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">warning</code>, <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">suggestion</code>) </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">original</code> </td></tr> string <tr><td> Original text </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">suggestion</code> </td></tr> string <tr><td> Suggested replacement </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">reason</code> </td></tr> string <tr><td> Explanation </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">offset</code> </td></tr> number <tr><td> Character offset in text </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">length</code> </td></tr> number <tr><td> Length of issue </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">category</code> </td></tr> string <tr><td> Category for grouping </td></tr></p>
+
+<p class="mb-4"><strong>Error Responses:</strong></p>
+
+<p class="mb-4"><strong>400 Bad Request:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>{
+<p class="mb-4">  "error": "Text too long",</p>
+<p class="mb-4">  "message": "Maximum text length is 50,000 characters"</p>
+<p class="mb-4">}</p>
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>401 Unauthorized:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>{
+<p class="mb-4">  "error": "API key required",</p>
+<p class="mb-4">  "message": "Please provide an API key for this provider"</p>
+<p class="mb-4">}</p>
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>500 Internal Server Error:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>{
+<p class="mb-4">  "error": "Provider error",</p>
+<p class="mb-4">  "message": "Failed to connect to AI provider"</p>
+<p class="mb-4">}</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h3 class="text-xl font-bold mt-6 mb-3">Rewrite Text</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2"><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">POST /rewrite</code></h4>
+
+<p class="mb-4">Rewrite text in a specific tone or style.</p>
+
+<p class="mb-4"><strong>Request:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>curl -X POST http://localhost:8787/rewrite \
+<p class="mb-4">  -H "Content-Type: application/json" \</p>
+<p class="mb-4">  -d '{</p>
+<p class="mb-4">    "text": "hey whats up can we talk",</p>
+<p class="mb-4">    "tone": "formal",</p>
+<p class="mb-4">    "provider": "groq",</p>
+<p class="mb-4">    "model": "llama-3.1-70b-versatile",</p>
+<p class="mb-4">    "apiKey": "gsk_xxx"</p>
+<p class="mb-4">  }'</p>
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>Request Fields:</strong></p>
+<p class="mb-4"><tr><td> Field </td></tr> Type <tr><td> Required </td></tr> Description |</p>
+<p class="mb-4"><tr><td>-------</td></tr>------<tr><td>----------</td></tr>-------------|</p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">text</code> </td></tr> string <tr><td> Yes </td></tr> Text to rewrite |</p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">tone</code> </td></tr> string <tr><td> Yes </td></tr> Target tone |</p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">provider</code> </td></tr> string <tr><td> No </td></tr> AI provider |</p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">model</code> </td></tr> string <tr><td> No </td></tr> Model to use |</p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">apiKey</code> </td></tr> string <tr><td> No </td></tr> API key |</p>
+
+<p class="mb-4"><strong>Available Tones:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">formal</code> - Professional, academic</li>
+<li class="mb-2"><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">casual</code> - Relaxed, informal</li>
+<li class="mb-2"><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">professional</code> - Business appropriate</li>
+<li class="mb-2"><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">friendly</code> - Warm, approachable</li>
+<li class="mb-2"><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">concise</code> - Brief, to the point</li>
+<li class="mb-2"><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">detailed</code> - Comprehensive, thorough</li>
+<li class="mb-2"><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">persuasive</code> - Convincing, compelling</li>
+<li class="mb-2"><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">neutral</code> - Balanced, unbiased</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Response (200 OK):</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>{
+<p class="mb-4">  "original": "hey whats up can we talk",</p>
+<p class="mb-4">  "rewritten": "Hello, how are you? May we have a conversation?",</p>
+<p class="mb-4">  "tone": "formal",</p>
+<p class="mb-4">  "provider": "groq",</p>
+<p class="mb-4">  "model": "llama-3.1-70b-versatile",</p>
+<p class="mb-4">  "metadata": {</p>
+<p class="mb-4">    "originalLength": 26,</p>
+<p class="mb-4">    "rewrittenLength": 49,</p>
+<p class="mb-4">    "processingTimeMs": 1250,</p>
+<p class="mb-4">    "confidenceScore": 0.95</p>
+<p class="mb-4">  }</p>
+<p class="mb-4">}</p>
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>Response Fields:</strong></p>
+<p class="mb-4"><tr><td> Field </td></tr> Type <tr><td> Description </td></tr></p>
+<p class="mb-4"><tr><td>-------</td></tr>------<tr><td>-------------</td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">original</code> </td></tr> string <tr><td> Original text </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">rewritten</code> </td></tr> string <tr><td> Rewritten text </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">tone</code> </td></tr> string <tr><td> Applied tone </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">provider</code> </td></tr> string <tr><td> AI provider used </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">model</code> </td></tr> string <tr><td> Model used </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">metadata</code> </td></tr> object <tr><td> Additional information </td></tr></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h3 class="text-xl font-bold mt-6 mb-3">Get Statistics</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2"><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">POST /statistics</code></h4>
+
+<p class="mb-4">Get detailed writing statistics.</p>
+
+<p class="mb-4"><strong>Request:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>curl -X POST http://localhost:8787/statistics \
+<p class="mb-4">  -H "Content-Type: application/json" \</p>
+<p class="mb-4">  -d '{</p>
+<p class="mb-4">    "text": "Your complete text here..."</p>
+<p class="mb-4">  }'</p>
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>Response (200 OK):</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>{
+<p class="mb-4">  "basic": {</p>
+<p class="mb-4">    "words": 1248,</p>
+<p class="mb-4">    "characters": 6542,</p>
+<p class="mb-4">    "charactersNoSpaces": 5421,</p>
+<p class="mb-4">    "sentences": 87,</p>
+<p class="mb-4">    "paragraphs": 12,</p>
+<p class="mb-4">    "syllables": 1876</p>
+<p class="mb-4">  },</p>
+<p class="mb-4">  "readability": {</p>
+<p class="mb-4">    "fleschReadingEase": 78.5,</p>
+<p class="mb-4">    "fleschKincaidGrade": 8.5,</p>
+<p class="mb-4">    "automatedReadabilityIndex": 9.2,</p>
+<p class="mb-4">    "readingLevel": "Excellent"</p>
+<p class="mb-4">  },</p>
+<p class="mb-4">  "time": {</p>
+<p class="mb-4">    "readingTimeSeconds": 374,</p>
+<p class="mb-4">    "readingTimeFormatted": "6 min 14 sec",</p>
+<p class="mb-4">    "speakingTimeSeconds": 499,</p>
+<p class="mb-4">    "speakingTimeFormatted": "8 min 19 sec"</p>
+<p class="mb-4">  },</p>
+<p class="mb-4">  "vocabulary": {</p>
+<p class="mb-4">    "uniqueWords": 542,</p>
+<p class="mb-4">    "vocabularyDiversity": 43.4,</p>
+<p class="mb-4">    "averageWordLength": 4.8,</p>
+<p class="mb-4">    "longWords": 156</p>
+<p class="mb-4">  },</p>
+<p class="mb-4">  "issues": {</p>
+<p class="mb-4">    "grammar": 3,</p>
+<p class="mb-4">    "spelling": 5,</p>
+<p class="mb-4">    "style": 7,</p>
+<p class="mb-4">    "clarity": 4,</p>
+<p class="mb-4">    "total": 19</p>
+<p class="mb-4">  }</p>
+<p class="mb-4">}</p>
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>Response Fields:</strong></p>
+
+<p class="mb-4"><strong>Basic:</strong></p>
+<p class="mb-4"><tr><td> Field </td></tr> Type <tr><td> Description </td></tr></p>
+<p class="mb-4"><tr><td>-------</td></tr>------<tr><td>-------------</td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">words</code> </td></tr> number <tr><td> Total words </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">characters</code> </td></tr> number <tr><td> Characters with spaces </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">charactersNoSpaces</code> </td></tr> number <tr><td> Characters without spaces </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">sentences</code> </td></tr> number <tr><td> Total sentences </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">paragraphs</code> </td></tr> number <tr><td> Total paragraphs </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">syllables</code> </td></tr> number <tr><td> Total syllables </td></tr></p>
+
+<p class="mb-4"><strong>Readability:</strong></p>
+<p class="mb-4"><tr><td> Field </td></tr> Type <tr><td> Description </td></tr></p>
+<p class="mb-4"><tr><td>-------</td></tr>------<tr><td>-------------</td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">fleschReadingEase</code> </td></tr> number <tr><td> 0-100 score </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">fleschKincaidGrade</code> </td></tr> number <tr><td> US grade level </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">automatedReadabilityIndex</code> </td></tr> number <tr><td> ARI score </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">readingLevel</code> </td></tr> string <tr><td> Text description </td></tr></p>
+
+<p class="mb-4"><strong>Time:</strong></p>
+<p class="mb-4"><tr><td> Field </td></tr> Type <tr><td> Description </td></tr></p>
+<p class="mb-4"><tr><td>-------</td></tr>------<tr><td>-------------</td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">readingTimeSeconds</code> </td></tr> number <tr><td> Seconds to read </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">readingTimeFormatted</code> </td></tr> string <tr><td> Human-readable </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">speakingTimeSeconds</code> </td></tr> number <tr><td> Seconds to speak </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">speakingTimeFormatted</code> </td></tr> string <tr><td> Human-readable </td></tr></p>
+
+<p class="mb-4"><strong>Vocabulary:</strong></p>
+<p class="mb-4"><tr><td> Field </td></tr> Type <tr><td> Description </td></tr></p>
+<p class="mb-4"><tr><td>-------</td></tr>------<tr><td>-------------</td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">uniqueWords</code> </td></tr> number <tr><td> Different words </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">vocabularyDiversity</code> </td></tr> number <tr><td> Percentage </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">averageWordLength</code> </td></tr> number <tr><td> Mean characters </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">longWords</code> </td></tr> number <tr><td> Words > 6 chars </td></tr></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📝 Code Examples</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">JavaScript/TypeScript</h3>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>// Analyze text
+<p class="mb-4">async function analyzeText(text: string) {</p>
+<p class="mb-4">  const response = await fetch('http://localhost:8787/analyze', {</p>
+<p class="mb-4">    method: 'POST',</p>
+<p class="mb-4">    headers: { 'Content-Type': 'application/json' },</p>
+<p class="mb-4">    body: JSON.stringify({</p>
+<p class="mb-4">      text: text,</p>
+<p class="mb-4">      provider: 'groq',</p>
+<p class="mb-4">      model: 'llama-3.1-70b-versatile'</p>
+<p class="mb-4">    })</p>
+<p class="mb-4">  });</p>
+<p class="mb-4">  </p>
+<p class="mb-4">  const data = await response.json();</p>
+<p class="mb-4">  return data;</p>
+<p class="mb-4">}</p>
+
+<p class="mb-4">// Rewrite text</p>
+<p class="mb-4">async function rewriteText(text: string, tone: string) {</p>
+<p class="mb-4">  const response = await fetch('http://localhost:8787/rewrite', {</p>
+<p class="mb-4">    method: 'POST',</p>
+<p class="mb-4">    headers: { 'Content-Type': 'application/json' },</p>
+<p class="mb-4">    body: JSON.stringify({</p>
+<p class="mb-4">      text: text,</p>
+<p class="mb-4">      tone: tone</p>
+<p class="mb-4">    })</p>
+<p class="mb-4">  });</p>
+<p class="mb-4">  </p>
+<p class="mb-4">  const data = await response.json();</p>
+<p class="mb-4">  return data.rewritten;</p>
+<p class="mb-4">}</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Python</h3>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>import requests
+
+<h1 class="text-4xl font-bold mb-6">Analyze text</h1>
+<p class="mb-4">def analyze_text(text):</p>
+<p class="mb-4">    response = requests.post(</p>
+<p class="mb-4">        'http://localhost:8787/analyze',</p>
+<p class="mb-4">        json={</p>
+<p class="mb-4">            'text': text,</p>
+<p class="mb-4">            'provider': 'groq',</p>
+<p class="mb-4">            'model': 'llama-3.1-70b-versatile'</p>
+<p class="mb-4">        }</p>
+<p class="mb-4">    )</p>
+<p class="mb-4">    return response.json()</p>
+
+<h1 class="text-4xl font-bold mb-6">Rewrite text</h1>
+<p class="mb-4">def rewrite_text(text, tone):</p>
+<p class="mb-4">    response = requests.post(</p>
+<p class="mb-4">        'http://localhost:8787/rewrite',</p>
+<p class="mb-4">        json={</p>
+<p class="mb-4">            'text': text,</p>
+<p class="mb-4">            'tone': tone</p>
+<p class="mb-4">        }</p>
+<p class="mb-4">    )</p>
+<p class="mb-4">    return response.json()['rewritten']</p>
+
+<h1 class="text-4xl font-bold mb-6">Get statistics</h1>
+<p class="mb-4">def get_statistics(text):</p>
+<p class="mb-4">    response = requests.post(</p>
+<p class="mb-4">        'http://localhost:8787/statistics',</p>
+<p class="mb-4">        json={'text': text}</p>
+<p class="mb-4">    )</p>
+<p class="mb-4">    return response.json()</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">cURL</h3>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Analyze</h1>
+<p class="mb-4">curl -X POST http://localhost:8787/analyze \</p>
+<p class="mb-4">  -H "Content-Type: application/json" \</p>
+<p class="mb-4">  -d '{"text": "me and him went", "provider": "groq"}'</p>
+
+<h1 class="text-4xl font-bold mb-6">Rewrite</h1>
+<p class="mb-4">curl -X POST http://localhost:8787/rewrite \</p>
+<p class="mb-4">  -H "Content-Type: application/json" \</p>
+<p class="mb-4">  -d '{"text": "hey", "tone": "formal"}'</p>
+
+<h1 class="text-4xl font-bold mb-6">Statistics</h1>
+<p class="mb-4">curl -X POST http://localhost:8787/statistics \</p>
+<p class="mb-4">  -H "Content-Type: application/json" \</p>
+<p class="mb-4">  -d '{"text": "Your text here"}'</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🔧 Error Handling</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Error Response Format</h3>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>{
+<p class="mb-4">  "error": "Error type",</p>
+<p class="mb-4">  "message": "Detailed error message",</p>
+<p class="mb-4">  "code": "ERROR_CODE"</p>
+<p class="mb-4">}</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Common Error Codes</h3>
+
+<p class="mb-4"><tr><td> Code </td></tr> HTTP Status <tr><td> Description </td></tr></p>
+<p class="mb-4"><tr><td>------</td></tr>-------------<tr><td>-------------</td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">INVALID_REQUEST</code> </td></tr> 400 <tr><td> Malformed request </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">TEXT_TOO_LONG</code> </td></tr> 400 <tr><td> Text exceeds 50,000 chars </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">API_KEY_REQUIRED</code> </td></tr> 401 <tr><td> API key needed </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">INVALID_API_KEY</code> </td></tr> 401 <tr><td> API key invalid </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">PROVIDER_ERROR</code> </td></tr> 500 <tr><td> AI provider error </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">RATE_LIMITED</code> </td></tr> 429 <tr><td> Too many requests </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">SERVICE_UNAVAILABLE</code> </td></tr> 503 <tr><td> Service down </td></tr></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📊 Rate Limiting</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Default Limits</h3>
+
+<p class="mb-4"><tr><td> Endpoint </td></tr> Limit <tr><td> Window </td></tr></p>
+<p class="mb-4"><tr><td>----------</td></tr>-------<tr><td>--------</td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">/analyze</code> </td></tr> 100 req <tr><td> 1 minute </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">/rewrite</code> </td></tr> 50 req <tr><td> 1 minute </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">/statistics</code> </td></tr> 200 req <tr><td> 1 minute </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">/health</code> </td></tr> Unlimited <tr><td> - </td></tr></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Rate Limit Response</h3>
+
+<p class="mb-4"><strong>429 Too Many Requests:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>{
+<p class="mb-4">  "error": "Rate limit exceeded",</p>
+<p class="mb-4">  "message": "Too many requests. Please try again in 30 seconds.",</p>
+<p class="mb-4">  "retryAfter": 30</p>
+<p class="mb-4">}</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🔒 Security</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Input Validation</h3>
+
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Maximum text length: 50,000 characters</li>
+<li class="mb-2">Sanitized input</li>
+<li class="mb-2">Type checking</li>
+<li class="mb-2">JSON validation</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">API Key Handling</h3>
+
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Keys stored in environment variables</li>
+<li class="mb-2">Never logged</li>
+<li class="mb-2">Passed securely to providers</li>
+<li class="mb-2">Not retained by backend</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">CORS</h3>
+
+<p class="mb-4">Configured for browser extensions:</p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>app.use('*', cors({
+<p class="mb-4">  origin: ['chrome-extension://<em>', 'moz-extension://</em>'],</p>
+<p class="mb-4">  credentials: true</p>
+<p class="mb-4">}));</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📈 Performance</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Response Times</h3>
+
+<p class="mb-4"><tr><td> Endpoint </td></tr> Avg (ms) <tr><td> P95 (ms) </td></tr> P99 (ms) |</p>
+<p class="mb-4"><tr><td>----------</td></tr>----------<tr><td>----------</td></tr>----------|</p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">/health</code> </td></tr> 10 <tr><td> 20 </td></tr> 50 |</p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">/analyze</code> (rule-based) </td></tr> 50 <tr><td> 100 </td></tr> 200 |</p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">/analyze</code> (AI) </td></tr> 1000 <tr><td> 2000 </td></tr> 3000 |</p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">/rewrite</code> </td></tr> 1500 <tr><td> 2500 </td></tr> 4000 |</p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">/statistics</code> </td></tr> 100 <tr><td> 200 </td></tr> 300 |</p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Optimization Tips</h3>
+
+<li class="mb-2"><strong>Use rule-based for simple checks</strong> - Faster, no API cost</li>
+<li class="mb-2"><strong>Batch requests</strong> - Combine multiple texts</li>
+<li class="mb-2"><strong>Cache results</strong> - Store common analyses</li>
+<li class="mb-2"><strong>Use appropriate models</strong> - Smaller models for simple tasks</li>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📚 Related Documentation</h2>
+
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><a href="05-backend-deployment.md" class="text-blue-600 dark:text-blue-400 hover:underline">Backend Deployment</a> - Deploy the API</li>
+<li class="mb-2"><a href="07-ai-providers.md" class="text-blue-600 dark:text-blue-400 hover:underline">AI Providers</a> - Configure providers</li>
+<li class="mb-2"><a href="18-troubleshooting.md" class="text-blue-600 dark:text-blue-400 hover:underline">Troubleshooting</a> - Fix issues</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<p class="mb-4"><strong>API Version:</strong> 2.1.0  </p>
+<p class="mb-4"><strong>Last Updated:</strong> March 2026</p>
+
+        </article>
+        
+        <!-- Back to Top -->
+        <div class="mt-12 pt-8 border-t border-gray-200 dark:border-dark-700">
+            <a href="#" class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:underline">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                </svg>
+                Back to top
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-50 dark:bg-dark-900 border-t border-gray-200 dark:border-dark-700 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <img src="../logo.svg" alt="OpenGrammar Logo" class="h-6 w-6">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">© 2026 OpenGrammar. Apache 2.0 License</span>
+                </div>
+                <div class="flex gap-6">
+                    <a href="https://github.com/swadhinbiswas/opengrammar" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">GitHub</a>
+                    <a href="../index.html" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">Home</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Theme Script -->
+    <script>
+        const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        if (theme === 'dark') document.documentElement.classList.add('dark');
+        
+        function updateThemeIcons() {
+            const isDark = document.documentElement.classList.contains('dark');
+            document.getElementById('theme-toggle-light-icon').classList.toggle('hidden', !isDark);
+            document.getElementById('theme-toggle-dark-icon').classList.toggle('hidden', isDark);
+        }
+        updateThemeIcons();
+        
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            updateThemeIcons();
+        });
+    </script>
+</body>
+</html>

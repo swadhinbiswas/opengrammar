@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐳 Docker Self-Hosting Guide | OpenGrammar</title>
+    <meta name="description" content="OpenGrammar Documentation">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd',
+                            400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb',
+                            700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a',
+                        },
+                        dark: {
+                            50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1',
+                            400: '#94a3b8', 500: '#64748b', 600: '#475569',
+                            700: '#334155', 800: '#1e293b', 900: '#0f172a', 950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        .dark ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    </style>
+</head>
+<body class="font-sans antialiased bg-white dark:bg-dark-950 text-gray-900 dark:text-gray-100">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/80 dark:bg-dark-900/80 backdrop-blur-md border-b border-gray-200 dark:border-dark-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="../index.html" class="flex items-center gap-2">
+                    <img src="../logo.svg" alt="OpenGrammar Logo" class="h-8 w-8">
+                    <span class="font-bold text-xl tracking-tight">OpenGrammar Docs</span>
+                </a>
+                <div class="flex items-center gap-4">
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-dark-800 hover:bg-gray-200 dark:hover:bg-dark-700" aria-label="Toggle dark mode">
+                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                        </svg>
+                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                    </button>
+                    <a href="../index.html" class="text-sm font-medium hover:text-primary-600 dark:hover:text-primary-400">Back to Docs</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <article class="prose prose-lg dark:prose-invert max-w-none">
+            <h1 class="text-4xl font-bold mb-6">🐳 Docker Self-Hosting Guide</h1>
+
+<p class="mb-4">Run OpenGrammar locally with Docker and optional local LLM support (Ollama).</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🎯 Why Self-Host with Docker?</h2>
+
+<p class="mb-4"><tr><td> Benefit </td></tr> Description |</p>
+<p class="mb-4"><tr><td>---------</td></tr>-------------|</p>
+<p class="mb-4"><tr><td> <strong>Complete Privacy</strong> </td></tr> All data stays on your machine |</p>
+<p class="mb-4"><tr><td> <strong>Free</strong> </td></tr> No API costs (with local LLM) |</p>
+<p class="mb-4"><tr><td> <strong>Offline</strong> </td></tr> Works without internet |</p>
+<p class="mb-4"><tr><td> <strong>Full Control</strong> </td></tr> Customize everything |</p>
+<p class="mb-4"><tr><td> <strong>No Rate Limits</strong> </td></tr> Use as much as you want |</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📋 Prerequisites</h2>
+
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Docker (v20.10+)</li>
+<li class="mb-2">Docker Compose (usually included with Docker)</li>
+<li class="mb-2">4GB+ RAM (for local LLM)</li>
+<li class="mb-2">NVIDIA GPU (optional, for faster LLM inference)</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🚀 Quick Start</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Option 1: Backend Only (Use Cloud APIs)</h3>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>cd opengrammar/opengrammar
+
+<h1 class="text-4xl font-bold mb-6">Create environment file</h1>
+<p class="mb-4">cat > .env << EOF</p>
+<p class="mb-4">PORT=8787</p>
+<p class="mb-4">NODE_ENV=production</p>
+<p class="mb-4">GROQ_API_KEY=your_groq_key</p>
+<p class="mb-4">OPENAI_API_KEY=your_openai_key</p>
+<p class="mb-4">EOF</p>
+
+<h1 class="text-4xl font-bold mb-6">Start backend</h1>
+<p class="mb-4">docker-compose up -d opengrammar-backend</p>
+
+<h1 class="text-4xl font-bold mb-6">Check status</h1>
+<p class="mb-4">docker-compose ps</p>
+
+<h1 class="text-4xl font-bold mb-6">View logs</h1>
+<p class="mb-4">docker-compose logs -f opengrammar-backend</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Option 2: Backend + Ollama (Local LLM)</h3>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>cd opengrammar/opengrammar
+
+<h1 class="text-4xl font-bold mb-6">Start everything (requires NVIDIA GPU)</h1>
+<p class="mb-4">docker-compose --profile local-llm up -d</p>
+
+<h1 class="text-4xl font-bold mb-6">Check status</h1>
+<p class="mb-4">docker-compose ps</p>
+
+<h1 class="text-4xl font-bold mb-6">View all logs</h1>
+<p class="mb-4">docker-compose logs -f</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🔧 Docker Compose Configuration</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Complete docker-compose.yml</h3>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>version: '3.8'
+
+<p class="mb-4">services:</p>
+<p class="mb-4">  # OpenGrammar Backend</p>
+<p class="mb-4">  opengrammar-backend:</p>
+<p class="mb-4">    build:</p>
+<p class="mb-4">      context: ./backend</p>
+<p class="mb-4">      dockerfile: Dockerfile</p>
+<p class="mb-4">    container_name: opengrammar-backend</p>
+<p class="mb-4">    restart: unless-stopped</p>
+<p class="mb-4">    ports:</p>
+<p class="mb-4">      - "8787:8787"</p>
+<p class="mb-4">    environment:</p>
+<p class="mb-4">      - NODE_ENV=production</p>
+<p class="mb-4">      - PORT=8787</p>
+<p class="mb-4">      - GROQ_API_KEY=${GROQ_API_KEY:-}</p>
+<p class="mb-4">      - OPENAI_API_KEY=${OPENAI_API_KEY:-}</p>
+<p class="mb-4">      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY:-}</p>
+<p class="mb-4">      - TOGETHER_API_KEY=${TOGETHER_API_KEY:-}</p>
+<p class="mb-4">      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL:-http://ollama:11434/v1}</p>
+<p class="mb-4">      - DEBUG=${DEBUG:-false}</p>
+<p class="mb-4">    healthcheck:</p>
+<p class="mb-4">      test: ["CMD", "curl", "-f", "http://localhost:8787/health"]</p>
+<p class="mb-4">      interval: 30s</p>
+<p class="mb-4">      timeout: 10s</p>
+<p class="mb-4">      retries: 3</p>
+<p class="mb-4">      start_period: 40s</p>
+<p class="mb-4">    networks:</p>
+<p class="mb-4">      - opengrammar-network</p>
+<p class="mb-4">    depends_on:</p>
+<p class="mb-4">      - ollama</p>
+<p class="mb-4">    volumes:</p>
+<p class="mb-4">      - ./backend/logs:/app/logs</p>
+
+<p class="mb-4">  # Ollama (Local LLM)</p>
+<p class="mb-4">  ollama:</p>
+<p class="mb-4">    image: ollama/ollama:latest</p>
+<p class="mb-4">    container_name: opengrammar-ollama</p>
+<p class="mb-4">    restart: unless-stopped</p>
+<p class="mb-4">    profiles:</p>
+<p class="mb-4">      - local-llm</p>
+<p class="mb-4">    ports:</p>
+<p class="mb-4">      - "11434:11434"</p>
+<p class="mb-4">    volumes:</p>
+<p class="mb-4">      - ollama_data:/root/.ollama</p>
+<p class="mb-4">    networks:</p>
+<p class="mb-4">      - opengrammar-network</p>
+<p class="mb-4">    deploy:</p>
+<p class="mb-4">      resources:</p>
+<p class="mb-4">        reservations:</p>
+<p class="mb-4">          devices:</p>
+<p class="mb-4">            - driver: nvidia</p>
+<p class="mb-4">              count: all</p>
+<p class="mb-4">              capabilities: [gpu]</p>
+
+<p class="mb-4">  # Open WebUI (Optional - for testing Ollama)</p>
+<p class="mb-4">  open-webui:</p>
+<p class="mb-4">    image: ghcr.io/open-webui/open-webui:main</p>
+<p class="mb-4">    container_name: opengrammar-webui</p>
+<p class="mb-4">    restart: unless-stopped</p>
+<p class="mb-4">    profiles:</p>
+<p class="mb-4">      - local-llm</p>
+<p class="mb-4">    ports:</p>
+<p class="mb-4">      - "3000:8080"</p>
+<p class="mb-4">    environment:</p>
+<p class="mb-4">      - OLLAMA_BASE_URL=http://ollama:11434</p>
+<p class="mb-4">    networks:</p>
+<p class="mb-4">      - opengrammar-network</p>
+<p class="mb-4">    depends_on:</p>
+<p class="mb-4">      - ollama</p>
+<p class="mb-4">    volumes:</p>
+<p class="mb-4">      - open-webui_data:/app/backend/data</p>
+
+<p class="mb-4">networks:</p>
+<p class="mb-4">  opengrammar-network:</p>
+<p class="mb-4">    driver: bridge</p>
+
+<p class="mb-4">volumes:</p>
+<p class="mb-4">  ollama_data:</p>
+<p class="mb-4">  open-webui_data:</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🤖 Local LLM Setup with Ollama</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Step 1: Start Ollama Container</h3>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>docker-compose --profile local-llm up -d ollama
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Step 2: Pull Grammar-Focused Models</h3>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Enter Ollama container</h1>
+<p class="mb-4">docker exec -it opengrammar-ollama bash</p>
+
+<h1 class="text-4xl font-bold mb-6">Pull models (inside container)</h1>
+<p class="mb-4">ollama pull qwen2.5:0.5b      # Ultra fast, 400MB</p>
+<p class="mb-4">ollama pull qwen2.5:1.5b      # Balanced, 1GB</p>
+<p class="mb-4">ollama pull phi4-mini:3.8b    # Great quality, 2.5GB</p>
+<p class="mb-4">ollama pull llama3.2:3b       # Good all-rounder, 2GB</p>
+
+<h1 class="text-4xl font-bold mb-6">Exit container</h1>
+<p class="mb-4">exit</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Step 3: Test Ollama</h3>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Test from host</h1>
+<p class="mb-4">curl http://localhost:11434/api/tags</p>
+
+<h1 class="text-4xl font-bold mb-6">Test model</h1>
+<p class="mb-4">curl http://localhost:11434/api/generate -d '{</p>
+<p class="mb-4">  "model": "qwen2.5:1.5b",</p>
+<p class="mb-4">  "prompt": "Fix this grammar: me and him went to store"</p>
+<p class="mb-4">}'</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Step 4: Configure OpenGrammar</h3>
+
+<li class="mb-2">Click extension icon → Settings</li>
+<li class="mb-2">Provider: <strong>Ollama (Local)</strong></li>
+<li class="mb-2">Base URL: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">http://localhost:11434/v1</code></li>
+<li class="mb-2">Model: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">qwen2.5:1.5b</code></li>
+<li class="mb-2">API Key: (leave empty)</li>
+<li class="mb-2">Backend URL: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">http://localhost:8787</code></li>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🎯 Model Recommendations</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">For Grammar Checking</h3>
+
+<p class="mb-4"><tr><td> Model </td></tr> Size <tr><td> RAM </td></tr> Speed <tr><td> Quality </td></tr> Best For |</p>
+<p class="mb-4"><tr><td>-------</td></tr>------<tr><td>-----</td></tr>-------<tr><td>---------</td></tr>----------|</p>
+<p class="mb-4"><tr><td> <strong>qwen2.5:0.5b</strong> </td></tr> 400MB <tr><td> 1GB </td></tr> ⚡⚡⚡⚡⚡ <tr><td> ⭐⭐⭐ </td></tr> Fast basic checks |</p>
+<p class="mb-4"><tr><td> <strong>qwen2.5:1.5b</strong> </td></tr> 1GB <tr><td> 2GB </td></tr> ⚡⚡⚡⚡ <tr><td> ⭐⭐⭐⭐ </td></tr> Balanced |</p>
+<p class="mb-4"><tr><td> <strong>phi4-mini:3.8b</strong> </td></tr> 2.5GB <tr><td> 4GB </td></tr> ⚡⚡⚡ <tr><td> ⭐⭐⭐⭐⭐ </td></tr> Best quality |</p>
+<p class="mb-4"><tr><td> <strong>llama3.2:3b</strong> </td></tr> 2GB <tr><td> 3GB </td></tr> ⚡⚡⚡⚡ <tr><td> ⭐⭐⭐⭐ </td></tr> Good balance |</p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">For GPU Acceleration</h3>
+
+<p class="mb-4">If you have an NVIDIA GPU:</p>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">High quality with GPU</h1>
+<p class="mb-4">ollama pull llama3.2:7b       # 4GB, requires 8GB+ GPU</p>
+<p class="mb-4">ollama pull mistral:7b        # 4GB, requires 8GB+ GPU</p>
+<p class="mb-4">ollama pull mixtral:8x7b      # 26GB, requires 24GB+ GPU</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🔧 Advanced Configuration</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Custom Backend Port</h3>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">docker-compose.yml</h1>
+<p class="mb-4">ports:</p>
+<p class="mb-4">  - "9000:8787"  # Change 8787 to 9000</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Enable GPU Support</h3>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">For NVIDIA GPUs</h1>
+<p class="mb-4">ollama:</p>
+<p class="mb-4">  deploy:</p>
+<p class="mb-4">    resources:</p>
+<p class="mb-4">      reservations:</p>
+<p class="mb-4">        devices:</p>
+<p class="mb-4">          - driver: nvidia</p>
+<p class="mb-4">            count: all</p>
+<p class="mb-4">            capabilities: [gpu]</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Persistent Logs</h3>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>opengrammar-backend:
+<p class="mb-4">  volumes:</p>
+<p class="mb-4">    - ./logs:/app/logs</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Network Isolation</h3>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>networks:
+<p class="mb-4">  opengrammar-network:</p>
+<p class="mb-4">    driver: bridge</p>
+<p class="mb-4">    ipam:</p>
+<p class="mb-4">      config:</p>
+<p class="mb-4">        - subnet: 172.28.0.0/16</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📊 Performance Benchmarks</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Local LLM (RTX 4090)</h3>
+
+<p class="mb-4"><tr><td> Model </td></tr> Tokens/sec <tr><td> Grammar Accuracy </td></tr> RAM <tr><td> VRAM </td></tr></p>
+<p class="mb-4"><tr><td>-------</td></tr>------------<tr><td>------------------</td></tr>-----<tr><td>------</td></tr></p>
+<p class="mb-4"><tr><td> qwen2.5:0.5b </td></tr> ~100 <tr><td> 75% </td></tr> 1GB <tr><td> 1GB </td></tr></p>
+<p class="mb-4"><tr><td> qwen2.5:1.5b </td></tr> ~80 <tr><td> 82% </td></tr> 2GB <tr><td> 2GB </td></tr></p>
+<p class="mb-4"><tr><td> phi4-mini:3.8b </td></tr> ~50 <tr><td> 88% </td></tr> 4GB <tr><td> 4GB </td></tr></p>
+<p class="mb-4"><tr><td> llama3.2:7b </td></tr> ~30 <tr><td> 90% </td></tr> 8GB <tr><td> 8GB </td></tr></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Cloud APIs (via Docker)</h3>
+
+<p class="mb-4"><tr><td> Model </td></tr> Latency <tr><td> Grammar Accuracy </td></tr> Cost/1K requests |</p>
+<p class="mb-4"><tr><td>-------</td></tr>---------<tr><td>------------------</td></tr>------------------|</p>
+<p class="mb-4"><tr><td> gpt-4o-mini </td></tr> ~1s <tr><td> 95% </td></tr> $0.15 |</p>
+<p class="mb-4"><tr><td> llama-3.1-70b (Groq) </td></tr> ~200ms <tr><td> 92% </td></tr> Free (tier) |</p>
+<p class="mb-4"><tr><td> claude-3.5-sonnet </td></tr> ~2s <tr><td> 96% </td></tr> $3.00 |</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🛡️ Security Considerations</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">1. Network Isolation</h3>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>networks:
+<p class="mb-4">  opengrammar-network:</p>
+<p class="mb-4">    internal: true  # No external access</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">2. Environment Variables</h3>
+<p class="mb-4">Never commit <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">.env</code> file:</p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>echo ".env" >> .gitignore
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">3. API Key Rotation</h3>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Generate new keys periodically</h1>
+<p class="mb-4">openssl rand -hex 32</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">4. Container Security</h3>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>security_opt:
+<p class="mb-4">  - no-new-privileges:true</p>
+<p class="mb-4">read_only: true</p>
+<p class="mb-4">tmpfs:</p>
+<p class="mb-4">  - /tmp</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📈 Monitoring & Maintenance</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">View Logs</h3>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">All services</h1>
+<p class="mb-4">docker-compose logs -f</p>
+
+<h1 class="text-4xl font-bold mb-6">Specific service</h1>
+<p class="mb-4">docker-compose logs -f opengrammar-backend</p>
+
+<h1 class="text-4xl font-bold mb-6">Last 100 lines</h1>
+<p class="mb-4">docker-compose logs --tail=100 opengrammar-backend</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Check Health</h3>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Backend health</h1>
+<p class="mb-4">curl http://localhost:8787/health</p>
+
+<h1 class="text-4xl font-bold mb-6">Ollama status</h1>
+<p class="mb-4">curl http://localhost:11434/api/tags</p>
+
+<h1 class="text-4xl font-bold mb-6">Container status</h1>
+<p class="mb-4">docker-compose ps</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Update Containers</h3>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Pull latest images</h1>
+<p class="mb-4">docker-compose pull</p>
+
+<h1 class="text-4xl font-bold mb-6">Recreate containers</h1>
+<p class="mb-4">docker-compose up -d --force-recreate</p>
+
+<h1 class="text-4xl font-bold mb-6">Clean up old images</h1>
+<p class="mb-4">docker image prune -f</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Backup Data</h3>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Backup Ollama models</h1>
+<p class="mb-4">docker run --rm \</p>
+<p class="mb-4">  -v opengrammar_ollama_data:/data \</p>
+<p class="mb-4">  -v $(pwd)/backup:/backup \</p>
+<p class="mb-4">  alpine tar czf /backup/ollama-backup.tar.gz /data</p>
+
+<h1 class="text-4xl font-bold mb-6">Backup settings</h1>
+<p class="mb-4">docker-compose exec opengrammar-backend \</p>
+<p class="mb-4">  cat /app/data/settings.json > backup-settings.json</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🔄 Troubleshooting</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Container Won't Start</h3>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Check logs</h1>
+<p class="mb-4">docker-compose logs opengrammar-backend</p>
+
+<h1 class="text-4xl font-bold mb-6">Test configuration</h1>
+<p class="mb-4">docker-compose config</p>
+
+<h1 class="text-4xl font-bold mb-6">Check port conflict</h1>
+<p class="mb-4">lsof -i :8787</p>
+<p class="mb-4">lsof -i :11434</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Ollama Connection Failed</h3>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Check Ollama is running</h1>
+<p class="mb-4">docker-compose ps ollama</p>
+
+<h1 class="text-4xl font-bold mb-6">Test connection</h1>
+<p class="mb-4">docker-compose exec opengrammar-backend curl http://ollama:11434/api/tags</p>
+
+<h1 class="text-4xl font-bold mb-6">Restart Ollama</h1>
+<p class="mb-4">docker-compose restart ollama</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">GPU Not Working</h3>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Check NVIDIA Container Toolkit</h1>
+<p class="mb-4">nvidia-container-cli info</p>
+
+<h1 class="text-4xl font-bold mb-6">Verify GPU access</h1>
+<p class="mb-4">docker exec -it opengrammar-ollama nvidia-smi</p>
+
+<h1 class="text-4xl font-bold mb-6">Update Docker Compose</h1>
+<p class="mb-4">docker-compose version</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">High Memory Usage</h3>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Check container memory</h1>
+<p class="mb-4">docker stats</p>
+
+<h1 class="text-4xl font-bold mb-6">Limit Ollama memory</h1>
+<p class="mb-4">ollama:</p>
+<p class="mb-4">  deploy:</p>
+<p class="mb-4">    resources:</p>
+<p class="mb-4">      limits:</p>
+<p class="mb-4">        memory: 4G</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Slow Performance</h3>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Check CPU usage</h1>
+<p class="mb-4">docker stats</p>
+
+<h1 class="text-4xl font-bold mb-6">Use smaller model</h1>
+<p class="mb-4">ollama pull qwen2.5:0.5b</p>
+
+<h1 class="text-4xl font-bold mb-6">Enable GPU (if available)</h1>
+<h1 class="text-4xl font-bold mb-6">See GPU configuration above</h1>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🚀 Production Deployment</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Docker Swarm</h3>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">docker-stack.yml</h1>
+<p class="mb-4">version: '3.8'</p>
+
+<p class="mb-4">services:</p>
+<p class="mb-4">  opengrammar-backend:</p>
+<p class="mb-4">    image: opengrammar-backend:latest</p>
+<p class="mb-4">    ports:</p>
+<p class="mb-4">      - "8787:8787"</p>
+<p class="mb-4">    environment:</p>
+<p class="mb-4">      - NODE_ENV=production</p>
+<p class="mb-4">    deploy:</p>
+<p class="mb-4">      replicas: 3</p>
+<p class="mb-4">      resources:</p>
+<p class="mb-4">        limits:</p>
+<p class="mb-4">          cpus: '1'</p>
+<p class="mb-4">          memory: 512M</p>
+<p class="mb-4">    healthcheck:</p>
+<p class="mb-4">      test: ["CMD", "curl", "-f", "http://localhost:8787/health"]</p>
+<p class="mb-4">      interval: 30s</p>
+<p class="mb-4">      timeout: 10s</p>
+<p class="mb-4">      retries: 3</p>
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4">Deploy:</p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>docker stack deploy -c docker-stack.yml opengrammar
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Kubernetes</h3>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">k8s/deployment.yaml</h1>
+<p class="mb-4">apiVersion: apps/v1</p>
+<p class="mb-4">kind: Deployment</p>
+<p class="mb-4">metadata:</p>
+<p class="mb-4">  name: opengrammar-backend</p>
+<p class="mb-4">spec:</p>
+<p class="mb-4">  replicas: 3</p>
+<p class="mb-4">  selector:</p>
+<p class="mb-4">    matchLabels:</p>
+<p class="mb-4">      app: opengrammar-backend</p>
+<p class="mb-4">  template:</p>
+<p class="mb-4">    metadata:</p>
+<p class="mb-4">      labels:</p>
+<p class="mb-4">        app: opengrammar-backend</p>
+<p class="mb-4">    spec:</p>
+<p class="mb-4">      containers:</p>
+<p class="mb-4">      - name: backend</p>
+<p class="mb-4">        image: opengrammar-backend:latest</p>
+<p class="mb-4">        ports:</p>
+<p class="mb-4">        - containerPort: 8787</p>
+<p class="mb-4">        env:</p>
+<p class="mb-4">        - name: NODE_ENV</p>
+<p class="mb-4">          value: "production"</p>
+<p class="mb-4">        livenessProbe:</p>
+<p class="mb-4">          httpGet:</p>
+<p class="mb-4">            path: /health</p>
+<p class="mb-4">            port: 8787</p>
+<p class="mb-4">          initialDelaySeconds: 30</p>
+<p class="mb-4">          periodSeconds: 10</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📚 Related Documentation</h2>
+
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><a href="05-backend-deployment.md" class="text-blue-600 dark:text-blue-400 hover:underline">Backend Deployment</a> - Cloud deployment options</li>
+<li class="mb-2"><a href="07-ai-providers.md" class="text-blue-600 dark:text-blue-400 hover:underline">AI Provider Setup</a> - Configure AI providers</li>
+<li class="mb-2"><a href="18-troubleshooting.md" class="text-blue-600 dark:text-blue-400 hover:underline">Troubleshooting</a> - Common issues</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<p class="mb-4"><strong>Your self-hosted OpenGrammar instance is ready! Happy writing! ✨</strong></p>
+
+        </article>
+        
+        <!-- Back to Top -->
+        <div class="mt-12 pt-8 border-t border-gray-200 dark:border-dark-700">
+            <a href="#" class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:underline">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                </svg>
+                Back to top
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-50 dark:bg-dark-900 border-t border-gray-200 dark:border-dark-700 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <img src="../logo.svg" alt="OpenGrammar Logo" class="h-6 w-6">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">© 2026 OpenGrammar. Apache 2.0 License</span>
+                </div>
+                <div class="flex gap-6">
+                    <a href="https://github.com/swadhinbiswas/opengrammar" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">GitHub</a>
+                    <a href="../index.html" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">Home</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Theme Script -->
+    <script>
+        const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        if (theme === 'dark') document.documentElement.classList.add('dark');
+        
+        function updateThemeIcons() {
+            const isDark = document.documentElement.classList.contains('dark');
+            document.getElementById('theme-toggle-light-icon').classList.toggle('hidden', !isDark);
+            document.getElementById('theme-toggle-dark-icon').classList.toggle('hidden', isDark);
+        }
+        updateThemeIcons();
+        
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            updateThemeIcons();
+        });
+    </script>
+</body>
+</html>

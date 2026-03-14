@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 OpenGrammar Documentation | OpenGrammar</title>
+    <meta name="description" content="OpenGrammar Documentation">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd',
+                            400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb',
+                            700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a',
+                        },
+                        dark: {
+                            50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1',
+                            400: '#94a3b8', 500: '#64748b', 600: '#475569',
+                            700: '#334155', 800: '#1e293b', 900: '#0f172a', 950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        .dark ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    </style>
+</head>
+<body class="font-sans antialiased bg-white dark:bg-dark-950 text-gray-900 dark:text-gray-100">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/80 dark:bg-dark-900/80 backdrop-blur-md border-b border-gray-200 dark:border-dark-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="../index.html" class="flex items-center gap-2">
+                    <img src="../logo.svg" alt="OpenGrammar Logo" class="h-8 w-8">
+                    <span class="font-bold text-xl tracking-tight">OpenGrammar Docs</span>
+                </a>
+                <div class="flex items-center gap-4">
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-dark-800 hover:bg-gray-200 dark:hover:bg-dark-700" aria-label="Toggle dark mode">
+                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                        </svg>
+                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                    </button>
+                    <a href="../index.html" class="text-sm font-medium hover:text-primary-600 dark:hover:text-primary-400">Back to Docs</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <article class="prose prose-lg dark:prose-invert max-w-none">
+            <h1 class="text-4xl font-bold mb-6">📚 OpenGrammar Documentation</h1>
+
+<p class="mb-4">Welcome to the complete documentation for OpenGrammar - your privacy-first, open-source writing assistant.</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📖 Table of Contents</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Getting Started</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><a href="docs/01-quick-start.md" class="text-blue-600 dark:text-blue-400 hover:underline"><strong>Quick Start</strong></a> - Get up and running in 5 minutes</li>
+<li class="mb-2"><a href="docs/02-what-is-opengrammar.md" class="text-blue-600 dark:text-blue-400 hover:underline"><strong>What is OpenGrammar?</strong></a> - Overview and features</li>
+<li class="mb-2"><a href="docs/03-system-requirements.md" class="text-blue-600 dark:text-blue-400 hover:underline"><strong>System Requirements</strong></a> - What you need to run OpenGrammar</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Installation & Setup</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><a href="docs/04-browser-extension-setup.md" class="text-blue-600 dark:text-blue-400 hover:underline"><strong>Browser Extension Setup</strong></a> - Chrome, Brave, Edge, Firefox</li>
+<li class="mb-2"><a href="docs/05-backend-deployment.md" class="text-blue-600 dark:text-blue-400 hover:underline"><strong>Backend Deployment</strong></a> - Complete deployment guide</li>
+<p class="mb-4"></ul>  - <a href="docs/05-backend-deployment.md#cloudflare-workers" class="text-blue-600 dark:text-blue-400 hover:underline">Cloudflare Workers</a></p>
+<p class="mb-4">  - <a href="docs/05-backend-deployment.md#vercel" class="text-blue-600 dark:text-blue-400 hover:underline">Vercel</a></p>
+<p class="mb-4">  - <a href="docs/05-backend-deployment.md#railway" class="text-blue-600 dark:text-blue-400 hover:underline">Railway</a></p>
+<p class="mb-4">  - <a href="docs/05-backend-deployment.md#render" class="text-blue-600 dark:text-blue-400 hover:underline">Render</a></p>
+<p class="mb-4">  - <a href="docs/06-docker-self-hosting.md" class="text-blue-600 dark:text-blue-400 hover:underline">Docker Self-Hosting</a></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Configuration</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><a href="docs/07-ai-providers.md" class="text-blue-600 dark:text-blue-400 hover:underline"><strong>AI Provider Setup</strong></a> - Configure AI providers</li>
+<p class="mb-4"></ul>  - <a href="docs/07-ai-providers.md#groq" class="text-blue-600 dark:text-blue-400 hover:underline">Groq (Free Tier)</a></p>
+<p class="mb-4">  - <a href="docs/07-ai-providers.md#openai" class="text-blue-600 dark:text-blue-400 hover:underline">OpenAI</a></p>
+<p class="mb-4">  - <a href="docs/07-ai-providers.md#openrouter" class="text-blue-600 dark:text-blue-400 hover:underline">OpenRouter</a></p>
+<p class="mb-4">  - <a href="docs/07-ai-providers.md#together-ai" class="text-blue-600 dark:text-blue-400 hover:underline">Together AI</a></p>
+<p class="mb-4">  - <a href="docs/07-ai-providers.md#ollama-local" class="text-blue-600 dark:text-blue-400 hover:underline">Ollama (Local)</a></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><a href="docs/08-extension-settings.md" class="text-blue-600 dark:text-blue-400 hover:underline"><strong>Extension Settings</strong></a> - Configure the extension</li>
+<li class="mb-2"><a href="docs/08-extension-settings.md#custom-dictionary" class="text-blue-600 dark:text-blue-400 hover:underline"><strong>Custom Dictionary</strong></a> - Manage your dictionary</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">User Guide</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><a href="docs/09-using-opengrammar.md" class="text-blue-600 dark:text-blue-400 hover:underline"><strong>Using OpenGrammar</strong></a> - Daily usage guide</li>
+<li class="mb-2"><a href="docs/09-using-opengrammar.md#grammar-checking" class="text-blue-600 dark:text-blue-400 hover:underline"><strong>Grammar Checking</strong></a> - How to check grammar</li>
+<li class="mb-2"><a href="docs/10-tone-rewriting.md" class="text-blue-600 dark:text-blue-400 hover:underline"><strong>Tone Rewriting</strong></a> - Rewrite text in different tones</li>
+<li class="mb-2"><a href="docs/11-writing-statistics.md" class="text-blue-600 dark:text-blue-400 hover:underline"><strong>Writing Statistics</strong></a> - Analyze your writing</li>
+<li class="mb-2"><a href="docs/12-keyboard-shortcuts.md" class="text-blue-600 dark:text-blue-400 hover:underline"><strong>Keyboard Shortcuts</strong></a> - All shortcuts reference</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Developer Guide</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><a href="docs/13-architecture.md" class="text-blue-600 dark:text-blue-400 hover:underline"><strong>Architecture Overview</strong></a> - System architecture</li>
+<li class="mb-2"><a href="docs/14-local-development.md" class="text-blue-600 dark:text-blue-400 hover:underline"><strong>Local Development</strong></a> - Development setup</li>
+<li class="mb-2"><a href="docs/15-api-reference.md" class="text-blue-600 dark:text-blue-400 hover:underline"><strong>API Reference</strong></a> - Backend API documentation</li>
+<li class="mb-2"><a href="docs/16-grammar-rules.md" class="text-blue-600 dark:text-blue-400 hover:underline"><strong>Adding Grammar Rules</strong></a> - Contribute grammar rules</li>
+<li class="mb-2"><a href="docs/17-building-extension.md" class="text-blue-600 dark:text-blue-400 hover:underline"><strong>Building the Extension</strong></a> - Build and package</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Troubleshooting</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><a href="docs/18-troubleshooting.md" class="text-blue-600 dark:text-blue-400 hover:underline"><strong>Troubleshooting Guide</strong></a> - Common issues and solutions</li>
+<li class="mb-2"><a href="docs/19-faq.md" class="text-blue-600 dark:text-blue-400 hover:underline"><strong>FAQ</strong></a> - Frequently asked questions</li>
+<li class="mb-2"><a href="docs/20-error-codes.md" class="text-blue-600 dark:text-blue-400 hover:underline"><strong>Error Codes</strong></a> - Error code reference</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Contributing</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><a href="docs/21-contributing.md" class="text-blue-600 dark:text-blue-400 hover:underline"><strong>Contributing Guide</strong></a> - How to contribute</li>
+<li class="mb-2"><a href="docs/22-code-style.md" class="text-blue-600 dark:text-blue-400 hover:underline"><strong>Code Style</strong></a> - Coding standards</li>
+<li class="mb-2"><a href="../ROADMAP.md" class="text-blue-600 dark:text-blue-400 hover:underline"><strong>Roadmap</strong></a> - Future development</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🚀 Quick Links</h2>
+
+<p class="mb-4"><tr><td> I want to... </td></tr> Go to... |</p>
+<p class="mb-4"><tr><td>--------------</td></tr>----------|</p>
+<p class="mb-4"><tr><td> Install the extension </td></tr> <a href="docs/04-browser-extension-setup.md" class="text-blue-600 dark:text-blue-400 hover:underline">Browser Extension Setup</a> |</p>
+<p class="mb-4"><tr><td> Deploy the backend </td></tr> <a href="docs/05-backend-deployment.md" class="text-blue-600 dark:text-blue-400 hover:underline">Backend Deployment</a> |</p>
+<p class="mb-4"><tr><td> Configure AI providers </td></tr> <a href="docs/07-ai-providers.md" class="text-blue-600 dark:text-blue-400 hover:underline">AI Provider Setup</a> |</p>
+<p class="mb-4"><tr><td> Use tone rewriting </td></tr> <a href="docs/10-tone-rewriting.md" class="text-blue-600 dark:text-blue-400 hover:underline">Tone Rewriting</a> |</p>
+<p class="mb-4"><tr><td> Report a bug </td></tr> <a href="https://github.com/swadhinbiswas/opengrammar/issues" class="text-blue-600 dark:text-blue-400 hover:underline">GitHub Issues</a> |</p>
+<p class="mb-4"><tr><td> Suggest a feature </td></tr> <a href="https://github.com/swadhinbiswas/opengrammar/discussions" class="text-blue-600 dark:text-blue-400 hover:underline">GitHub Discussions</a> |</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📞 Support</h2>
+
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><strong>GitHub Issues</strong>: <a href="https://github.com/swadhinbiswas/opengrammar/issues" class="text-blue-600 dark:text-blue-400 hover:underline">Report bugs or request features</a></li>
+<li class="mb-2"><strong>GitHub Discussions</strong>: <a href="https://github.com/swadhinbiswas/opengrammar/discussions" class="text-blue-600 dark:text-blue-400 hover:underline">Ask questions and discuss ideas</a></li>
+<li class="mb-2"><strong>Documentation</strong>: <a href="https://github.com/swadhinbiswas/opengrammar/tree/main/opengrammar" class="text-blue-600 dark:text-blue-400 hover:underline">Complete guides and tutorials</a></li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📄 License</h2>
+
+<p class="mb-4">OpenGrammar is licensed under the Apache 2.0 License - see the <a href="../LICENSE" class="text-blue-600 dark:text-blue-400 hover:underline">LICENSE</a> file for details.</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<p class="mb-4"><strong>Last Updated:</strong> March 2026  </p>
+<p class="mb-4"><strong>Version:</strong> 2.1.0</p>
+
+        </article>
+        
+        <!-- Back to Top -->
+        <div class="mt-12 pt-8 border-t border-gray-200 dark:border-dark-700">
+            <a href="#" class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:underline">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                </svg>
+                Back to top
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-50 dark:bg-dark-900 border-t border-gray-200 dark:border-dark-700 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <img src="../logo.svg" alt="OpenGrammar Logo" class="h-6 w-6">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">© 2026 OpenGrammar. Apache 2.0 License</span>
+                </div>
+                <div class="flex gap-6">
+                    <a href="https://github.com/swadhinbiswas/opengrammar" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">GitHub</a>
+                    <a href="../index.html" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">Home</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Theme Script -->
+    <script>
+        const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        if (theme === 'dark') document.documentElement.classList.add('dark');
+        
+        function updateThemeIcons() {
+            const isDark = document.documentElement.classList.contains('dark');
+            document.getElementById('theme-toggle-light-icon').classList.toggle('hidden', !isDark);
+            document.getElementById('theme-toggle-dark-icon').classList.toggle('hidden', isDark);
+        }
+        updateThemeIcons();
+        
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            updateThemeIcons();
+        });
+    </script>
+</body>
+</html>

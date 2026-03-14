@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌐 Browser Extension Setup Guide | OpenGrammar</title>
+    <meta name="description" content="OpenGrammar Documentation">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd',
+                            400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb',
+                            700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a',
+                        },
+                        dark: {
+                            50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1',
+                            400: '#94a3b8', 500: '#64748b', 600: '#475569',
+                            700: '#334155', 800: '#1e293b', 900: '#0f172a', 950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        .dark ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    </style>
+</head>
+<body class="font-sans antialiased bg-white dark:bg-dark-950 text-gray-900 dark:text-gray-100">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/80 dark:bg-dark-900/80 backdrop-blur-md border-b border-gray-200 dark:border-dark-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="../index.html" class="flex items-center gap-2">
+                    <img src="../logo.svg" alt="OpenGrammar Logo" class="h-8 w-8">
+                    <span class="font-bold text-xl tracking-tight">OpenGrammar Docs</span>
+                </a>
+                <div class="flex items-center gap-4">
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-dark-800 hover:bg-gray-200 dark:hover:bg-dark-700" aria-label="Toggle dark mode">
+                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                        </svg>
+                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                    </button>
+                    <a href="../index.html" class="text-sm font-medium hover:text-primary-600 dark:hover:text-primary-400">Back to Docs</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <article class="prose prose-lg dark:prose-invert max-w-none">
+            <h1 class="text-4xl font-bold mb-6">🌐 Browser Extension Setup Guide</h1>
+
+<p class="mb-4">Install and configure OpenGrammar on Chrome, Brave, Edge, and Firefox.</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📋 Supported Browsers</h2>
+
+<p class="mb-4"><tr><td> Browser </td></tr> Version <tr><td> Status </td></tr></p>
+<p class="mb-4"><tr><td>---------</td></tr>---------<tr><td>--------</td></tr></p>
+<p class="mb-4"><tr><td> <strong>Google Chrome</strong> </td></tr> 88+ <tr><td> ✅ Fully Supported </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Brave</strong> </td></tr> 1.20+ <tr><td> ✅ Fully Supported </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Microsoft Edge</strong> </td></tr> 88+ <tr><td> ✅ Fully Supported </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Mozilla Firefox</strong> </td></tr> 90+ <tr><td> ✅ Supported (Temporary) </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Opera</strong> </td></tr> 74+ <tr><td> ✅ Supported </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Vivaldi</strong> </td></tr> 3.6+ <tr><td> ✅ Supported </td></tr></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🔧 Installation</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Google Chrome</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Step 1: Build the Extension</h4>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Navigate to extension folder</h1>
+<p class="mb-4">cd opengrammar/opengrammar/extension</p>
+
+<h1 class="text-4xl font-bold mb-6">Install dependencies</h1>
+<p class="mb-4">bun install</p>
+
+<h1 class="text-4xl font-bold mb-6">Build for production</h1>
+<p class="mb-4">bun run build</p>
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4">This creates a <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">dist/</code> folder with the built extension.</p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Step 2: Load in Chrome</h4>
+<li class="mb-2">Open Chrome</li>
+<li class="mb-2">Navigate to <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">chrome://extensions/</code></li>
+<li class="mb-2">Enable <strong>Developer mode</strong> (toggle in top-right corner)</li>
+<li class="mb-2">Click <strong>Load unpacked</strong></li>
+<li class="mb-2">Select the <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">opengrammar/extension/dist</code> folder</li>
+<li class="mb-2">Click <strong>Select</strong></li>
+
+<p class="mb-4">✅ <strong>Extension loaded!</strong> You'll see the OpenGrammar icon in your toolbar.</p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Step 3: Pin to Toolbar (Optional)</h4>
+<li class="mb-2">Click the puzzle piece icon (Extensions) in toolbar</li>
+<li class="mb-2">Find OpenGrammar in the list</li>
+<li class="mb-2">Click the pin icon 📌</li>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h3 class="text-xl font-bold mt-6 mb-3">Brave Browser</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Step 1: Build the Extension</h4>
+<p class="mb-4">Same as Chrome:</p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>cd opengrammar/opengrammar/extension
+<p class="mb-4">bun install</p>
+<p class="mb-4">bun run build</p>
+<p class="mb-4"></code></pre></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Step 2: Load in Brave</h4>
+<li class="mb-2">Open Brave</li>
+<li class="mb-2">Navigate to <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">brave://extensions/</code></li>
+<li class="mb-2">Enable <strong>Developer mode</strong> (top-right)</li>
+<li class="mb-2">Click <strong>Load unpacked</strong></li>
+<li class="mb-2">Select <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">opengrammar/extension/dist</code> folder</li>
+<li class="mb-2">Click <strong>Select</strong></li>
+
+<p class="mb-4">✅ <strong>Extension loaded!</strong></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Step 3: Pin to Toolbar</h4>
+<li class="mb-2">Click the puzzle piece icon</li>
+<li class="mb-2">Pin OpenGrammar</li>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h3 class="text-xl font-bold mt-6 mb-3">Microsoft Edge</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Step 1: Build the Extension</h4>
+<p class="mb-4">Same as Chrome:</p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>cd opengrammar/opengrammar/extension
+<p class="mb-4">bun install</p>
+<p class="mb-4">bun run build</p>
+<p class="mb-4"></code></pre></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Step 2: Load in Edge</h4>
+<li class="mb-2">Open Edge</li>
+<li class="mb-2">Navigate to <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">edge://extensions/</code></li>
+<li class="mb-2">Enable <strong>Developer mode</strong> (left sidebar)</li>
+<li class="mb-2">Click <strong>Load unpacked</strong></li>
+<li class="mb-2">Select <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">opengrammar/extension/dist</code> folder</li>
+<li class="mb-2">Click <strong>Select Folder</strong></li>
+
+<p class="mb-4">✅ <strong>Extension loaded!</strong></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Step 3: Pin to Toolbar</h4>
+<li class="mb-2">Click the puzzle piece icon</li>
+<li class="mb-2">Pin OpenGrammar</li>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h3 class="text-xl font-bold mt-6 mb-3">Mozilla Firefox</h3>
+
+<p class="mb-4">⚠️ <strong>Note:</strong> Firefox support is temporary. The extension must be reloaded each time you restart Firefox.</p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Step 1: Build the Extension</h4>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>cd opengrammar/opengrammar/extension
+<p class="mb-4">bun install</p>
+<p class="mb-4">bun run build</p>
+<p class="mb-4"></code></pre></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Step 2: Load in Firefox</h4>
+<li class="mb-2">Open Firefox</li>
+<li class="mb-2">Navigate to <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">about:debugging#/runtime/this-firefox</code></li>
+<li class="mb-2">Click <strong>Load Temporary Add-on</strong></li>
+<li class="mb-2">Navigate to <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">opengrammar/extension/dist</code></li>
+<li class="mb-2">Select <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">manifest.json</code></li>
+<li class="mb-2">Click <strong>Open</strong></li>
+
+<p class="mb-4">✅ <strong>Extension loaded!</strong></p>
+
+<p class="mb-4">⚠️ <strong>Important:</strong> This extension will be unloaded when you close Firefox. You'll need to reload it each session.</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h3 class="text-xl font-bold mt-6 mb-3">Opera</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Step 1: Enable Chrome Extensions</h4>
+<li class="mb-2">Open Opera</li>
+<li class="mb-2">Go to Settings</li>
+<li class="mb-2">Enable "Allow extensions from other stores"</li>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Step 2: Install Chrome Extension Loader</h4>
+<li class="mb-2">Visit Opera Add-ons</li>
+<li class="mb-2">Search for "Install Chrome Extensions"</li>
+<li class="mb-2">Add to Opera</li>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Step 3: Load OpenGrammar</h4>
+<li class="mb-2">Navigate to <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">chrome://extensions/</code></li>
+<li class="mb-2">Enable Developer mode</li>
+<li class="mb-2">Load unpacked → <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">opengrammar/extension/dist</code></li>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h3 class="text-xl font-bold mt-6 mb-3">Vivaldi</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Step 1: Load in Vivaldi</h4>
+<li class="mb-2">Open Vivaldi</li>
+<li class="mb-2">Navigate to <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">vivaldi://extensions/</code></li>
+<li class="mb-2">Enable <strong>Developer mode</strong></li>
+<li class="mb-2">Click <strong>Load unpacked</strong></li>
+<li class="mb-2">Select <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">opengrammar/extension/dist</code></li>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">⚙️ Initial Configuration</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Step 1: Open Settings</h3>
+<li class="mb-2">Click the OpenGrammar icon in your toolbar</li>
+<li class="mb-2">Click the <strong>Settings</strong> (gear) icon</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Step 2: Configure Backend URL</h3>
+<li class="mb-2">Find <strong>Backend URL</strong> field</li>
+<li class="mb-2">Enter your backend URL:</li>
+<p class="mb-4">   - Local: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">http://localhost:8787</code></p>
+<p class="mb-4">   - Cloudflare: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">https://opengrammar.yourname.workers.dev</code></p>
+<p class="mb-4">   - Vercel: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">https://opengrammar-backend.vercel.app</code></p>
+<p class="mb-4">   - Railway: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">https://your-app.railway.app</code></p>
+<p class="mb-4">   - Render: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">https://opengrammar-backend.onrender.com</code></p>
+<p class="mb-4">   - Docker: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">http://localhost:8787</code></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Step 3: Configure AI Provider</h3>
+<li class="mb-2">Select <strong>Provider</strong> from dropdown:</li>
+<p class="mb-4">   - <strong>Groq</strong> (Recommended - Free tier)</p>
+<p class="mb-4">   - <strong>OpenAI</strong> (Best quality)</p>
+<p class="mb-4">   - <strong>OpenRouter</strong> (100+ models)</p>
+<p class="mb-4">   - <strong>Together AI</strong> (Open-source)</p>
+<p class="mb-4">   - <strong>Ollama</strong> (Local, offline)</p>
+<p class="mb-4">   - <strong>Custom</strong> (Your own API)</p>
+
+<li class="mb-2">Enter your <strong>API Key</strong> (if required)</li>
+<li class="mb-2">Select <strong>Model</strong> from dropdown</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Step 4: Test Connection</h3>
+<li class="mb-2">Look for the <strong>status indicator</strong></li>
+<li class="mb-2">🟢 Green = Connected</li>
+<li class="mb-2">🔴 Red = Not connected</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Step 5: Save Settings</h3>
+<p class="mb-4">Click <strong>Save</strong> to apply changes.</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🎯 Provider Recommendations</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">For Free Usage</h3>
+<p class="mb-4"><strong>Provider:</strong> Groq</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><strong>API Key:</strong> Get free key at <a href="https://console.groq.com" class="text-blue-600 dark:text-blue-400 hover:underline">console.groq.com</a></li>
+<li class="mb-2"><strong>Model:</strong> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">llama-3.1-70b-versatile</code></li>
+<li class="mb-2"><strong>Limits:</strong> 100 requests/day free</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">For Best Quality</h3>
+<p class="mb-4"><strong>Provider:</strong> OpenAI</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><strong>API Key:</strong> Get at <a href="https://platform.openai.com" class="text-blue-600 dark:text-blue-400 hover:underline">platform.openai.com</a></li>
+<li class="mb-2"><strong>Model:</strong> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">gpt-4o-mini</code></li>
+<li class="mb-2"><strong>Cost:</strong> ~$0.15 per 1K requests</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">For Privacy (Offline)</h3>
+<p class="mb-4"><strong>Provider:</strong> Ollama (Local)</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><strong>API Key:</strong> (none required)</li>
+<li class="mb-2"><strong>Model:</strong> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">qwen2.5:1.5b</code></li>
+<li class="mb-2"><strong>Setup:</strong> See <a href="06-docker-self-hosting.md" class="text-blue-600 dark:text-blue-400 hover:underline">Docker Self-Hosting</a></li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">For Model Variety</h3>
+<p class="mb-4"><strong>Provider:</strong> OpenRouter</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><strong>API Key:</strong> Get at <a href="https://openrouter.ai" class="text-blue-600 dark:text-blue-400 hover:underline">openrouter.ai</a></li>
+<li class="mb-2"><strong>Models:</strong> 100+ options (Claude, Llama, etc.)</li>
+<li class="mb-2"><strong>Cost:</strong> Pay-per-use</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🔍 Verifying Installation</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Test 1: Check Extension Icon</h3>
+<li class="mb-2">Click the OpenGrammar icon</li>
+<li class="mb-2">Popup should open</li>
+<li class="mb-2">You should see settings and status</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Test 2: Check Grammar</h3>
+<li class="mb-2">Open any text box (Gmail, Google Docs, etc.)</li>
+<li class="mb-2">Type: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">me and him went to store</code></li>
+<li class="mb-2">You should see a <strong>red underline</strong> under "me and him"</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Test 3: Check Backend Connection</h3>
+<li class="mb-2">Click extension icon</li>
+<li class="mb-2">Look for status indicator</li>
+<li class="mb-2">Should be green with "Connected"</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Test 4: Test Rewrite Feature</h3>
+<li class="mb-2">Select any text on a webpage</li>
+<li class="mb-2">Right-click</li>
+<li class="mb-2">Choose <strong>Rewrite with OpenGrammar</strong></li>
+<li class="mb-2">Rewrite popup should open</li>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🛠️ Extension Features</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Popup Menu</h3>
+<p class="mb-4">Accessed by clicking the toolbar icon:</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><strong>Enable/Disable Toggle</strong> - Turn extension on/off</li>
+<li class="mb-2"><strong>Error Count</strong> - Shows detected issues</li>
+<li class="mb-2"><strong>Settings</strong> - Open settings page</li>
+<li class="mb-2"><strong>Statistics</strong> - View writing stats</li>
+<li class="mb-2"><strong>Backend Status</strong> - Connection indicator</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Settings Page</h3>
+<p class="mb-4">Right-click extension icon → <strong>Options</strong>:</p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">General Settings</h4>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Enable OpenGrammar</li>
+<li class="mb-2">Check as you type</li>
+<li class="mb-2">Show notifications</li>
+<li class="mb-2">Keyboard shortcuts</li>
+<p class="mb-4"></ul></p>
+<h4 class="text-lg font-bold mt-4 mb-2">AI Settings</h4>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Provider selection</li>
+<li class="mb-2">API key management</li>
+<li class="mb-2">Model selection</li>
+<li class="mb-2">Custom base URL</li>
+<li class="mb-2">Backend health check</li>
+<p class="mb-4"></ul></p>
+<h4 class="text-lg font-bold mt-4 mb-2">Site-Specific Settings</h4>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Disable on specific domains</li>
+<li class="mb-2">Per-domain AI settings</li>
+<li class="mb-2">Domain whitelist</li>
+<p class="mb-4"></ul></p>
+<h4 class="text-lg font-bold mt-4 mb-2">Custom Dictionary</h4>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Add custom words</li>
+<li class="mb-2">Import/export dictionary</li>
+<li class="mb-2">Manage false positives</li>
+<p class="mb-4"></ul></p>
+<h4 class="text-lg font-bold mt-4 mb-2">Ignored Issues</h4>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">View ignored suggestions</li>
+<li class="mb-2">Clear all ignored issues</li>
+<li class="mb-2">Manage per-domain ignores</li>
+<p class="mb-4"></ul></p>
+<h4 class="text-lg font-bold mt-4 mb-2">Data Management</h4>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Export all settings</li>
+<li class="mb-2">Import settings backup</li>
+<li class="mb-2">Reset to defaults</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🎨 User Interface</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Color-Coded Underlines</h3>
+
+<p class="mb-4"><tr><td> Color </td></tr> Meaning <tr><td> Example </td></tr></p>
+<p class="mb-4"><tr><td>-------</td></tr>---------<tr><td>---------</td></tr></p>
+<p class="mb-4"><tr><td> <strong>Red</strong> </td></tr> Grammar/Spelling <tr><td> "teh" → "the" </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Amber</strong> </td></tr> Clarity Issues <tr><td> Long, confusing sentences </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Blue</strong> </td></tr> Style Suggestions <tr><td> Passive voice, weak words </td></tr></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Interactive Tooltips</h3>
+<p class="mb-4">Click any underlined text to see:</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Issue type icon</li>
+<li class="mb-2">Original text</li>
+<li class="mb-2">Suggested fix</li>
+<li class="mb-2">Explanation</li>
+<li class="mb-2">Action buttons (Apply, Ignore, Add to Dictionary)</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Rewrite Popup</h3>
+<p class="mb-4">Accessed via right-click or <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Shift+R</code>:</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Selected text preview</li>
+<li class="mb-2">8 tone buttons</li>
+<li class="mb-2">Rewrite button</li>
+<li class="mb-2">Apply/Copy buttons</li>
+<li class="mb-2">Close button</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🔄 Updating the Extension</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Manual Update</h3>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Rebuild extension</h1>
+<p class="mb-4">cd opengrammar/opengrammar/extension</p>
+<p class="mb-4">bun run build</p>
+
+<h1 class="text-4xl font-bold mb-6">Reload in browser</h1>
+<h1 class="text-4xl font-bold mb-6">chrome://extensions/ → Click reload icon on OpenGrammar</h1>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Automatic Updates</h3>
+<p class="mb-4">Since this is a locally-loaded extension, it won't auto-update. You need to:</p>
+<li class="mb-2">Rebuild manually</li>
+<li class="mb-2">Reload in extensions page</li>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🆘 Troubleshooting</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Extension Not Showing</h3>
+<p class="mb-4"><strong>Problem:</strong> Can't find OpenGrammar icon</p>
+
+<p class="mb-4"><strong>Solution:</strong></p>
+<li class="mb-2">Check <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">chrome://extensions/</code> (or browser equivalent)</li>
+<li class="mb-2">Make sure extension is enabled</li>
+<li class="mb-2">Click the puzzle piece icon → Pin OpenGrammar</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">No Grammar Highlights</h3>
+<p class="mb-4"><strong>Problem:</strong> Typing errors but no underlines appear</p>
+
+<p class="mb-4"><strong>Solution:</strong></p>
+<li class="mb-2">Check extension is enabled (icon badge visible)</li>
+<li class="mb-2">Verify site is not in disabled domains</li>
+<li class="mb-2">Check backend is running: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">curl http://localhost:8787/health</code></li>
+<li class="mb-2">Reload the page</li>
+<li class="mb-2">Check browser console (F12) for errors</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Backend Not Connecting</h3>
+<p class="mb-4"><strong>Problem:</strong> Red status indicator, "Not connected" error</p>
+
+<p class="mb-4"><strong>Solution:</strong></p>
+<li class="mb-2">Verify backend URL in settings</li>
+<li class="mb-2">Test backend: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">curl your-backend-url/health</code></li>
+<li class="mb-2">Check CORS configuration</li>
+<li class="mb-2">Restart backend service</li>
+<li class="mb-2">Check firewall settings</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Extension Crashes</h3>
+<p class="mb-4"><strong>Problem:</strong> Extension closes or stops working</p>
+
+<p class="mb-4"><strong>Solution:</strong></p>
+<li class="mb-2">Reload extension in extensions page</li>
+<li class="mb-2">Clear browser cache</li>
+<li class="mb-2">Check browser console for errors</li>
+<li class="mb-2">Rebuild extension</li>
+<li class="mb-2">Try in incognito mode (enable in extensions page)</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Rewrite Not Working</h3>
+<p class="mb-4"><strong>Problem:</strong> Right-click menu doesn't appear</p>
+
+<p class="mb-4"><strong>Solution:</strong></p>
+<li class="mb-2">Make sure text is selected</li>
+<li class="mb-2">Check extension is enabled</li>
+<li class="mb-2">Reload the page</li>
+<li class="mb-2">Check browser permissions</li>
+<li class="mb-2">Try keyboard shortcut: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Shift+R</code></li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Settings Not Saving</h3>
+<p class="mb-4"><strong>Problem:</strong> Settings reset after closing</p>
+
+<p class="mb-4"><strong>Solution:</strong></p>
+<li class="mb-2">Check browser storage permissions</li>
+<li class="mb-2">Clear browser data for extension</li>
+<li class="mb-2">Try in a fresh browser profile</li>
+<li class="mb-2">Export settings before resetting</li>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📊 Browser-Specific Notes</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Chrome</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">✅ Best compatibility</li>
+<li class="mb-2">✅ All features work</li>
+<li class="mb-2">⚠️ Requires Developer mode for local loading</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Brave</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">✅ Same as Chrome (Chromium-based)</li>
+<li class="mb-2">✅ Privacy features don't interfere</li>
+<li class="mb-2">⚠️ May need to disable Shields for some sites</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Edge</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">✅ Full Chromium compatibility</li>
+<li class="mb-2">✅ All features work</li>
+<li class="mb-2">⚠️ Some Microsoft-specific UI differences</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Firefox</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">⚠️ Temporary loading only</li>
+<li class="mb-2">⚠️ Must reload each session</li>
+<li class="mb-2">✅ All core features work</li>
+<li class="mb-2">⚠️ Some Chrome APIs not available</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Opera</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">✅ Chrome extension compatibility</li>
+<li class="mb-2">⚠️ May need additional setup</li>
+<li class="mb-2">✅ All features work</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Vivaldi</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">✅ Full Chromium compatibility</li>
+<li class="mb-2">✅ All features work</li>
+<li class="mb-2">✅ Easy extension management</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📚 Related Documentation</h2>
+
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><a href="01-quick-start.md" class="text-blue-600 dark:text-blue-400 hover:underline">Quick Start</a> - Get started in 5 minutes</li>
+<li class="mb-2"><a href="05-backend-deployment.md" class="text-blue-600 dark:text-blue-400 hover:underline">Backend Deployment</a> - Deploy your backend</li>
+<li class="mb-2"><a href="07-ai-providers.md" class="text-blue-600 dark:text-blue-400 hover:underline">AI Provider Setup</a> - Configure AI providers</li>
+<li class="mb-2"><a href="09-using-opengrammar.md" class="text-blue-600 dark:text-blue-400 hover:underline">Using OpenGrammar</a> - Daily usage guide</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<p class="mb-4"><strong>Your extension is now installed and ready! Start writing better! ✨</strong></p>
+
+        </article>
+        
+        <!-- Back to Top -->
+        <div class="mt-12 pt-8 border-t border-gray-200 dark:border-dark-700">
+            <a href="#" class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:underline">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                </svg>
+                Back to top
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-50 dark:bg-dark-900 border-t border-gray-200 dark:border-dark-700 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <img src="../logo.svg" alt="OpenGrammar Logo" class="h-6 w-6">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">© 2026 OpenGrammar. Apache 2.0 License</span>
+                </div>
+                <div class="flex gap-6">
+                    <a href="https://github.com/swadhinbiswas/opengrammar" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">GitHub</a>
+                    <a href="../index.html" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">Home</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Theme Script -->
+    <script>
+        const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        if (theme === 'dark') document.documentElement.classList.add('dark');
+        
+        function updateThemeIcons() {
+            const isDark = document.documentElement.classList.contains('dark');
+            document.getElementById('theme-toggle-light-icon').classList.toggle('hidden', !isDark);
+            document.getElementById('theme-toggle-dark-icon').classList.toggle('hidden', isDark);
+        }
+        updateThemeIcons();
+        
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            updateThemeIcons();
+        });
+    </script>
+</body>
+</html>

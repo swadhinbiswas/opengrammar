@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⌨️ Keyboard Shortcuts Reference | OpenGrammar</title>
+    <meta name="description" content="OpenGrammar Documentation">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd',
+                            400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb',
+                            700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a',
+                        },
+                        dark: {
+                            50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1',
+                            400: '#94a3b8', 500: '#64748b', 600: '#475569',
+                            700: '#334155', 800: '#1e293b', 900: '#0f172a', 950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        .dark ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    </style>
+</head>
+<body class="font-sans antialiased bg-white dark:bg-dark-950 text-gray-900 dark:text-gray-100">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/80 dark:bg-dark-900/80 backdrop-blur-md border-b border-gray-200 dark:border-dark-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="../index.html" class="flex items-center gap-2">
+                    <img src="../logo.svg" alt="OpenGrammar Logo" class="h-8 w-8">
+                    <span class="font-bold text-xl tracking-tight">OpenGrammar Docs</span>
+                </a>
+                <div class="flex items-center gap-4">
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-dark-800 hover:bg-gray-200 dark:hover:bg-dark-700" aria-label="Toggle dark mode">
+                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                        </svg>
+                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                    </button>
+                    <a href="../index.html" class="text-sm font-medium hover:text-primary-600 dark:hover:text-primary-400">Back to Docs</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <article class="prose prose-lg dark:prose-invert max-w-none">
+            <h1 class="text-4xl font-bold mb-6">⌨️ Keyboard Shortcuts Reference</h1>
+
+<p class="mb-4">Complete reference for all OpenGrammar keyboard shortcuts.</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📋 Default Shortcuts</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Windows / Linux</h3>
+
+<p class="mb-4"><tr><td> Action </td></tr> Shortcut <tr><td> Description </td></tr></p>
+<p class="mb-4"><tr><td>--------</td></tr>----------<tr><td>-------------</td></tr></p>
+<p class="mb-4"><tr><td> <strong>Rewrite Selected Text</strong> </td></tr> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Shift+R</code> <tr><td> Open rewrite popup for selected text </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Toggle Extension</strong> </td></tr> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Shift+E</code> <tr><td> Enable/disable extension </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Open Statistics</strong> </td></tr> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Shift+S</code> <tr><td> View writing statistics </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Open Settings</strong> </td></tr> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Shift+,</code> <tr><td> Open options page </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Check Grammar</strong> </td></tr> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Shift+G</code> <tr><td> Manual grammar check </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Add to Dictionary</strong> </td></tr> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Shift+D</code> <tr><td> Add selected word to dictionary </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Ignore Issue</strong> </td></tr> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Shift+I</code> <tr><td> Ignore current suggestion </td></tr></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">macOS</h3>
+
+<p class="mb-4"><tr><td> Action </td></tr> Shortcut <tr><td> Description </td></tr></p>
+<p class="mb-4"><tr><td>--------</td></tr>----------<tr><td>-------------</td></tr></p>
+<p class="mb-4"><tr><td> <strong>Rewrite Selected Text</strong> </td></tr> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Cmd+Shift+R</code> <tr><td> Open rewrite popup for selected text </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Toggle Extension</strong> </td></tr> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Cmd+Shift+E</code> <tr><td> Enable/disable extension </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Open Statistics</strong> </td></tr> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Cmd+Shift+S</code> <tr><td> View writing statistics </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Open Settings</strong> </td></tr> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Cmd+Shift+,</code> <tr><td> Open options page </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Check Grammar</strong> </td></tr> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Cmd+Shift+G</code> <tr><td> Manual grammar check </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Add to Dictionary</strong> </td></tr> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Cmd+Shift+D</code> <tr><td> Add selected word to dictionary </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Ignore Issue</strong> </td></tr> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Cmd+Shift+I</code> <tr><td> Ignore current suggestion </td></tr></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🔧 Customizing Shortcuts</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Chrome / Brave / Edge</h3>
+
+<li class="mb-2"><strong>Open Extensions Shortcuts</strong></li>
+<p class="mb-4">   <pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>   chrome://extensions/shortcuts</p>
+<p class="mb-4">   </code></pre></p>
+<p class="mb-4">   Or: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">brave://extensions/shortcuts</code> / <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">edge://extensions/shortcuts</code></p>
+
+<li class="mb-2"><strong>Find OpenGrammar</strong></li>
+<p class="mb-4">   - Scroll to OpenGrammar in the list</p>
+
+<li class="mb-2"><strong>Edit Shortcut</strong></li>
+<p class="mb-4">   - Click on the shortcut field</p>
+<p class="mb-4">   - Press your desired key combination</p>
+<p class="mb-4">   - Click <strong>Save</strong></p>
+
+<li class="mb-2"><strong>Test Shortcut</strong></li>
+<p class="mb-4">   - Try the new shortcut</p>
+<p class="mb-4">   - Ensure it doesn't conflict with other extensions</p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Firefox</h3>
+
+<li class="mb-2"><strong>Open Add-ons</strong></li>
+<p class="mb-4">   <pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>   about:addons</p>
+<p class="mb-4">   </code></pre></p>
+
+<li class="mb-2"><strong>Open Shortcut Settings</strong></li>
+<p class="mb-4">   - Click gear icon ⚙️</p>
+<p class="mb-4">   - Select <strong>Manage Extension Shortcuts</strong></p>
+
+<li class="mb-2"><strong>Edit OpenGrammar Shortcuts</strong></li>
+<p class="mb-4">   - Find OpenGrammar</p>
+<p class="mb-4">   - Click shortcut field</p>
+<p class="mb-4">   - Press new combination</p>
+<p class="mb-4">   - Changes save automatically</p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Opera</h3>
+
+<li class="mb-2"><strong>Open Extensions</strong></li>
+<p class="mb-4">   <pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>   opera://extensions/</p>
+<p class="mb-4">   </code></pre></p>
+
+<li class="mb-2"><strong>Enable Developer Mode</strong></li>
+<p class="mb-4">   - Toggle in top-right</p>
+
+<li class="mb-2"><strong>Click "Keyboard Shortcuts"</strong></li>
+<p class="mb-4">   - Find OpenGrammar</p>
+<p class="mb-4">   - Edit shortcuts</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">💡 Shortcut Tips</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Best Practices</h3>
+
+<p class="mb-4">✅ <strong>Choose memorable combinations:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Use action-related keys (R for Rewrite)</li>
+<li class="mb-2">Keep hands on home row</li>
+<li class="mb-2">Use modifier keys consistently</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4">✅ <strong>Avoid conflicts:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Don't use <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+C</code>, <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+V</code>, <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Z</code></li>
+<li class="mb-2">Avoid browser shortcuts (<code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+T</code>, <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+W</code>)</li>
+<li class="mb-2">Check system shortcuts first</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4">✅ <strong>Ergonomic considerations:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Use one hand when possible</li>
+<li class="mb-2">Avoid awkward combinations</li>
+<li class="mb-2">Consider left-handed vs right-handed</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Recommended Custom Shortcuts</h3>
+
+<p class="mb-4"><tr><td> Purpose </td></tr> Windows/Linux <tr><td> Mac </td></tr></p>
+<p class="mb-4"><tr><td>---------</td></tr>---------------<tr><td>-----</td></tr></p>
+<p class="mb-4"><tr><td> Rewrite </td></tr> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Alt+R</code> <tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Opt+R</code> </td></tr></p>
+<p class="mb-4"><tr><td> Statistics </td></tr> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Alt+S</code> <tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Opt+S</code> </td></tr></p>
+<p class="mb-4"><tr><td> Settings </td></tr> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Alt+,</code> <tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Opt+,</code> </td></tr></p>
+<p class="mb-4"><tr><td> Toggle </td></tr> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Alt+E</code> <tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Opt+E</code> </td></tr></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🎯 Using Shortcuts Effectively</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Rewrite Workflow</h3>
+
+<li class="mb-2"><strong>Select Text</strong></li>
+<p class="mb-4">   - Click and drag to highlight</p>
+<p class="mb-4">   - Or use <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Shift+Arrow</code> keys</p>
+
+<li class="mb-2"><strong>Press Rewrite Shortcut</strong></li>
+<p class="mb-4">   - <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Shift+R</code> (Windows/Linux)</p>
+<p class="mb-4">   - <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Cmd+Shift+R</code> (Mac)</p>
+
+<li class="mb-2"><strong>Choose Tone</strong></li>
+<p class="mb-4">   - Click tone button or use number keys</p>
+<p class="mb-4">   - 1: Formal, 2: Casual, 3: Professional, etc.</p>
+
+<li class="mb-2"><strong>Apply or Copy</strong></li>
+<p class="mb-4">   - <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Enter</code> to apply</p>
+<p class="mb-4">   - <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+C</code> to copy</p>
+<p class="mb-4">   - <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Esc</code> to close</p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Quick Check Workflow</h3>
+
+<li class="mb-2"><strong>Finish Writing</strong></li>
+<p class="mb-4">   - Complete your text</p>
+
+<li class="mb-2"><strong>Manual Grammar Check</strong></li>
+<p class="mb-4">   - Press <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Shift+G</code></p>
+<p class="mb-4">   - Review all suggestions</p>
+
+<li class="mb-2"><strong>Apply Fixes</strong></li>
+<p class="mb-4">   - Click suggestions to apply</p>
+<p class="mb-4">   - Or use keyboard navigation</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">⚠️ Troubleshooting</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Shortcut Not Working</h3>
+
+<p class="mb-4"><strong>Possible causes:</strong></p>
+
+<li class="mb-2"><strong>Conflict with browser shortcut</strong></li>
+<p class="mb-4">   - Check <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">chrome://extensions/shortcuts</code></p>
+<p class="mb-4">   - Change to different combination</p>
+
+<li class="mb-2"><strong>Extension not loaded</strong></li>
+<p class="mb-4">   - Reload extension</p>
+<p class="mb-4">   - Check if enabled</p>
+
+<li class="mb-2"><strong>Wrong context</strong></li>
+<p class="mb-4">   - Some shortcuts only work in text inputs</p>
+<p class="mb-4">   - Try in different context</p>
+
+<li class="mb-2"><strong>Focus issue</strong></li>
+<p class="mb-4">   - Click on webpage first</p>
+<p class="mb-4">   - Ensure page has focus</p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Shortcut Conflicts</h3>
+
+<p class="mb-4"><strong>How to resolve:</strong></p>
+
+<li class="mb-2"><strong>Identify conflict</strong></li>
+<p class="mb-4">   - Try shortcut</p>
+<p class="mb-4">   - See what happens</p>
+
+<li class="mb-2"><strong>Check all shortcuts</strong></li>
+<p class="mb-4">   - Browser: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">chrome://settings/shortcuts</code></p>
+<p class="mb-4">   - Extensions: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">chrome://extensions/shortcuts</code></p>
+<p class="mb-4">   - OS: System settings</p>
+
+<li class="mb-2"><strong>Change conflicting shortcut</strong></li>
+<p class="mb-4">   - Pick unused combination</p>
+<p class="mb-4">   - Test immediately</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🔍 Advanced Shortcut Tips</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Power User Techniques</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2">1. Muscle Memory Training</h4>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Practice same shortcut daily</li>
+<li class="mb-2">Use for one week consistently</li>
+<li class="mb-2">Becomes automatic</li>
+<p class="mb-4"></ul></p>
+<h4 class="text-lg font-bold mt-4 mb-2">2. Shortcut Chaining</h4>
+<p class="mb-4">Combine shortcuts for efficiency:</p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Select Text → Ctrl+Shift+R → Choose Tone → Enter → Done!
+<p class="mb-4"></code></pre></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">3. Context-Aware Usage</h4>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Different shortcuts for different contexts</li>
+<li class="mb-2">Email: Rewrite + Formal</li>
+<li class="mb-2">Chat: Quick check only</li>
+<li class="mb-2">Docs: Full statistics</li>
+<p class="mb-4"></ul></p>
+<h4 class="text-lg font-bold mt-4 mb-2">4. Custom Workflows</h4>
+<p class="mb-4">Create your own workflow:</p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Write → Check (Ctrl+Shift+G) → Rewrite (Ctrl+Shift+R) → Stats (Ctrl+Shift+S)
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📊 Shortcut Comparison</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">By Frequency of Use</h3>
+
+<p class="mb-4"><tr><td> Shortcut </td></tr> Daily Use <tr><td> Weekly Use </td></tr> Rarely |</p>
+<p class="mb-4"><tr><td>----------</td></tr>-----------<tr><td>------------</td></tr>--------|</p>
+<p class="mb-4"><tr><td> Rewrite </td></tr> ⭐⭐⭐⭐⭐ <tr><td> - </td></tr> - |</p>
+<p class="mb-4"><tr><td> Toggle </td></tr> ⭐⭐⭐ <tr><td> ⭐⭐ </td></tr> - |</p>
+<p class="mb-4"><tr><td> Statistics </td></tr> - <tr><td> ⭐⭐⭐ </td></tr> ⭐⭐ |</p>
+<p class="mb-4"><tr><td> Settings </td></tr> - <tr><td> ⭐⭐ </td></tr> ⭐⭐⭐ |</p>
+<p class="mb-4"><tr><td> Check Grammar </td></tr> ⭐⭐ <tr><td> ⭐⭐⭐ </td></tr> ⭐⭐ |</p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">By Platform</h3>
+
+<p class="mb-4"><tr><td> Platform </td></tr> Best Supported <tr><td> Limited </td></tr> Not Supported |</p>
+<p class="mb-4"><tr><td>----------</td></tr>----------------<tr><td>---------</td></tr>---------------|</p>
+<p class="mb-4"><tr><td> Chrome </td></tr> ✅ All shortcuts <tr><td> - </td></tr> - |</p>
+<p class="mb-4"><tr><td> Brave </td></tr> ✅ All shortcuts <tr><td> - </td></tr> - |</p>
+<p class="mb-4"><tr><td> Edge </td></tr> ✅ All shortcuts <tr><td> - </td></tr> - |</p>
+<p class="mb-4"><tr><td> Firefox </td></tr> ⚠️ Most shortcuts <tr><td> ⚠️ Some limitations </td></tr> - |</p>
+<p class="mb-4"><tr><td> Opera </td></tr> ✅ All shortcuts <tr><td> - </td></tr> - |</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🎓 Learning Shortcuts</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Week 1: Basics</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Master <strong>Rewrite</strong> (<code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Shift+R</code>)</li>
+<li class="mb-2">Use for all text rewriting</li>
+<li class="mb-2">Build muscle memory</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Week 2: Efficiency</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Add <strong>Toggle</strong> (<code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Shift+E</code>)</li>
+<li class="mb-2">Enable/disable quickly</li>
+<li class="mb-2">Save clicks</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Week 3: Analysis</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Learn <strong>Statistics</strong> (<code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Shift+S</code>)</li>
+<li class="mb-2">Check writing metrics</li>
+<li class="mb-2">Track improvement</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Week 4: Mastery</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Use all shortcuts fluently</li>
+<li class="mb-2">Create custom workflows</li>
+<li class="mb-2">Teach others</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🆘 Quick Reference Card</h2>
+
+<p class="mb-4">Print this for your desk!</p>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>┌─────────────────────────────────────────────┐
+<p class="mb-4">│         OpenGrammar Quick Shortcuts         │</p>
+<p class="mb-4">├─────────────────────────────────────────────┤</p>
+<p class="mb-4">│                                             │</p>
+<p class="mb-4">│  Rewrite Text     Ctrl+Shift+R  (Win/Linux) │</p>
+<p class="mb-4">│                   Cmd+Shift+R   (Mac)       │</p>
+<p class="mb-4">│                                             │</p>
+<p class="mb-4">│  Toggle Extension Ctrl+Shift+E  (Win/Linux) │</p>
+<p class="mb-4">│                   Cmd+Shift+E   (Mac)       │</p>
+<p class="mb-4">│                                             │</p>
+<p class="mb-4">│  Statistics       Ctrl+Shift+S  (Win/Linux) │</p>
+<p class="mb-4">│                   Cmd+Shift+S   (Mac)       │</p>
+<p class="mb-4">│                                             │</p>
+<p class="mb-4">│  Settings         Ctrl+Shift+,  (Win/Linux) │</p>
+<p class="mb-4">│                   Cmd+Shift+,   (Mac)       │</p>
+<p class="mb-4">│                                             │</p>
+<p class="mb-4">│  Check Grammar    Ctrl+Shift+G  (Win/Linux) │</p>
+<p class="mb-4">│                   Cmd+Shift+G   (Mac)       │</p>
+<p class="mb-4">│                                             │</p>
+<p class="mb-4">└─────────────────────────────────────────────┘</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📚 Related Documentation</h2>
+
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><a href="09-using-opengrammar.md" class="text-blue-600 dark:text-blue-400 hover:underline">Using OpenGrammar</a> - Complete user guide</li>
+<li class="mb-2"><a href="10-tone-rewriting.md" class="text-blue-600 dark:text-blue-400 hover:underline">Tone Rewriting</a> - Rewriting features</li>
+<li class="mb-2"><a href="18-troubleshooting.md" class="text-blue-600 dark:text-blue-400 hover:underline">Troubleshooting</a> - Fix issues</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<p class="mb-4"><strong>Happy Shortcuting! ⚡</strong></p>
+
+<p class="mb-4">Save time and write more efficiently with keyboard shortcuts!</p>
+
+        </article>
+        
+        <!-- Back to Top -->
+        <div class="mt-12 pt-8 border-t border-gray-200 dark:border-dark-700">
+            <a href="#" class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:underline">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                </svg>
+                Back to top
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-50 dark:bg-dark-900 border-t border-gray-200 dark:border-dark-700 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <img src="../logo.svg" alt="OpenGrammar Logo" class="h-6 w-6">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">© 2026 OpenGrammar. Apache 2.0 License</span>
+                </div>
+                <div class="flex gap-6">
+                    <a href="https://github.com/swadhinbiswas/opengrammar" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">GitHub</a>
+                    <a href="../index.html" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">Home</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Theme Script -->
+    <script>
+        const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        if (theme === 'dark') document.documentElement.classList.add('dark');
+        
+        function updateThemeIcons() {
+            const isDark = document.documentElement.classList.contains('dark');
+            document.getElementById('theme-toggle-light-icon').classList.toggle('hidden', !isDark);
+            document.getElementById('theme-toggle-dark-icon').classList.toggle('hidden', isDark);
+        }
+        updateThemeIcons();
+        
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            updateThemeIcons();
+        });
+    </script>
+</body>
+</html>

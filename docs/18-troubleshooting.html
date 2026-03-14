@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔧 Troubleshooting Guide | OpenGrammar</title>
+    <meta name="description" content="OpenGrammar Documentation">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd',
+                            400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb',
+                            700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a',
+                        },
+                        dark: {
+                            50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1',
+                            400: '#94a3b8', 500: '#64748b', 600: '#475569',
+                            700: '#334155', 800: '#1e293b', 900: '#0f172a', 950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        .dark ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    </style>
+</head>
+<body class="font-sans antialiased bg-white dark:bg-dark-950 text-gray-900 dark:text-gray-100">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/80 dark:bg-dark-900/80 backdrop-blur-md border-b border-gray-200 dark:border-dark-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="../index.html" class="flex items-center gap-2">
+                    <img src="../logo.svg" alt="OpenGrammar Logo" class="h-8 w-8">
+                    <span class="font-bold text-xl tracking-tight">OpenGrammar Docs</span>
+                </a>
+                <div class="flex items-center gap-4">
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-dark-800 hover:bg-gray-200 dark:hover:bg-dark-700" aria-label="Toggle dark mode">
+                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                        </svg>
+                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                    </button>
+                    <a href="../index.html" class="text-sm font-medium hover:text-primary-600 dark:hover:text-primary-400">Back to Docs</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <article class="prose prose-lg dark:prose-invert max-w-none">
+            <h1 class="text-4xl font-bold mb-6">🔧 Troubleshooting Guide</h1>
+
+<p class="mb-4">Solve common OpenGrammar issues with this comprehensive troubleshooting guide.</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📋 Quick Fixes</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Extension Not Working</h3>
+
+<p class="mb-4"><strong>Problem:</strong> Extension installed but not detecting errors</p>
+
+<p class="mb-4"><strong>Quick Fix:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">1. Reload extension</h1>
+<p class="mb-4">chrome://extensions/ → Click reload icon on OpenGrammar</p>
+
+<h1 class="text-4xl font-bold mb-6">2. Refresh the page</h1>
+<p class="mb-4">Press F5 or Ctrl+R</p>
+
+<h1 class="text-4xl font-bold mb-6">3. Check backend</h1>
+<p class="mb-4">curl http://localhost:8787/health</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🔍 Common Issues</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Issue 1: No Grammar Highlights</h3>
+
+<p class="mb-4"><strong>Symptoms:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Typing text with errors</li>
+<li class="mb-2">No red/amber/blue underlines appear</li>
+<li class="mb-2">Extension icon shows no error count</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Possible Causes & Solutions:</strong></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Cause 1: Extension Disabled</h4>
+<p class="mb-4"><strong>Solution:</strong></p>
+<li class="mb-2">Click extension icon</li>
+<li class="mb-2">Check "Enable OpenGrammar" is ON</li>
+<li class="mb-2">Toggle if needed</li>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Cause 2: Site Disabled</h4>
+<p class="mb-4"><strong>Solution:</strong></p>
+<li class="mb-2">Right-click extension → Options</li>
+<li class="mb-2">Go to Site-Specific Settings</li>
+<li class="mb-2">Check if current site is disabled</li>
+<li class="mb-2">Enable if needed</li>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Cause 3: Backend Not Running</h4>
+<p class="mb-4"><strong>Solution:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Check backend status</h1>
+<p class="mb-4">curl http://localhost:8787/health</p>
+
+<h1 class="text-4xl font-bold mb-6">Start backend</h1>
+<p class="mb-4">cd opengrammar/opengrammar/backend</p>
+<p class="mb-4">bun run dev</p>
+<p class="mb-4"></code></pre></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Cause 4: Text Too Short</h4>
+<p class="mb-4"><strong>Solution:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Extension only checks text with 5+ characters</li>
+<li class="mb-2">Type more text to trigger checking</li>
+<p class="mb-4"></ul></p>
+<h4 class="text-lg font-bold mt-4 mb-2">Cause 5: Wrong Input Type</h4>
+<p class="mb-4"><strong>Solution:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Extension works on: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400"><input></code>, <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400"><textarea></code>, <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">[contenteditable]</code></li>
+<li class="mb-2">Doesn't work on: PDFs, images, non-editable text</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h3 class="text-xl font-bold mt-6 mb-3">Issue 2: Backend Connection Failed</h3>
+
+<p class="mb-4"><strong>Symptoms:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Red status indicator in extension</li>
+<li class="mb-2">"Cannot connect to backend" error</li>
+<li class="mb-2">No AI suggestions</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Solutions:</strong></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Check Backend URL</h4>
+<li class="mb-2">Click extension → Settings</li>
+<li class="mb-2">Verify Backend URL:</li>
+<p class="mb-4">   - Local: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">http://localhost:8787</code></p>
+<p class="mb-4">   - Cloudflare: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">https://yourname.workers.dev</code></p>
+<p class="mb-4">   - Vercel: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">https://yourapp.vercel.app</code></p>
+<p class="mb-4">   - Railway: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">https://yourapp.railway.app</code></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Test Backend</h4>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Test health endpoint</h1>
+<p class="mb-4">curl http://localhost:8787/health</p>
+
+<h1 class="text-4xl font-bold mb-6">Expected response:</h1>
+<h1 class="text-4xl font-bold mb-6">{"status":"healthy","timestamp":"..."}</h1>
+<p class="mb-4"></code></pre></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Check CORS</h4>
+<p class="mb-4">If using custom backend:</p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>// Ensure CORS is configured
+<p class="mb-4">app.use('*', cors({</p>
+<p class="mb-4">  origin: ['chrome-extension://<em>', 'moz-extension://</em>']</p>
+<p class="mb-4">}));</p>
+<p class="mb-4"></code></pre></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Restart Backend</h4>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Stop backend (Ctrl+C)</h1>
+<h1 class="text-4xl font-bold mb-6">Restart</h1>
+<p class="mb-4">bun run dev</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h3 class="text-xl font-bold mt-6 mb-3">Issue 3: AI Not Working</h3>
+
+<p class="mb-4"><strong>Symptoms:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Rule-based checks work</li>
+<li class="mb-2">AI suggestions don't appear</li>
+<li class="mb-2">"API key invalid" error</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Solutions:</strong></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Check API Key</h4>
+<li class="mb-2">Click extension → Settings</li>
+<li class="mb-2">Verify API key is entered</li>
+<li class="mb-2">Check for typos (no spaces)</li>
+<li class="mb-2">Ensure key starts with correct prefix:</li>
+<p class="mb-4">   - Groq: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">gsk_</code></p>
+<p class="mb-4">   - OpenAI: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">sk-</code></p>
+<p class="mb-4">   - OpenRouter: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">sk-or-</code></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Test API Key</h4>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Test Groq key</h1>
+<p class="mb-4">curl https://api.groq.com/openai/v1/chat/completions \</p>
+<p class="mb-4">  -H "Authorization: Bearer gsk_xxx" \</p>
+<p class="mb-4">  -H "Content-Type: application/json" \</p>
+<p class="mb-4">  -d '{"model":"llama-3.1-70b-versatile","messages":[{"role":"user","content":"test"}]}'</p>
+
+<h1 class="text-4xl font-bold mb-6">Test OpenAI key</h1>
+<p class="mb-4">curl https://api.openai.com/v1/chat/completions \</p>
+<p class="mb-4">  -H "Authorization: Bearer sk-xxx" \</p>
+<p class="mb-4">  -H "Content-Type: application/json" \</p>
+<p class="mb-4">  -d '{"model":"gpt-4o-mini","messages":[{"role":"user","content":"test"}]}'</p>
+<p class="mb-4"></code></pre></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Check Provider Selection</h4>
+<li class="mb-2">Settings → Provider</li>
+<li class="mb-2">Ensure correct provider selected</li>
+<li class="mb-2">Model matches provider</li>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Check Rate Limits</h4>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Groq free tier: 100 requests/day</li>
+<li class="mb-2">If exceeded, wait 24 hours or upgrade</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h3 class="text-xl font-bold mt-6 mb-3">Issue 4: Extension Crashes</h3>
+
+<p class="mb-4"><strong>Symptoms:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Extension closes unexpectedly</li>
+<li class="mb-2">Popup doesn't open</li>
+<li class="mb-2">Options page blank</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Solutions:</strong></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Clear Extension Data</h4>
+<li class="mb-2"><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">chrome://extensions/</code></li>
+<li class="mb-2">Click "Details" on OpenGrammar</li>
+<li class="mb-2">Click "Clear storage" or "Reset"</li>
+<li class="mb-2">Reload extension</li>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Check Browser Console</h4>
+<li class="mb-2">Right-click extension popup → Inspect</li>
+<li class="mb-2">Check Console tab for errors</li>
+<li class="mb-2">Copy error messages</li>
+<li class="mb-2">Search in documentation or create issue</li>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Rebuild Extension</h4>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>cd opengrammar/opengrammar/extension
+
+<h1 class="text-4xl font-bold mb-6">Clean build</h1>
+<p class="mb-4">rm -rf dist node_modules</p>
+<p class="mb-4">bun install</p>
+<p class="mb-4">bun run build</p>
+
+<h1 class="text-4xl font-bold mb-6">Reload in chrome://extensions/</h1>
+<p class="mb-4"></code></pre></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Try Incognito Mode</h4>
+<li class="mb-2">Open incognito window</li>
+<li class="mb-2">Enable extension for incognito:</li>
+<p class="mb-4">   - <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">chrome://extensions/</code> → Details → "Allow in Incognito"</p>
+<li class="mb-2">Test in incognito</li>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h3 class="text-xl font-bold mt-6 mb-3">Issue 5: Rewrite Not Working</h3>
+
+<p class="mb-4"><strong>Symptoms:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Right-click menu doesn't show rewrite option</li>
+<li class="mb-2">Rewrite popup doesn't open</li>
+<li class="mb-2">Rewrite returns error</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Solutions:</strong></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Check Text Selection</h4>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Ensure text is actually selected</li>
+<li class="mb-2">Try selecting different text</li>
+<li class="mb-2">Minimum 5 characters</li>
+<p class="mb-4"></ul></p>
+<h4 class="text-lg font-bold mt-4 mb-2">Check Keyboard Shortcut</h4>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Windows/Linux: Ctrl+Shift+R</h1>
+<h1 class="text-4xl font-bold mb-6">Mac: Cmd+Shift+R</h1>
+
+<h1 class="text-4xl font-bold mb-6">If not working, check shortcut:</h1>
+<p class="mb-4">chrome://extensions/shortcuts</p>
+<p class="mb-4"></code></pre></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Verify Backend</h4>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Test rewrite endpoint</h1>
+<p class="mb-4">curl -X POST http://localhost:8787/rewrite \</p>
+<p class="mb-4">  -H "Content-Type: application/json" \</p>
+<p class="mb-4">  -d '{"text":"hey","tone":"formal"}'</p>
+<p class="mb-4"></code></pre></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Check Provider</h4>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Rewrite requires AI provider</li>
+<li class="mb-2">Ensure API key is valid</li>
+<li class="mb-2">Try different provider</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h3 class="text-xl font-bold mt-6 mb-3">Issue 6: Slow Performance</h3>
+
+<p class="mb-4"><strong>Symptoms:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Slow grammar checking</li>
+<li class="mb-2">Laggy typing</li>
+<li class="mb-2">Delayed suggestions</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Solutions:</strong></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Reduce Text Length</h4>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Split long documents</li>
+<li class="mb-2">Check in chunks</li>
+<li class="mb-2">Use rule-based only for long texts</li>
+<p class="mb-4"></ul></p>
+<h4 class="text-lg font-bold mt-4 mb-2">Disable AI Temporarily</h4>
+<li class="mb-2">Settings → Provider</li>
+<li class="mb-2">Select "Rule-Based Only"</li>
+<li class="mb-2">Faster, offline checking</li>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Clear Browser Cache</h4>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Chrome: Ctrl+Shift+Delete</h1>
+<h1 class="text-4xl font-bold mb-6">Clear cached images and files</h1>
+<h1 class="text-4xl font-bold mb-6">Reload extension</h1>
+<p class="mb-4"></code></pre></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Check System Resources</h4>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Open Task Manager (Shift+Esc in Chrome)</li>
+<li class="mb-2">Check memory usage</li>
+<li class="mb-2">Close unused tabs</li>
+<li class="mb-2">Restart browser</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h3 class="text-xl font-bold mt-6 mb-3">Issue 7: False Positives</h3>
+
+<p class="mb-4"><strong>Symptoms:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Correct words flagged as errors</li>
+<li class="mb-2">Technical terms marked wrong</li>
+<li class="mb-2">Names highlighted</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Solutions:</strong></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Add to Dictionary</h4>
+<li class="mb-2">Click highlighted word</li>
+<li class="mb-2">Click "Add to Dictionary"</li>
+<li class="mb-2">Word won't be flagged again</li>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Bulk Add Words</h4>
+<li class="mb-2">Options → Custom Dictionary</li>
+<li class="mb-2">Click "Add Word"</li>
+<li class="mb-2">Enter multiple words</li>
+<li class="mb-2">Or import from file</li>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Disable Specific Rules</h4>
+<p class="mb-4">(Advanced)</p>
+<li class="mb-2">Options → Grammar Rules</li>
+<li class="mb-2">Disable specific rule categories</li>
+<li class="mb-2">Save settings</li>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h3 class="text-xl font-bold mt-6 mb-3">Issue 8: Settings Not Saving</h3>
+
+<p class="mb-4"><strong>Symptoms:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Settings reset after closing</li>
+<li class="mb-2">API key disappears</li>
+<li class="mb-2">Changes don't persist</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Solutions:</strong></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Check Storage Permissions</h4>
+<li class="mb-2"><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">chrome://extensions/</code></li>
+<li class="mb-2">OpenGrammar → Details</li>
+<li class="mb-2">Ensure storage permission enabled</li>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Clear and Reset</h4>
+<li class="mb-2">Options → Data Management</li>
+<li class="mb-2">Click "Reset All Settings"</li>
+<li class="mb-2">Reconfigure settings</li>
+<li class="mb-2">Save and reload</li>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Export/Import</h4>
+<li class="mb-2">Export current settings (if possible)</li>
+<li class="mb-2">Reset to defaults</li>
+<li class="mb-2">Import settings back</li>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Check Browser Storage</h4>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Clear browser data</h1>
+<p class="mb-4">chrome://settings/clearBrowserData</p>
+
+<h1 class="text-4xl font-bold mb-6">Clear "Cookies and other site data"</h1>
+<h1 class="text-4xl font-bold mb-6">Clear "Cached images and files"</h1>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🔍 Debug Mode</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Enable Debug Logging</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Backend Debug Mode</h4>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Set DEBUG environment variable</h1>
+<p class="mb-4">export DEBUG=true</p>
+
+<h1 class="text-4xl font-bold mb-6">Start backend</h1>
+<p class="mb-4">bun run dev</p>
+
+<h1 class="text-4xl font-bold mb-6">Or with inline variable</h1>
+<p class="mb-4">DEBUG=true bun run dev</p>
+<p class="mb-4"></code></pre></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Extension Debug Mode</h4>
+<li class="mb-2">Open any webpage</li>
+<li class="mb-2">Press F12 → Open DevTools</li>
+<li class="mb-2">Go to Console tab</li>
+<li class="mb-2">Look for OpenGrammar logs</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Common Log Messages</h3>
+
+<p class="mb-4"><tr><td> Message </td></tr> Meaning <tr><td> Action </td></tr></p>
+<p class="mb-4"><tr><td>---------</td></tr>---------<tr><td>--------</td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Grammar check skipped</code> </td></tr> Text too short or not editable <tr><td> Normal, no action needed </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Backend connection issue</code> </td></tr> Can't reach backend <tr><td> Check backend URL and status </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">LLM Analysis Error</code> </td></tr> AI provider error <tr><td> Check API key and provider </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Settings saved</code> </td></tr> Settings updated <tr><td> Normal, success message </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Rate limit exceeded</code> </td></tr> Too many requests <tr><td> Wait and retry </td></tr></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🧪 Testing Checklist</h2>
+
+<p class="mb-4">Use this to verify everything works:</p>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Extension Installation
+<p class="mb-4">☐ Extension appears in chrome://extensions/</p>
+<p class="mb-4">☐ Extension icon visible in toolbar</p>
+<p class="mb-4">☐ Popup opens when clicking icon</p>
+<p class="mb-4">☐ Options page loads</p>
+
+<p class="mb-4">Backend Connection</p>
+<p class="mb-4">☐ Backend health endpoint responds</p>
+<p class="mb-4">☐ Status indicator shows green</p>
+<p class="mb-4">☐ Providers list loads</p>
+<p class="mb-4">☐ Models list loads</p>
+
+<p class="mb-4">Grammar Checking</p>
+<p class="mb-4">☐ Typing in text box triggers check</p>
+<p class="mb-4">☐ Red underlines appear for errors</p>
+<p class="mb-4">☐ Clicking underline shows tooltip</p>
+<p class="mb-4">☐ Apply button works</p>
+<p class="mb-4">☐ Ignore button works</p>
+<p class="mb-4">☐ Add to Dictionary works</p>
+
+<p class="mb-4">AI Features</p>
+<p class="mb-4">☐ API key saves correctly</p>
+<p class="mb-4">☐ Provider selection works</p>
+<p class="mb-4">☐ AI suggestions appear</p>
+<p class="mb-4">☐ No error messages</p>
+
+<p class="mb-4">Tone Rewriting</p>
+<p class="mb-4">☐ Right-click menu appears</p>
+<p class="mb-4">☐ Rewrite popup opens</p>
+<p class="mb-4">☐ Tone selection works</p>
+<p class="mb-4">☐ Rewrite generates results</p>
+<p class="mb-4">☐ Apply/Copy buttons work</p>
+
+<p class="mb-4">Settings</p>
+<p class="mb-4">☐ All settings save</p>
+<p class="mb-4">☐ Settings persist after reload</p>
+<p class="mb-4">☐ Export/Import works</p>
+<p class="mb-4">☐ Reset works</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🆘 Still Having Issues?</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Collect Debug Information</h3>
+
+<p class="mb-4">Before asking for help, gather:</p>
+
+<li class="mb-2"><strong>Extension Version</strong></li>
+<p class="mb-4">   <pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>   chrome://extensions/ → Note version number</p>
+<p class="mb-4">   </code></pre></p>
+
+<li class="mb-2"><strong>Browser Version</strong></li>
+<p class="mb-4">   <pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>   chrome://settings/help → Copy version</p>
+<p class="mb-4">   </code></pre></p>
+
+<li class="mb-2"><strong>Backend Logs</strong></li>
+<p class="mb-4">   <pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>   cd backend</p>
+<p class="mb-4">   bun run dev 2>&1 | tee backend.log</p>
+<p class="mb-4">   </code></pre></p>
+
+<li class="mb-2"><strong>Browser Console</strong></li>
+<p class="mb-4">   <pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>   F12 → Console → Copy errors</p>
+<p class="mb-4">   </code></pre></p>
+
+<li class="mb-2"><strong>Test Results</strong></li>
+<p class="mb-4">   <pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>   curl http://localhost:8787/health</p>
+<p class="mb-4">   curl http://localhost:8787/providers</p>
+<p class="mb-4">   </code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Get Help</h3>
+
+<li class="mb-2"><strong>Check Documentation</strong></li>
+<p class="mb-4">   - Read relevant docs</p>
+<p class="mb-4">   - Search for similar issues</p>
+
+<li class="mb-2"><strong>GitHub Issues</strong></li>
+<p class="mb-4">   - Search existing issues</p>
+<p class="mb-4">   - Create new issue with debug info</p>
+
+<li class="mb-2"><strong>GitHub Discussions</strong></li>
+<p class="mb-4">   - Ask questions</p>
+<p class="mb-4">   - Share experiences</p>
+
+<li class="mb-2"><strong>Discord/Community</strong></li>
+<p class="mb-4">   - Join community server</p>
+<p class="mb-4">   - Ask in appropriate channel</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📚 Related Documentation</h2>
+
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><a href="01-quick-start.md" class="text-blue-600 dark:text-blue-400 hover:underline">Quick Start</a> - Setup guide</li>
+<li class="mb-2"><a href="04-browser-extension-setup.md" class="text-blue-600 dark:text-blue-400 hover:underline">Browser Setup</a> - Installation</li>
+<li class="mb-2"><a href="07-ai-providers.md" class="text-blue-600 dark:text-blue-400 hover:underline">AI Providers</a> - Provider configuration</li>
+<li class="mb-2"><a href="19-faq.md" class="text-blue-600 dark:text-blue-400 hover:underline">FAQ</a> - Frequently asked questions</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<p class="mb-4"><strong>Still stuck? Create a GitHub issue with your debug information!</strong> 🐛</p>
+
+        </article>
+        
+        <!-- Back to Top -->
+        <div class="mt-12 pt-8 border-t border-gray-200 dark:border-dark-700">
+            <a href="#" class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:underline">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                </svg>
+                Back to top
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-50 dark:bg-dark-900 border-t border-gray-200 dark:border-dark-700 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <img src="../logo.svg" alt="OpenGrammar Logo" class="h-6 w-6">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">© 2026 OpenGrammar. Apache 2.0 License</span>
+                </div>
+                <div class="flex gap-6">
+                    <a href="https://github.com/swadhinbiswas/opengrammar" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">GitHub</a>
+                    <a href="../index.html" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">Home</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Theme Script -->
+    <script>
+        const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        if (theme === 'dark') document.documentElement.classList.add('dark');
+        
+        function updateThemeIcons() {
+            const isDark = document.documentElement.classList.contains('dark');
+            document.getElementById('theme-toggle-light-icon').classList.toggle('hidden', !isDark);
+            document.getElementById('theme-toggle-dark-icon').classList.toggle('hidden', isDark);
+        }
+        updateThemeIcons();
+        
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            updateThemeIcons();
+        });
+    </script>
+</body>
+</html>

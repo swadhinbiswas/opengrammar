@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 AI Provider Setup Guide | OpenGrammar</title>
+    <meta name="description" content="OpenGrammar Documentation">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd',
+                            400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb',
+                            700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a',
+                        },
+                        dark: {
+                            50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1',
+                            400: '#94a3b8', 500: '#64748b', 600: '#475569',
+                            700: '#334155', 800: '#1e293b', 900: '#0f172a', 950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        .dark ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    </style>
+</head>
+<body class="font-sans antialiased bg-white dark:bg-dark-950 text-gray-900 dark:text-gray-100">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/80 dark:bg-dark-900/80 backdrop-blur-md border-b border-gray-200 dark:border-dark-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="../index.html" class="flex items-center gap-2">
+                    <img src="../logo.svg" alt="OpenGrammar Logo" class="h-8 w-8">
+                    <span class="font-bold text-xl tracking-tight">OpenGrammar Docs</span>
+                </a>
+                <div class="flex items-center gap-4">
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-dark-800 hover:bg-gray-200 dark:hover:bg-dark-700" aria-label="Toggle dark mode">
+                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                        </svg>
+                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                    </button>
+                    <a href="../index.html" class="text-sm font-medium hover:text-primary-600 dark:hover:text-primary-400">Back to Docs</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <article class="prose prose-lg dark:prose-invert max-w-none">
+            <h1 class="text-4xl font-bold mb-6">🤖 AI Provider Setup Guide</h1>
+
+<p class="mb-4">Configure AI providers for advanced grammar checking and tone rewriting.</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📋 Overview</h2>
+
+<p class="mb-4">OpenGrammar supports <strong>6 AI providers</strong>, giving you flexibility in cost, quality, and privacy.</p>
+
+<p class="mb-4"><tr><td> Provider </td></tr> Speed <tr><td> Quality </td></tr> Cost <tr><td> Best For </td></tr></p>
+<p class="mb-4"><tr><td>----------</td></tr>-------<tr><td>---------</td></tr>------<tr><td>----------</td></tr></p>
+<p class="mb-4"><tr><td> <strong>Groq</strong> </td></tr> ⚡⚡⚡ <tr><td> ⭐⭐⭐⭐ </td></tr> Free tier <tr><td> Fast & free </td></tr></p>
+<p class="mb-4"><tr><td> <strong>OpenAI</strong> </td></tr> ⚡⚡ <tr><td> ⭐⭐⭐⭐⭐ </td></tr> $$ <tr><td> Best quality </td></tr></p>
+<p class="mb-4"><tr><td> <strong>OpenRouter</strong> </td></tr> ⚡⚡ <tr><td> ⭐⭐⭐⭐⭐ </td></tr> Varies <tr><td> Model variety </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Together AI</strong> </td></tr> ⚡⚡ <tr><td> ⭐⭐⭐⭐ </td></tr> $ <tr><td> Open-source </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Ollama</strong> </td></tr> ⚡⚡⚡ <tr><td> ⭐⭐⭐ </td></tr> Free <tr><td> Privacy, offline </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Custom</strong> </td></tr> - <tr><td> - </td></tr> - <tr><td> Your own API </td></tr></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🎯 Quick Setup</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Step 1: Choose Your Provider</h3>
+
+<p class="mb-4"><strong>For Free Usage:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Provider: <strong>Groq</strong></li>
+<li class="mb-2">Free tier: 100 requests/day</li>
+<li class="mb-2">Quality: Excellent (Llama 3.1 70B)</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>For Best Quality:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Provider: <strong>OpenAI</strong></li>
+<li class="mb-2">Model: GPT-4o-mini</li>
+<li class="mb-2">Cost: ~$0.15 per 1K requests</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>For Privacy:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Provider: <strong>Ollama (Local)</strong></li>
+<li class="mb-2">100% offline</li>
+<li class="mb-2">Free (your hardware)</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Step 2: Get API Key</h3>
+
+<p class="mb-4">Follow the guide for your chosen provider below.</p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Step 3: Configure Extension</h3>
+
+<li class="mb-2">Click OpenGrammar icon</li>
+<li class="mb-2">Click <strong>Settings</strong> (gear icon)</li>
+<li class="mb-2">Select <strong>Provider</strong> from dropdown</li>
+<li class="mb-2">Enter <strong>API Key</strong></li>
+<li class="mb-2">Select <strong>Model</strong></li>
+<li class="mb-2">Click <strong>Save</strong></li>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">⚡ Groq (Recommended - Free)</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Overview</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><strong>Free Tier:</strong> 100 requests/day</li>
+<li class="mb-2"><strong>Speed:</strong> Fastest (LPU technology)</li>
+<li class="mb-2"><strong>Quality:</strong> Excellent (Llama 3.1 70B)</li>
+<li class="mb-2"><strong>Setup Time:</strong> 2 minutes</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Step 1: Create Account</h3>
+<li class="mb-2">Visit <a href="https://console.groq.com" class="text-blue-600 dark:text-blue-400 hover:underline">Groq Console</a></li>
+<li class="mb-2">Click <strong>Sign Up</strong></li>
+<li class="mb-2">Complete registration</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Step 2: Get API Key</h3>
+<li class="mb-2">Go to <strong>API Keys</strong> in left sidebar</li>
+<li class="mb-2">Click <strong>Create API Key</strong></li>
+<li class="mb-2">Give it a name (e.g., "OpenGrammar")</li>
+<li class="mb-2">Copy the key (starts with <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">gsk_</code>)</li>
+<li class="mb-2">⚠️ <strong>Save it now</strong> - you can't see it again!</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Step 3: Configure in Extension</h3>
+<li class="mb-2">Click OpenGrammar icon → Settings</li>
+<li class="mb-2">Provider: <strong>Groq</strong></li>
+<li class="mb-2">API Key: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">gsk_xxx</code> (paste your key)</li>
+<li class="mb-2">Model: <strong>llama-3.1-70b-versatile</strong></li>
+<li class="mb-2">Click <strong>Save</strong></li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Available Models</h3>
+<p class="mb-4"><tr><td> Model </td></tr> Speed <tr><td> Quality </td></tr> Best For |</p>
+<p class="mb-4"><tr><td>-------</td></tr>-------<tr><td>---------</td></tr>----------|</p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">llama-3.1-70b-versatile</code> </td></tr> ⚡⚡⚡ <tr><td> ⭐⭐⭐⭐⭐ </td></tr> <strong>Recommended</strong> |</p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">llama-3.1-8b-instant</code> </td></tr> ⚡⚡⚡⚡ <tr><td> ⭐⭐⭐⭐ </td></tr> Fast checks |</p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">gemma2-9b-it</code> </td></tr> ⚡⚡⚡ <tr><td> ⭐⭐⭐⭐ </td></tr> Balanced |</p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">mixtral-8x7b-32768</code> </td></tr> ⚡⚡ <tr><td> ⭐⭐⭐⭐⭐ </td></tr> Complex writing |</p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Testing</h3>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Test Groq API</h1>
+<p class="mb-4">curl https://api.groq.com/openai/v1/chat/completions \</p>
+<p class="mb-4">  -H "Authorization: Bearer gsk_xxx" \</p>
+<p class="mb-4">  -H "Content-Type: application/json" \</p>
+<p class="mb-4">  -d '{</p>
+<p class="mb-4">    "model": "llama-3.1-70b-versatile",</p>
+<p class="mb-4">    "messages": [{"role": "user", "content": "Hello!"}]</p>
+<p class="mb-4">  }'</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Troubleshooting</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><strong>Error: Invalid API key</strong> - Check key starts with <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">gsk_</code></li>
+<li class="mb-2"><strong>Error: Rate limit</strong> - Free tier is 100/day, wait 24 hours</li>
+<li class="mb-2"><strong>Error: Model not found</strong> - Use exact model name</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🟢 OpenAI (Best Quality)</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Overview</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><strong>Quality:</strong> Best available</li>
+<li class="mb-2"><strong>Speed:</strong> Good</li>
+<li class="mb-2"><strong>Cost:</strong> $0.15 per 1K requests (GPT-4o-mini)</li>
+<li class="mb-2"><strong>Setup Time:</strong> 5 minutes</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Step 1: Create Account</h3>
+<li class="mb-2">Visit <a href="https://platform.openai.com" class="text-blue-600 dark:text-blue-400 hover:underline">OpenAI Platform</a></li>
+<li class="mb-2">Click <strong>Sign Up</strong></li>
+<li class="mb-2">Complete registration</li>
+<li class="mb-2">Add phone number (required)</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Step 2: Add Credits</h3>
+<li class="mb-2">Go to <strong>Settings</strong> → <strong>Billing</strong></li>
+<li class="mb-2">Click <strong>Add payment method</strong></li>
+<li class="mb-2">Add minimum $5 credit (recommended)</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Step 3: Get API Key</h3>
+<li class="mb-2">Go to <strong>API Keys</strong> section</li>
+<li class="mb-2">Click <strong>Create new secret key</strong></li>
+<li class="mb-2">Give it a name (e.g., "OpenGrammar")</li>
+<li class="mb-2">Copy the key (starts with <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">sk-</code>)</li>
+<li class="mb-2">⚠️ <strong>Save it now</strong> - can't see it again!</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Step 4: Configure in Extension</h3>
+<li class="mb-2">Click OpenGrammar icon → Settings</li>
+<li class="mb-2">Provider: <strong>OpenAI</strong></li>
+<li class="mb-2">API Key: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">sk-xxx</code> (paste your key)</li>
+<li class="mb-2">Model: <strong>gpt-4o-mini</strong> (recommended)</li>
+<li class="mb-2">Click <strong>Save</strong></li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Available Models</h3>
+<p class="mb-4"><tr><td> Model </td></tr> Speed <tr><td> Quality </td></tr> Cost/1K <tr><td> Best For </td></tr></p>
+<p class="mb-4"><tr><td>-------</td></tr>-------<tr><td>---------</td></tr>---------<tr><td>----------</td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">gpt-4o-mini</code> </td></tr> ⚡⚡ <tr><td> ⭐⭐⭐⭐⭐ </td></tr> $0.15 <tr><td> <strong>Recommended</strong> </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">gpt-4o</code> </td></tr> ⚡ <tr><td> ⭐⭐⭐⭐⭐⭐ </td></tr> $2.50 <tr><td> Premium quality </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">gpt-3.5-turbo</code> </td></tr> ⚡⚡⚡ <tr><td> ⭐⭐⭐⭐ </td></tr> $0.05 <tr><td> Budget option </td></tr></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Cost Estimates</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><strong>Light user</strong> (50 checks/day): ~$0.25/month</li>
+<li class="mb-2"><strong>Medium user</strong> (200 checks/day): ~$1/month</li>
+<li class="mb-2"><strong>Heavy user</strong> (1000 checks/day): ~$5/month</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Testing</h3>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Test OpenAI API</h1>
+<p class="mb-4">curl https://api.openai.com/v1/chat/completions \</p>
+<p class="mb-4">  -H "Authorization: Bearer sk-xxx" \</p>
+<p class="mb-4">  -H "Content-Type: application/json" \</p>
+<p class="mb-4">  -d '{</p>
+<p class="mb-4">    "model": "gpt-4o-mini",</p>
+<p class="mb-4">    "messages": [{"role": "user", "content": "Fix: me and him went"}]</p>
+<p class="mb-4">  }'</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🌐 OpenRouter (100+ Models)</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Overview</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><strong>Models:</strong> 100+ (Claude, Llama, Mistral, etc.)</li>
+<li class="mb-2"><strong>Cost:</strong> Pay-per-use, varies by model</li>
+<li class="mb-2"><strong>Speed:</strong> Good</li>
+<li class="mb-2"><strong>Setup Time:</strong> 5 minutes</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Step 1: Create Account</h3>
+<li class="mb-2">Visit <a href="https://openrouter.ai" class="text-blue-600 dark:text-blue-400 hover:underline">OpenRouter</a></li>
+<li class="mb-2">Click <strong>Sign In</strong></li>
+<li class="mb-2">Sign in with Google or GitHub</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Step 2: Get API Key</h3>
+<li class="mb-2">Go to <strong>Keys</strong> section</li>
+<li class="mb-2">Click <strong>Create Key</strong></li>
+<li class="mb-2">Give it a name</li>
+<li class="mb-2">Copy the key</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Step 3: Add Credits</h3>
+<li class="mb-2">Go to <strong>Credits</strong> section</li>
+<li class="mb-2">Add minimum $5 credit</li>
+<li class="mb-2">Choose payment method</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Step 4: Configure in Extension</h3>
+<li class="mb-2">Click OpenGrammar icon → Settings</li>
+<li class="mb-2">Provider: <strong>OpenRouter</strong></li>
+<li class="mb-2">API Key: (paste your key)</li>
+<li class="mb-2">Model: <strong>anthropic/claude-3.5-sonnet</strong> (recommended)</li>
+<li class="mb-2">Click <strong>Save</strong></li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Popular Models</h3>
+<p class="mb-4"><tr><td> Model </td></tr> Provider <tr><td> Quality </td></tr> Cost/1K <tr><td> Best For </td></tr></p>
+<p class="mb-4"><tr><td>-------</td></tr>----------<tr><td>---------</td></tr>---------<tr><td>----------</td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">anthropic/claude-3.5-sonnet</code> </td></tr> Anthropic <tr><td> ⭐⭐⭐⭐⭐⭐ </td></tr> $3.00 <tr><td> Best overall </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">meta-llama/llama-3.1-70b</code> </td></tr> Meta <tr><td> ⭐⭐⭐⭐⭐ </td></tr> $0.40 <tr><td> Great value </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">mistralai/mistral-large</code> </td></tr> Mistral <tr><td> ⭐⭐⭐⭐⭐ </td></tr> $2.00 <tr><td> European AI </td></tr></p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">google/gemini-pro</code> </td></tr> Google <tr><td> ⭐⭐⭐⭐⭐ </td></tr> $0.25 <tr><td> Google quality </td></tr></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Testing</h3>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Test OpenRouter API</h1>
+<p class="mb-4">curl https://openrouter.ai/api/v1/chat/completions \</p>
+<p class="mb-4">  -H "Authorization: Bearer xxx" \</p>
+<p class="mb-4">  -H "Content-Type: application/json" \</p>
+<p class="mb-4">  -d '{</p>
+<p class="mb-4">    "model": "anthropic/claude-3.5-sonnet",</p>
+<p class="mb-4">    "messages": [{"role": "user", "content": "Hello!"}]</p>
+<p class="mb-4">  }'</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🔷 Together AI (Open-Source)</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Overview</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><strong>Models:</strong> Open-source (Llama, Mistral, etc.)</li>
+<li class="mb-2"><strong>Cost:</strong> Very cheap ($0.01-0.10 per 1K)</li>
+<li class="mb-2"><strong>Speed:</strong> Fast</li>
+<li class="mb-2"><strong>Setup Time:</strong> 5 minutes</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Step 1: Create Account</h3>
+<li class="mb-2">Visit <a href="https://api.together.ai" class="text-blue-600 dark:text-blue-400 hover:underline">Together AI</a></li>
+<li class="mb-2">Click <strong>Sign Up</strong></li>
+<li class="mb-2">Complete registration</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Step 2: Get API Key</h3>
+<li class="mb-2">Go to <strong>Settings</strong> → <strong>API Keys</strong></li>
+<li class="mb-2">Click <strong>Create API Key</strong></li>
+<li class="mb-2">Copy the key</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Step 3: Add Credits</h3>
+<li class="mb-2">Go to <strong>Billing</strong> section</li>
+<li class="mb-2">Add credits (minimum $5)</li>
+<li class="mb-2">Get $25 free credit on signup</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Step 4: Configure in Extension</h3>
+<li class="mb-2">Click OpenGrammar icon → Settings</li>
+<li class="mb-2">Provider: <strong>Together AI</strong></li>
+<li class="mb-2">API Key: (paste your key)</li>
+<li class="mb-2">Model: <strong>meta-llama/Meta-Llama-3.1-70B-Instruct</strong></li>
+<li class="mb-2">Click <strong>Save</strong></li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Available Models</h3>
+<p class="mb-4"><tr><td> Model </td></tr> Quality <tr><td> Cost/1K </td></tr> Best For |</p>
+<p class="mb-4"><tr><td>-------</td></tr>---------<tr><td>---------</td></tr>----------|</p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">meta-llama/Meta-Llama-3.1-70B-Instruct</code> </td></tr> ⭐⭐⭐⭐⭐ <tr><td> $0.40 </td></tr> <strong>Recommended</strong> |</p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">mistralai/Mixtral-8x7B-Instruct</code> </td></tr> ⭐⭐⭐⭐⭐ <tr><td> $0.60 </td></tr> Complex tasks |</p>
+<p class="mb-4"><tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Qwen/Qwen2.5-72B-Instruct</code> </td></tr> ⭐⭐⭐⭐⭐ <tr><td> $0.40 </td></tr> Alternative |</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🦙 Ollama (Local - Offline)</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Overview</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><strong>Privacy:</strong> 100% local, offline</li>
+<li class="mb-2"><strong>Cost:</strong> Free (your hardware)</li>
+<li class="mb-2"><strong>Speed:</strong> Depends on hardware</li>
+<li class="mb-2"><strong>Setup Time:</strong> 15 minutes</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Prerequisites</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">4GB+ RAM (for smaller models)</li>
+<li class="mb-2">8GB+ RAM (for larger models)</li>
+<li class="mb-2">NVIDIA GPU (optional, for acceleration)</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Step 1: Install Ollama</h3>
+
+<p class="mb-4"><strong>Linux:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>curl -fsSL https://ollama.com/install.sh | sh
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>macOS:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>brew install ollama
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>Windows:</strong></p>
+<li class="mb-2">Download from <a href="https://ollama.com" class="text-blue-600 dark:text-blue-400 hover:underline">ollama.com</a></li>
+<li class="mb-2">Run installer</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Step 2: Start Ollama Service</h3>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Start Ollama (runs in background)</h1>
+<p class="mb-4">ollama serve</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Step 3: Pull Models</h3>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Small & fast (recommended for grammar)</h1>
+<p class="mb-4">ollama pull qwen2.5:0.5b      # 400MB, very fast</p>
+<p class="mb-4">ollama pull qwen2.5:1.5b      # 1GB, balanced</p>
+
+<h1 class="text-4xl font-bold mb-6">Medium quality</h1>
+<p class="mb-4">ollama pull phi4-mini:3.8b    # 2.5GB, great quality</p>
+<p class="mb-4">ollama pull llama3.2:3b       # 2GB, good balance</p>
+
+<h1 class="text-4xl font-bold mb-6">High quality (requires GPU)</h1>
+<p class="mb-4">ollama pull llama3.2:7b       # 4GB, requires 8GB+ RAM</p>
+<p class="mb-4">ollama pull mistral:7b        # 4GB, requires 8GB+ RAM</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Step 4: Test Ollama</h3>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Test the model</h1>
+<p class="mb-4">ollama run qwen2.5:1.5b "Fix this: me and him went to store"</p>
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4">Expected output:</p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>"He and I went to the store."
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Step 5: Configure in Extension</h3>
+<li class="mb-2">Click OpenGrammar icon → Settings</li>
+<li class="mb-2">Provider: <strong>Ollama (Local)</strong></li>
+<li class="mb-2">Base URL: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">http://localhost:11434/v1</code></li>
+<li class="mb-2">Model: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">qwen2.5:1.5b</code> (or your chosen model)</li>
+<li class="mb-2">API Key: (leave empty - not needed)</li>
+<li class="mb-2">Click <strong>Save</strong></li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Model Recommendations</h3>
+
+<p class="mb-4"><tr><td> Use Case </td></tr> Model <tr><td> RAM </td></tr> Speed <tr><td> Quality </td></tr></p>
+<p class="mb-4"><tr><td>----------</td></tr>-------<tr><td>-----</td></tr>-------<tr><td>---------</td></tr></p>
+<p class="mb-4"><tr><td> <strong>Basic grammar</strong> </td></tr> qwen2.5:0.5b <tr><td> 1GB </td></tr> ⚡⚡⚡⚡⚡ <tr><td> ⭐⭐⭐ </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Better accuracy</strong> </td></tr> qwen2.5:1.5b <tr><td> 2GB </td></tr> ⚡⚡⚡⚡ <tr><td> ⭐⭐⭐⭐ </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Professional writing</strong> </td></tr> phi4-mini:3.8b <tr><td> 4GB </td></tr> ⚡⚡⚡ <tr><td> ⭐⭐⭐⭐⭐ </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Best quality</strong> </td></tr> llama3.2:7b <tr><td> 8GB </td></tr> ⚡⚡ <tr><td> ⭐⭐⭐⭐⭐ </td></tr></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">GPU Acceleration (NVIDIA)</h3>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Install NVIDIA Container Toolkit</h1>
+<p class="mb-4">sudo apt-get install -y nvidia-container-toolkit</p>
+
+<h1 class="text-4xl font-bold mb-6">Configure Docker</h1>
+<p class="mb-4">sudo nvidia-ctk runtime configure --runtime=docker</p>
+<p class="mb-4">sudo systemctl restart docker</p>
+
+<h1 class="text-4xl font-bold mb-6">Ollama will automatically use GPU</h1>
+<p class="mb-4">ollama run llama3.2:7b</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Troubleshooting</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><strong>Error: Connection refused</strong> - Make sure Ollama is running: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">ollama serve</code></li>
+<li class="mb-2"><strong>Error: Model not found</strong> - Pull the model: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">ollama pull qwen2.5:1.5b</code></li>
+<li class="mb-2"><strong>Slow performance</strong> - Use smaller model or enable GPU</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🔧 Custom Provider</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Overview</h3>
+<p class="mb-4">Use your own API endpoint or any OpenAI-compatible API.</p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Configuration</h3>
+<li class="mb-2">Click OpenGrammar icon → Settings</li>
+<li class="mb-2">Provider: <strong>Custom</strong></li>
+<li class="mb-2">Base URL: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">https://your-api.com/v1</code></li>
+<li class="mb-2">API Key: (your API key)</li>
+<li class="mb-2">Model: (your model name)</li>
+<li class="mb-2">Click <strong>Save</strong></li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Example: LocalAI</h3>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">Run LocalAI with Docker</h1>
+<p class="mb-4">docker run -p 8080:8080 localai/localai</p>
+
+<h1 class="text-4xl font-bold mb-6">Configure in extension</h1>
+<p class="mb-4">Provider: Custom</p>
+<p class="mb-4">Base URL: http://localhost:8080/v1</p>
+<p class="mb-4">Model: llama-3.1-70b</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Example: LM Studio</h3>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">LM Studio runs locally</h1>
+<h1 class="text-4xl font-bold mb-6">Configure in extension</h1>
+<p class="mb-4">Provider: Custom</p>
+<p class="mb-4">Base URL: http://localhost:1234/v1</p>
+<p class="mb-4">Model: local-model</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📊 Provider Comparison</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Speed Comparison</h3>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Groq (Llama-70B)        ████████████████████ 200ms
+<p class="mb-4">OpenAI (GPT-4o-mini)    ██████████ 1s</p>
+<p class="mb-4">Together (Llama-70B)    ████████████ 800ms</p>
+<p class="mb-4">OpenRouter (Claude)     ██████████████████ 2s</p>
+<p class="mb-4">Ollama (Qwen-1.5B)      ██████████████ 500ms (local)</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Quality Comparison</h3>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>OpenAI (GPT-4o)         ████████████████████ 96%
+<p class="mb-4">OpenRouter (Claude)     ████████████████████ 96%</p>
+<p class="mb-4">OpenAI (GPT-4o-mini)    ██████████████████ 95%</p>
+<p class="mb-4">Groq (Llama-70B)        ████████████████ 92%</p>
+<p class="mb-4">Ollama (Phi-4-mini)     ██████████████ 88%</p>
+<p class="mb-4">Ollama (Qwen-1.5B)      ████████████ 82%</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Cost Comparison (per 1K requests)</h3>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Ollama (Local)          $0.00 (free)
+<p class="mb-4">Groq (Free tier)        $0.00 (100/day free)</p>
+<p class="mb-4">Together (Llama-70B)    $0.40</p>
+<p class="mb-4">OpenAI (GPT-4o-mini)    $0.15</p>
+<p class="mb-4">OpenRouter (Claude)     $3.00</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🎯 Provider Selection Guide</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Choose Groq If:</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">✅ You want free usage</li>
+<li class="mb-2">✅ You need fast responses</li>
+<li class="mb-2">✅ You're okay with 100 requests/day limit</li>
+<li class="mb-2">✅ You want good quality</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Choose OpenAI If:</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">✅ You want the best quality</li>
+<li class="mb-2">✅ You don't mind paying</li>
+<li class="mb-2">✅ You need reliability</li>
+<li class="mb-2">✅ You want GPT-4 level intelligence</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Choose OpenRouter If:</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">✅ You want model variety</li>
+<li class="mb-2">✅ You want to try Claude</li>
+<li class="mb-2">✅ You want flexibility</li>
+<li class="mb-2">✅ You need specific models</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Choose Together AI If:</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">✅ You want cheap open-source</li>
+<li class="mb-2">✅ You like Llama models</li>
+<li class="mb-2">✅ You want good value</li>
+<li class="mb-2">✅ You need fast inference</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Choose Ollama If:</h3>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">✅ Privacy is your priority</li>
+<li class="mb-2">✅ You have good hardware</li>
+<li class="mb-2">✅ You want offline access</li>
+<li class="mb-2">✅ You don't want API costs</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🔄 Switching Providers</h2>
+
+<p class="mb-4">You can switch providers anytime:</p>
+
+<li class="mb-2">Click OpenGrammar icon</li>
+<li class="mb-2">Click <strong>Settings</strong></li>
+<li class="mb-2">Change <strong>Provider</strong> dropdown</li>
+<li class="mb-2">Enter new API key (if required)</li>
+<li class="mb-2">Select new <strong>Model</strong></li>
+<li class="mb-2">Click <strong>Save</strong></li>
+
+<p class="mb-4">Your settings are saved automatically.</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📚 Related Documentation</h2>
+
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><a href="05-backend-deployment.md" class="text-blue-600 dark:text-blue-400 hover:underline">Backend Deployment</a> - Deploy your backend</li>
+<li class="mb-2"><a href="06-docker-self-hosting.md" class="text-blue-600 dark:text-blue-400 hover:underline">Docker Self-Hosting</a> - Run locally</li>
+<li class="mb-2"><a href="18-troubleshooting.md" class="text-blue-600 dark:text-blue-400 hover:underline">Troubleshooting</a> - Common issues</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<p class="mb-4"><strong>Your AI provider is now configured! Start writing better! ✨</strong></p>
+
+        </article>
+        
+        <!-- Back to Top -->
+        <div class="mt-12 pt-8 border-t border-gray-200 dark:border-dark-700">
+            <a href="#" class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:underline">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                </svg>
+                Back to top
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-50 dark:bg-dark-900 border-t border-gray-200 dark:border-dark-700 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <img src="../logo.svg" alt="OpenGrammar Logo" class="h-6 w-6">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">© 2026 OpenGrammar. Apache 2.0 License</span>
+                </div>
+                <div class="flex gap-6">
+                    <a href="https://github.com/swadhinbiswas/opengrammar" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">GitHub</a>
+                    <a href="../index.html" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">Home</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Theme Script -->
+    <script>
+        const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        if (theme === 'dark') document.documentElement.classList.add('dark');
+        
+        function updateThemeIcons() {
+            const isDark = document.documentElement.classList.contains('dark');
+            document.getElementById('theme-toggle-light-icon').classList.toggle('hidden', !isDark);
+            document.getElementById('theme-toggle-dark-icon').classList.toggle('hidden', isDark);
+        }
+        updateThemeIcons();
+        
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            updateThemeIcons();
+        });
+    </script>
+</body>
+</html>

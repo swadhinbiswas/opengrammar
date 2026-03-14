@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤝 Contributing to OpenGrammar | OpenGrammar</title>
+    <meta name="description" content="OpenGrammar Documentation">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd',
+                            400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb',
+                            700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a',
+                        },
+                        dark: {
+                            50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1',
+                            400: '#94a3b8', 500: '#64748b', 600: '#475569',
+                            700: '#334155', 800: '#1e293b', 900: '#0f172a', 950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        .dark ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    </style>
+</head>
+<body class="font-sans antialiased bg-white dark:bg-dark-950 text-gray-900 dark:text-gray-100">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/80 dark:bg-dark-900/80 backdrop-blur-md border-b border-gray-200 dark:border-dark-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="../index.html" class="flex items-center gap-2">
+                    <img src="../logo.svg" alt="OpenGrammar Logo" class="h-8 w-8">
+                    <span class="font-bold text-xl tracking-tight">OpenGrammar Docs</span>
+                </a>
+                <div class="flex items-center gap-4">
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-dark-800 hover:bg-gray-200 dark:hover:bg-dark-700" aria-label="Toggle dark mode">
+                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                        </svg>
+                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                    </button>
+                    <a href="../index.html" class="text-sm font-medium hover:text-primary-600 dark:hover:text-primary-400">Back to Docs</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <article class="prose prose-lg dark:prose-invert max-w-none">
+            <h1 class="text-4xl font-bold mb-6">🤝 Contributing to OpenGrammar</h1>
+
+<p class="mb-4">Thank you for your interest in contributing to OpenGrammar! This guide will help you get started.</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📋 Table of Contents</h2>
+
+<li class="mb-2"><a href="#ways-to-contribute" class="text-blue-600 dark:text-blue-400 hover:underline">Ways to Contribute</a></li>
+<li class="mb-2"><a href="#getting-started" class="text-blue-600 dark:text-blue-400 hover:underline">Getting Started</a></li>
+<li class="mb-2"><a href="#development-setup" class="text-blue-600 dark:text-blue-400 hover:underline">Development Setup</a></li>
+<li class="mb-2"><a href="#making-changes" class="text-blue-600 dark:text-blue-400 hover:underline">Making Changes</a></li>
+<li class="mb-2"><a href="#submitting-pull-requests" class="text-blue-600 dark:text-blue-400 hover:underline">Submitting Pull Requests</a></li>
+<li class="mb-2"><a href="#code-style" class="text-blue-600 dark:text-blue-400 hover:underline">Code Style</a></li>
+<li class="mb-2"><a href="#adding-grammar-rules" class="text-blue-600 dark:text-blue-400 hover:underline">Adding Grammar Rules</a></li>
+<li class="mb-2"><a href="#documentation" class="text-blue-600 dark:text-blue-400 hover:underline">Documentation</a></li>
+<li class="mb-2"><a href="#community" class="text-blue-600 dark:text-blue-400 hover:underline">Community</a></li>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🎯 Ways to Contribute</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Non-Developers</h3>
+
+<p class="mb-4"><strong>Everyone can contribute!</strong> You don't need to be a programmer:</p>
+
+<li class="mb-2"><strong>Report Bugs</strong></li>
+<p class="mb-4">   - Found something broken?</p>
+<p class="mb-4">   - Create a GitHub issue</p>
+<p class="mb-4">   - Describe what happened</p>
+
+<li class="mb-2"><strong>Suggest Features</strong></li>
+<p class="mb-4">   - Have an idea?</p>
+<p class="mb-4">   - Open a GitHub discussion</p>
+<p class="mb-4">   - Explain your use case</p>
+
+<li class="mb-2"><strong>Improve Documentation</strong></li>
+<p class="mb-4">   - Fix typos</p>
+<p class="mb-4">   - Clarify instructions</p>
+<p class="mb-4">   - Add examples</p>
+<p class="mb-4">   - Translate to other languages</p>
+
+<li class="mb-2"><strong>Spread the Word</strong></li>
+<p class="mb-4">   - Star the repository</p>
+<p class="mb-4">   - Share on social media</p>
+<p class="mb-4">   - Tell friends and colleagues</p>
+<p class="mb-4">   - Write blog posts</p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Developers</h3>
+
+<p class="mb-4"><strong>Code contributions welcome!</strong></p>
+
+<li class="mb-2"><strong>Fix Bugs</strong></li>
+<p class="mb-4">   - Check "Issues" tab</p>
+<p class="mb-4">   - Look for "bug" label</p>
+<p class="mb-4">   - Submit fixes</p>
+
+<li class="mb-2"><strong>Add Features</strong></li>
+<p class="mb-4">   - Check "Roadmap"</p>
+<p class="mb-4">   - Look for "enhancement" label</p>
+<p class="mb-4">   - Implement and submit</p>
+
+<li class="mb-2"><strong>Improve Performance</strong></li>
+<p class="mb-4">   - Optimize code</p>
+<p class="mb-4">   - Reduce bundle size</p>
+<p class="mb-4">   - Improve loading times</p>
+
+<li class="mb-2"><strong>Write Tests</strong></li>
+<p class="mb-4">   - Add unit tests</p>
+<p class="mb-4">   - Integration tests</p>
+<p class="mb-4">   - E2E tests</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🚀 Getting Started</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Prerequisites</h3>
+
+<p class="mb-4"><strong>Required:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Node.js 18+ or Bun</li>
+<li class="mb-2">Git</li>
+<li class="mb-2">Code editor (VS Code recommended)</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Nice to have:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Experience with TypeScript</li>
+<li class="mb-2">Browser extension development knowledge</li>
+<li class="mb-2">React familiarity</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Quick Setup</h3>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">1. Fork the repository</h1>
+<h1 class="text-4xl font-bold mb-6">Click "Fork" on GitHub</h1>
+
+<h1 class="text-4xl font-bold mb-6">2. Clone your fork</h1>
+<p class="mb-4">git clone https://github.com/YOUR_USERNAME/opengrammar.git</p>
+<p class="mb-4">cd opengrammar</p>
+
+<h1 class="text-4xl font-bold mb-6">3. Add upstream remote</h1>
+<p class="mb-4">git remote add upstream https://github.com/swadhinbiswas/opengrammar.git</p>
+
+<h1 class="text-4xl font-bold mb-6">4. Install dependencies</h1>
+<p class="mb-4">cd opengrammar/opengrammar</p>
+<p class="mb-4">bun install</p>
+
+<h1 class="text-4xl font-bold mb-6">5. Start development</h1>
+<p class="mb-4">bun run dev</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">💻 Development Setup</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Project Structure</h3>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>opengrammar/
+<p class="mb-4">├── backend/              # Serverless API</p>
+<p class="mb-4">│   ├── src/</p>
+<p class="mb-4">│   │   ├── index.ts     # Main API file</p>
+<p class="mb-4">│   │   ├── analyzer.ts  # Grammar analyzer</p>
+<p class="mb-4">│   │   └── analyzer-simple.ts  # Rule-based rules</p>
+<p class="mb-4">│   ├── package.json</p>
+<p class="mb-4">│   └── wrangler.toml</p>
+<p class="mb-4">│</p>
+<p class="mb-4">├── extension/            # Browser extension</p>
+<p class="mb-4">│   ├── src/</p>
+<p class="mb-4">│   │   ├── background/  # Service worker</p>
+<p class="mb-4">│   │   ├── content/     # Content scripts</p>
+<p class="mb-4">│   │   ├── popup/       # Popup UI</p>
+<p class="mb-4">│   │   └── options/     # Settings page</p>
+<p class="mb-4">│   ├── public/</p>
+<p class="mb-4">│   ├── manifest.json</p>
+<p class="mb-4">│   └── package.json</p>
+<p class="mb-4">│</p>
+<p class="mb-4">└── docs/                # Documentation</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Development Commands</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Backend</h4>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>cd opengrammar/backend
+
+<h1 class="text-4xl font-bold mb-6">Install dependencies</h1>
+<p class="mb-4">bun install</p>
+
+<h1 class="text-4xl font-bold mb-6">Start development server</h1>
+<p class="mb-4">bun run dev</p>
+
+<h1 class="text-4xl font-bold mb-6">Type check</h1>
+<p class="mb-4">bun x tsc --noEmit</p>
+
+<h1 class="text-4xl font-bold mb-6">Build for production</h1>
+<p class="mb-4">bun run build</p>
+
+<h1 class="text-4xl font-bold mb-6">Deploy to Cloudflare</h1>
+<p class="mb-4">bun x wrangler deploy</p>
+<p class="mb-4"></code></pre></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Extension</h4>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>cd opengrammar/extension
+
+<h1 class="text-4xl font-bold mb-6">Install dependencies</h1>
+<p class="mb-4">bun install</p>
+
+<h1 class="text-4xl font-bold mb-6">Start development (watch mode)</h1>
+<p class="mb-4">bun run dev</p>
+
+<h1 class="text-4xl font-bold mb-6">Build for production</h1>
+<p class="mb-4">bun run build</p>
+
+<h1 class="text-4xl font-bold mb-6">Type check</h1>
+<p class="mb-4">bun x tsc --noEmit</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Testing Your Changes</h3>
+
+<li class="mb-2"><strong>Build Extension</strong></li>
+<p class="mb-4">   <pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>   bun run build</p>
+<p class="mb-4">   </code></pre></p>
+
+<li class="mb-2"><strong>Load in Browser</strong></li>
+<p class="mb-4">   - Open <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">chrome://extensions/</code></p>
+<p class="mb-4">   - Enable Developer Mode</p>
+<p class="mb-4">   - Click "Load unpacked"</p>
+<p class="mb-4">   - Select <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">extension/dist</code> folder</p>
+
+<li class="mb-2"><strong>Test Features</strong></li>
+<p class="mb-4">   - Type in text boxes</p>
+<p class="mb-4">   - Check grammar detection</p>
+<p class="mb-4">   - Test tone rewriting</p>
+<p class="mb-4">   - Verify settings save</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🔧 Making Changes</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Branch Naming</h3>
+
+<p class="mb-4">Use descriptive branch names:</p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>feature/add-new-tone
+<p class="mb-4">fix/grammar-detection-bug</p>
+<p class="mb-4">docs/update-readme</p>
+<p class="mb-4">refactor/improve-performance</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Commit Messages</h3>
+
+<p class="mb-4">Follow conventional commits:</p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>feat: add persuasive tone option
+<p class="mb-4">fix: correct apostrophe detection</p>
+<p class="mb-4">docs: update installation guide</p>
+<p class="mb-4">refactor: optimize analyzer performance</p>
+<p class="mb-4">test: add unit tests for rewrite API</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Making Code Changes</h3>
+
+<li class="mb-2"><strong>Create Branch</strong></li>
+<p class="mb-4">   <pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>   git checkout -b feature/your-feature-name</p>
+<p class="mb-4">   </code></pre></p>
+
+<li class="mb-2"><strong>Make Changes</strong></li>
+<p class="mb-4">   - Edit files</p>
+<p class="mb-4">   - Add tests</p>
+<p class="mb-4">   - Update documentation</p>
+
+<li class="mb-2"><strong>Test Locally</strong></li>
+<p class="mb-4">   <pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>   # Type check</p>
+<p class="mb-4">   bun x tsc --noEmit</p>
+<p class="mb-4">   </p>
+<p class="mb-4">   # Build</p>
+<p class="mb-4">   bun run build</p>
+<p class="mb-4">   </p>
+<p class="mb-4">   # Test in browser</p>
+<p class="mb-4">   # Load unpacked extension</p>
+<p class="mb-4">   </code></pre></p>
+
+<li class="mb-2"><strong>Commit Changes</strong></li>
+<p class="mb-4">   <pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>   git add .</p>
+<p class="mb-4">   git commit -m "feat: add your feature"</p>
+<p class="mb-4">   </code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📤 Submitting Pull Requests</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Before Submitting</h3>
+
+<p class="mb-4"><strong>Checklist:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">[ ] Code compiles without errors</li>
+<li class="mb-2">[ ] Tests pass (if applicable)</li>
+<li class="mb-2">[ ] Code is formatted</li>
+<li class="mb-2">[ ] Documentation updated</li>
+<li class="mb-2">[ ] Tested in browser</li>
+<li class="mb-2">[ ] No console errors</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Creating PR</h3>
+
+<li class="mb-2"><strong>Push to Your Fork</strong></li>
+<p class="mb-4">   <pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>   git push origin feature/your-feature-name</p>
+<p class="mb-4">   </code></pre></p>
+
+<li class="mb-2"><strong>Open Pull Request</strong></li>
+<p class="mb-4">   - Go to your fork on GitHub</p>
+<p class="mb-4">   - Click "Pull requests"</p>
+<p class="mb-4">   - Click "New pull request"</p>
+<p class="mb-4">   - Select your branch</p>
+<p class="mb-4">   - Compare to <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">main</code> branch</p>
+
+<li class="mb-2"><strong>Fill Out Template</strong></li>
+<p class="mb-4">   <pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>   ## Description</p>
+<p class="mb-4">   Brief description of changes</p>
+
+<p class="mb-4">   ## Type of Change</p>
+<p class="mb-4">   - [ ] Bug fix</p>
+<p class="mb-4">   - [ ] New feature</p>
+<p class="mb-4">   - [ ] Documentation update</p>
+<p class="mb-4">   - [ ] Performance improvement</p>
+
+<p class="mb-4">   ## Testing</p>
+<p class="mb-4">   Describe how you tested:</p>
+<p class="mb-4">   - [ ] Manual testing in browser</p>
+<p class="mb-4">   - [ ] Unit tests added/updated</p>
+<p class="mb-4">   - [ ] Tested on Chrome/Brave/Edge</p>
+
+<p class="mb-4">   ## Checklist</p>
+<p class="mb-4">   - [ ] Code follows style guidelines</p>
+<p class="mb-4">   - [ ] Self-review completed</p>
+<p class="mb-4">   - [ ] No console errors</p>
+<p class="mb-4">   - [ ] Documentation updated</p>
+<p class="mb-4">   </code></pre></p>
+
+<li class="mb-2"><strong>Submit PR</strong></li>
+<p class="mb-4">   - Click "Create pull request"</p>
+<p class="mb-4">   - Wait for review</p>
+<p class="mb-4">   - Respond to feedback</p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">PR Review Process</h3>
+
+<li class="mb-2"><strong>Automated Checks</strong></li>
+<p class="mb-4">   - CI/CD runs tests</p>
+<p class="mb-4">   - Type checking</p>
+<p class="mb-4">   - Build verification</p>
+
+<li class="mb-2"><strong>Maintainer Review</strong></li>
+<p class="mb-4">   - Code quality check</p>
+<p class="mb-4">   - Functionality verification</p>
+<p class="mb-4">   - Security review</p>
+
+<li class="mb-2"><strong>Feedback & Changes</strong></li>
+<p class="mb-4">   - Respond to comments</p>
+<p class="mb-4">   - Make requested changes</p>
+<p class="mb-4">   - Push updates to branch</p>
+
+<li class="mb-2"><strong>Merge</strong></li>
+<p class="mb-4">   - PR approved</p>
+<p class="mb-4">   - All checks pass</p>
+<p class="mb-4">   - Merged to main</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📝 Code Style</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">TypeScript</h3>
+
+<p class="mb-4"><strong>General Guidelines:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>// Use interfaces for types
+<p class="mb-4">interface GrammarIssue {</p>
+<p class="mb-4">  type: 'grammar' <tr><td> 'spelling' </td></tr> 'style';</p>
+<p class="mb-4">  original: string;</p>
+<p class="mb-4">  suggestion: string;</p>
+<p class="mb-4">  reason: string;</p>
+<p class="mb-4">}</p>
+
+<p class="mb-4">// Use arrow functions</p>
+<p class="mb-4">const analyze = (text: string): GrammarIssue[] => {</p>
+<p class="mb-4">  // Implementation</p>
+<p class="mb-4">};</p>
+
+<p class="mb-4">// Use template literals</p>
+<p class="mb-4">const message = <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Found ${issues.length} issues</code>;</p>
+
+<p class="mb-4">// Use optional chaining</p>
+<p class="mb-4">const length = text?.length ?? 0;</p>
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>Naming Conventions:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>// Variables: camelCase
+<p class="mb-4">const grammarRules = [];</p>
+
+<p class="mb-4">// Functions: camelCase</p>
+<p class="mb-4">function analyzeText() {}</p>
+
+<p class="mb-4">// Classes: PascalCase</p>
+<p class="mb-4">class GrammarAnalyzer {}</p>
+
+<p class="mb-4">// Interfaces: PascalCase</p>
+<p class="mb-4">interface AnalyzerConfig {}</p>
+
+<p class="mb-4">// Constants: UPPER_SNAKE_CASE</p>
+<p class="mb-4">const MAX_TEXT_LENGTH = 50000;</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">React/JSX</h3>
+
+<p class="mb-4"><strong>Component Structure:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>import React, { useState, useEffect } from 'react';
+
+<p class="mb-4">interface Props {</p>
+<p class="mb-4">  title: string;</p>
+<p class="mb-4">  onSave: (data: any) => void;</p>
+<p class="mb-4">}</p>
+
+<p class="mb-4">export const MyComponent: React.FC<Props> = ({ title, onSave }) => {</p>
+<p class="mb-4">  const [state, setState] = useState('');</p>
+<p class="mb-4">  </p>
+<p class="mb-4">  return (</p>
+<p class="mb-4">    <div className="container"></p>
+<p class="mb-4">      <h1>{title}</h1></p>
+<p class="mb-4">    </div></p>
+<p class="mb-4">  );</p>
+<p class="mb-4">};</p>
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>CSS Classes:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>// Use Tailwind CSS classes
+<div className="flex items-center gap-2 p-4 bg-white rounded-lg shadow">
+<p class="mb-4">  Content</p>
+<p class="mb-4"></div></p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📚 Adding Grammar Rules</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Where Rules Live</h3>
+
+<p class="mb-4">Rules are in <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">backend/src/analyzer-simple.ts</code></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Rule Structure</h3>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>{
+<p class="mb-4">  pattern: /\bteh\b/gi,</p>
+<p class="mb-4">  suggestion: 'the',</p>
+<p class="mb-4">  reason: 'Misspelled word. The correct spelling is "the".',</p>
+<p class="mb-4">  type: 'spelling',</p>
+<p class="mb-4">  severity: 'error'</p>
+<p class="mb-4">}</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Adding a New Rule</h3>
+
+<p class="mb-4"><strong>Example: Add "alot" → "a lot"</strong></p>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>// In analyzer-simple.ts
+<p class="mb-4">checkCommonMisspellings(text: string): GrammarIssue[] {</p>
+<p class="mb-4">  const issues: GrammarIssue[] = [];</p>
+<p class="mb-4">  </p>
+<p class="mb-4">  const rules = [</p>
+<p class="mb-4">    {</p>
+<p class="mb-4">      pattern: /\balot\b/gi,</p>
+<p class="mb-4">      suggestion: 'a lot',</p>
+<p class="mb-4">      reason: '"Alot" is not a word. Use "a lot" (two words).',</p>
+<p class="mb-4">      type: 'spelling',</p>
+<p class="mb-4">      severity: 'error'</p>
+<p class="mb-4">    },</p>
+<p class="mb-4">    // Add more rules here</p>
+<p class="mb-4">  ];</p>
+<p class="mb-4">  </p>
+<p class="mb-4">  // Rule checking logic</p>
+<p class="mb-4">  return issues;</p>
+<p class="mb-4">}</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Testing Rules</h3>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>// Test the rule
+<p class="mb-4">const text = "I have alot of work";</p>
+<p class="mb-4">const issues = checkCommonMisspellings(text);</p>
+<p class="mb-4">console.log(issues); // Should detect "alot"</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Rule Categories</h3>
+
+<p class="mb-4"><strong>1. Spelling</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>{
+<p class="mb-4">  pattern: /\brecieve\b/gi,</p>
+<p class="mb-4">  suggestion: 'receive',</p>
+<p class="mb-4">  reason: 'Misspelled word',</p>
+<p class="mb-4">  type: 'spelling'</p>
+<p class="mb-4">}</p>
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>2. Grammar</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>{
+<p class="mb-4">  pattern: /\bme and [a-z]+\b/gi,</p>
+<p class="mb-4">  suggestion: 'I and [name]',</p>
+<p class="mb-4">  reason: 'Use subject pronoun',</p>
+<p class="mb-4">  type: 'grammar'</p>
+<p class="mb-4">}</p>
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>3. Style</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>{
+<p class="mb-4">  pattern: /\bvery good\b/gi,</p>
+<p class="mb-4">  suggestion: 'excellent',</p>
+<p class="mb-4">  reason: 'Consider a stronger word',</p>
+<p class="mb-4">  type: 'style'</p>
+<p class="mb-4">}</p>
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>4. Clarity</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>{
+<p class="mb-4">  pattern: /.{35,}/g,  // Sentences > 35 chars</p>
+<p class="mb-4">  suggestion: 'Shorten sentence',</p>
+<p class="mb-4">  reason: 'Sentence may be hard to read',</p>
+<p class="mb-4">  type: 'clarity'</p>
+<p class="mb-4">}</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📖 Documentation</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Documentation Structure</h3>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>docs/
+<p class="mb-4">├── 00-index.md           # Documentation index</p>
+<p class="mb-4">├── 01-quick-start.md     # Quick start guide</p>
+<p class="mb-4">├── 04-browser-extension-setup.md</p>
+<p class="mb-4">├── 05-backend-deployment.md</p>
+<p class="mb-4">├── 06-docker-self-hosting.md</p>
+<p class="mb-4">├── 07-ai-providers.md</p>
+<p class="mb-4">├── 09-using-opengrammar.md</p>
+<p class="mb-4">├── 10-tone-rewriting.md</p>
+<p class="mb-4">├── 11-writing-statistics.md</p>
+<p class="mb-4">├── 12-keyboard-shortcuts.md</p>
+<p class="mb-4">├── 15-api-reference.md</p>
+<p class="mb-4">├── 18-troubleshooting.md</p>
+<p class="mb-4">├── 19-faq.md</p>
+<p class="mb-4">└── 21-contributing.md    # This file</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Documentation Guidelines</h3>
+
+<p class="mb-4"><strong>Writing Style:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Clear and concise</li>
+<li class="mb-2">Use active voice</li>
+<li class="mb-2">Include examples</li>
+<li class="mb-2">Add screenshots when helpful</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Markdown Format:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code><h1 class="text-4xl font-bold mb-6">H1 Heading</h1>
+<h2 class="text-2xl font-bold mt-8 mb-4">H2 Heading</h2>
+<h3 class="text-xl font-bold mt-6 mb-3">H3 Heading</h3>
+
+<p class="mb-4"><strong>Bold</strong> for emphasis</p>
+<code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Code</code> for commands/paths
+<blockquote class="border-l-4 border-blue-500 pl-4 my-4 italic text-gray-600 dark:text-gray-400">Blockquotes for notes</blockquote>
+
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Bullet lists</li>
+<p class="mb-4"></ul>1. Numbered lists</p>
+
+<p class="mb-4"><a href="url" class="text-blue-600 dark:text-blue-400 hover:underline">Links</a></p>
+<p class="mb-4">!<a href="url" class="text-blue-600 dark:text-blue-400 hover:underline">Images</a></p>
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>Code Blocks:</strong></p>
+<p class="mb-4">`<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code></code></pre>bash</p>
+<h1 class="text-4xl font-bold mb-6">Bash commands</h1>
+<p class="mb-4">npm install</p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>
+<p class="mb-4"></code></pre>typescript</p>
+<p class="mb-4">// TypeScript code</p>
+<p class="mb-4">const value = 42;</p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>
+<p class="mb-4"></code></pre>json</p>
+<p class="mb-4">// JSON examples</p>
+<p class="mb-4">{</p>
+<p class="mb-4">  "key": "value"</p>
+<p class="mb-4">}</p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code></code></pre>`
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🌟 Community</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Communication Channels</h3>
+
+<p class="mb-4"><strong>GitHub:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><a href="https://github.com/swadhinbiswas/opengrammar/issues" class="text-blue-600 dark:text-blue-400 hover:underline">Issues</a> - Bug reports</li>
+<li class="mb-2"><a href="https://github.com/swadhinbiswas/opengrammar/discussions" class="text-blue-600 dark:text-blue-400 hover:underline">Discussions</a> - Questions</li>
+<li class="mb-2"><a href="https://github.com/swadhinbiswas/opengrammar/pulls" class="text-blue-600 dark:text-blue-400 hover:underline">Pull Requests</a> - Code contributions</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Discord:</strong> (if available)</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Join server link</li>
+<li class="mb-2">Introduce yourself</li>
+<li class="mb-2">Ask questions in #help channel</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Code of Conduct</h3>
+
+<p class="mb-4"><strong>Be respectful:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Welcome all contributors</li>
+<li class="mb-2">No harassment</li>
+<li class="mb-2">Constructive feedback</li>
+<li class="mb-2">Inclusive language</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Report issues:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Contact maintainers</li>
+<li class="mb-2">Use private channels for sensitive issues</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Recognition</h3>
+
+<p class="mb-4"><strong>Contributors get:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Credit in README</li>
+<li class="mb-2">Contributor badge</li>
+<li class="mb-2">Shout-outs in releases</li>
+<li class="mb-2">Community recognition</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🎓 Learning Resources</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Recommended Reading</h3>
+
+<p class="mb-4"><strong>Browser Extensions:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><a href="https://developer.chrome.com/docs/extensions/" class="text-blue-600 dark:text-blue-400 hover:underline">Chrome Extensions Docs</a></li>
+<li class="mb-2"><a href="https://developer.chrome.com/docs/extensions/mv3/intro/" class="text-blue-600 dark:text-blue-400 hover:underline">Manifest V3 Guide</a></li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>TypeScript:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><a href="https://www.typescriptlang.org/docs/" class="text-blue-600 dark:text-blue-400 hover:underline">TypeScript Handbook</a></li>
+<li class="mb-2"><a href="https://basarat.gitbook.io/typescript/" class="text-blue-600 dark:text-blue-400 hover:underline">TypeScript Deep Dive</a></li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>React:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><a href="https://react.dev/" class="text-blue-600 dark:text-blue-400 hover:underline">React Docs</a></li>
+<li class="mb-2"><a href="https://reactpatterns.com/" class="text-blue-600 dark:text-blue-400 hover:underline">React Patterns</a></li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Getting Help</h3>
+
+<p class="mb-4"><strong>Stuck?</strong></p>
+<li class="mb-2">Check existing issues</li>
+<li class="mb-2">Search documentation</li>
+<li class="mb-2">Ask in discussions</li>
+<li class="mb-2">Contact maintainers</li>
+
+<p class="mb-4"><strong>Want to pair program?</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Reach out to maintainers</li>
+<li class="mb-2">Join community calls</li>
+<li class="mb-2">Participate in hackathons</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🏆 Contributor Recognition</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Contributor Levels</h3>
+
+<p class="mb-4"><strong>First Contribution:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Welcome message</li>
+<li class="mb-2">Contributor badge</li>
+<li class="mb-2">Merged PR</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Regular Contributor (5+ PRs):</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Featured in release notes</li>
+<li class="mb-2">Contributor spotlight</li>
+<li class="mb-2">Direct input on features</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Core Contributor (20+ PRs):</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Write access to repository</li>
+<li class="mb-2">Vote on major decisions</li>
+<li class="mb-2">Represent project</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Hall of Fame</h3>
+
+<p class="mb-4">Top contributors featured in:</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">README.md</li>
+<li class="mb-2">Release notes</li>
+<li class="mb-2">Project website</li>
+<li class="mb-2">Conference talks</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📞 Contact Maintainers</h2>
+
+<p class="mb-4"><strong>For questions:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">GitHub Discussions</li>
+<li class="mb-2">Discord server</li>
+<li class="mb-2">Email (if listed)</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>For sensitive issues:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Private message maintainers</li>
+<li class="mb-2">Email security contact</li>
+<li class="mb-2">Report vulnerabilities privately</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<p class="mb-4"><strong>Thank you for contributing to OpenGrammar! 🎉</strong></p>
+
+<p class="mb-4">Your contributions make OpenGrammar better for everyone!</p>
+
+        </article>
+        
+        <!-- Back to Top -->
+        <div class="mt-12 pt-8 border-t border-gray-200 dark:border-dark-700">
+            <a href="#" class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:underline">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                </svg>
+                Back to top
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-50 dark:bg-dark-900 border-t border-gray-200 dark:border-dark-700 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <img src="../logo.svg" alt="OpenGrammar Logo" class="h-6 w-6">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">© 2026 OpenGrammar. Apache 2.0 License</span>
+                </div>
+                <div class="flex gap-6">
+                    <a href="https://github.com/swadhinbiswas/opengrammar" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">GitHub</a>
+                    <a href="../index.html" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">Home</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Theme Script -->
+    <script>
+        const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        if (theme === 'dark') document.documentElement.classList.add('dark');
+        
+        function updateThemeIcons() {
+            const isDark = document.documentElement.classList.contains('dark');
+            document.getElementById('theme-toggle-light-icon').classList.toggle('hidden', !isDark);
+            document.getElementById('theme-toggle-dark-icon').classList.toggle('hidden', isDark);
+        }
+        updateThemeIcons();
+        
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            updateThemeIcons();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📖 Using OpenGrammar - Complete User Guide | OpenGrammar</title>
+    <meta name="description" content="OpenGrammar Documentation">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd',
+                            400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb',
+                            700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a',
+                        },
+                        dark: {
+                            50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1',
+                            400: '#94a3b8', 500: '#64748b', 600: '#475569',
+                            700: '#334155', 800: '#1e293b', 900: '#0f172a', 950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        .dark ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    </style>
+</head>
+<body class="font-sans antialiased bg-white dark:bg-dark-950 text-gray-900 dark:text-gray-100">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/80 dark:bg-dark-900/80 backdrop-blur-md border-b border-gray-200 dark:border-dark-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="../index.html" class="flex items-center gap-2">
+                    <img src="../logo.svg" alt="OpenGrammar Logo" class="h-8 w-8">
+                    <span class="font-bold text-xl tracking-tight">OpenGrammar Docs</span>
+                </a>
+                <div class="flex items-center gap-4">
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-dark-800 hover:bg-gray-200 dark:hover:bg-dark-700" aria-label="Toggle dark mode">
+                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                        </svg>
+                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                    </button>
+                    <a href="../index.html" class="text-sm font-medium hover:text-primary-600 dark:hover:text-primary-400">Back to Docs</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <article class="prose prose-lg dark:prose-invert max-w-none">
+            <h1 class="text-4xl font-bold mb-6">📖 Using OpenGrammar - Complete User Guide</h1>
+
+<p class="mb-4">Master OpenGrammar with this comprehensive guide to all features and functionality.</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📋 Table of Contents</h2>
+
+<li class="mb-2"><a href="#getting-started" class="text-blue-600 dark:text-blue-400 hover:underline">Getting Started</a></li>
+<li class="mb-2"><a href="#grammar-checking" class="text-blue-600 dark:text-blue-400 hover:underline">Grammar Checking</a></li>
+<li class="mb-2"><a href="#tone-rewriting" class="text-blue-600 dark:text-blue-400 hover:underline">Tone Rewriting</a></li>
+<li class="mb-2"><a href="#writing-statistics" class="text-blue-600 dark:text-blue-400 hover:underline">Writing Statistics</a></li>
+<li class="mb-2"><a href="#custom-dictionary" class="text-blue-600 dark:text-blue-400 hover:underline">Custom Dictionary</a></li>
+<li class="mb-2"><a href="#site-specific-settings" class="text-blue-600 dark:text-blue-400 hover:underline">Site-Specific Settings</a></li>
+<li class="mb-2"><a href="#keyboard-shortcuts" class="text-blue-600 dark:text-blue-400 hover:underline">Keyboard Shortcuts</a></li>
+<li class="mb-2"><a href="#tips--best-practices" class="text-blue-600 dark:text-blue-400 hover:underline">Tips & Best Practices</a></li>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🚀 Getting Started</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">First Time Setup</h3>
+
+<li class="mb-2"><strong>Install the Extension</strong></li>
+<p class="mb-4">   - See <a href="04-browser-extension-setup.md" class="text-blue-600 dark:text-blue-400 hover:underline">Browser Extension Setup</a></p>
+<p class="mb-4">   </p>
+<li class="mb-2"><strong>Configure Backend</strong></li>
+<p class="mb-4">   - Click extension icon → Settings</p>
+<p class="mb-4">   - Enter Backend URL (local or deployed)</p>
+<p class="mb-4">   </p>
+<li class="mb-2"><strong>Set Up AI Provider</strong></li>
+<p class="mb-4">   - Choose provider (Groq recommended for free tier)</p>
+<p class="mb-4">   - Enter API key</p>
+<p class="mb-4">   - Select model</p>
+<p class="mb-4">   </p>
+<li class="mb-2"><strong>Test It Out</strong></li>
+<p class="mb-4">   - Open any text box</p>
+<p class="mb-4">   - Type: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">me and him went to store</code></p>
+<p class="mb-4">   - You should see red underline</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">✍️ Grammar Checking</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">How It Works</h3>
+
+<p class="mb-4">OpenGrammar uses a <strong>dual-engine approach</strong>:</p>
+
+<li class="mb-2"><strong>Rule-Based Engine</strong> (Free, Offline)</li>
+<p class="mb-4">   - 40+ grammar rules</p>
+<p class="mb-4">   - Instant checking</p>
+<p class="mb-4">   - No API required</p>
+<p class="mb-4">   </p>
+<li class="mb-2"><strong>AI-Powered Engine</strong> (Advanced)</li>
+<p class="mb-4">   - Context understanding</p>
+<p class="mb-4">   - Complex grammar</p>
+<p class="mb-4">   - Requires API key</p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Color-Coded Underlines</h3>
+
+<p class="mb-4"><tr><td> Color </td></tr> Meaning <tr><td> Example </td></tr></p>
+<p class="mb-4"><tr><td>-------</td></tr>---------<tr><td>---------</td></tr></p>
+<p class="mb-4"><tr><td> <strong>Red</strong> </td></tr> Spelling/Grammar <tr><td> "teh" → "the" </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Amber</strong> </td></tr> Clarity <tr><td> Long sentences </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Blue</strong> </td></tr> Style <tr><td> Passive voice </td></tr></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Using Grammar Checking</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Step 1: Start Typing</h4>
+<p class="mb-4">Open any text input:</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Gmail compose</li>
+<li class="mb-2">Google Docs</li>
+<li class="mb-2">Notion</li>
+<li class="mb-2">Any text box on the web</li>
+<p class="mb-4"></ul></p>
+<h4 class="text-lg font-bold mt-4 mb-2">Step 2: Watch for Underlines</h4>
+<p class="mb-4">As you type, OpenGrammar automatically checks:</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">After you stop typing (800ms delay)</li>
+<li class="mb-2">Only text with 5+ characters</li>
+<li class="mb-2">Works in real-time</li>
+<p class="mb-4"></ul></p>
+<h4 class="text-lg font-bold mt-4 mb-2">Step 3: Review Suggestions</h4>
+<p class="mb-4">Click any underlined text to see:</p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>┌─────────────────────────────┐
+<p class="mb-4">│ 🔴 Grammar Error            │</p>
+<p class="mb-4">│                             │</p>
+<p class="mb-4">│ Original: me and him        │</p>
+<p class="mb-4">│ Suggestion: he and I        │</p>
+<p class="mb-4">│                             │</p>
+<p class="mb-4">│ Subject pronoun error.      │</p>
+<p class="mb-4">│ Use subject pronouns for    │</p>
+<p class="mb-4">│ the subject of a sentence.  │</p>
+<p class="mb-4">│                             │</p>
+<p class="mb-4">│ [Apply] [Ignore] [Dictionary]│</p>
+<p class="mb-4">└─────────────────────────────┘</p>
+<p class="mb-4"></code></pre></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Step 4: Apply Changes</h4>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><strong>Apply</strong> - Replace text with suggestion</li>
+<li class="mb-2"><strong>Ignore</strong> - Dismiss this instance</li>
+<li class="mb-2"><strong>Add to Dictionary</strong> - Never flag this word again</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Grammar Rules Included</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Spelling (100+ rules)</h4>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Common misspellings: teh → the</li>
+<li class="mb-2">Missing apostrophes: dont → don't</li>
+<li class="mb-2">Wrong word: alot → a lot</li>
+<p class="mb-4"></ul></p>
+<h4 class="text-lg font-bold mt-4 mb-2">Basic Grammar (35+ rules)</h4>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Pronoun errors: me and him → he and I</li>
+<li class="mb-2">Irregular verbs: buyed → bought</li>
+<li class="mb-2">Their/there/they're confusion</li>
+<li class="mb-2">Your/you're confusion</li>
+<li class="mb-2">Its/it's confusion</li>
+<p class="mb-4"></ul></p>
+<h4 class="text-lg font-bold mt-4 mb-2">Style (50+ rules)</h4>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Passive voice detection</li>
+<li class="mb-2">Weak words: very good → excellent</li>
+<li class="mb-2">Redundant phrases: absolutely essential → essential</li>
+<li class="mb-2">Clichés: think outside the box</li>
+<p class="mb-4"></ul></p>
+<h4 class="text-lg font-bold mt-4 mb-2">Clarity</h4>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Long sentences (>35 words)</li>
+<li class="mb-2">Complex sentence structure</li>
+<li class="mb-2">Hard to read passages</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Examples</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Example 1: Basic Grammar</h4>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Input:  "me and him went to the store"
+<p class="mb-4">Output: "he and I went to the store"</p>
+<p class="mb-4">         ^^^^^^^^</p>
+<p class="mb-4">         Grammar error detected</p>
+<p class="mb-4"></code></pre></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Example 2: Spelling</h4>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Input:  "I dont belive in teh supernatural"
+<p class="mb-4">Output: "I don't believe in the supernatural"</p>
+<p class="mb-4">         ^^^^  ^^^^^^^    ^^</p>
+<p class="mb-4">         3 spelling errors detected</p>
+<p class="mb-4"></code></pre></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Example 3: Style</h4>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Input:  "The report was written by John yesterday"
+<p class="mb-4">Output: "John wrote the report yesterday"</p>
+<p class="mb-4">         ^^^^^^^^^^^^^^^</p>
+<p class="mb-4">         Passive voice detected</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🎨 Tone Rewriting</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Overview</h3>
+
+<p class="mb-4">Rewrite any text in 8 different tones:</p>
+
+<p class="mb-4"><tr><td> Tone </td></tr> Use Case <tr><td> Example </td></tr></p>
+<p class="mb-4"><tr><td>------</td></tr>----------<tr><td>---------</td></tr></p>
+<p class="mb-4"><tr><td> <strong>Formal</strong> 🎩<em></em> </td></tr> Business, academic <tr><td> "Hey" → "Greetings" </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Casual</strong> 😊 </td></tr> Friends, chat <tr><td> "Greetings" → "Hey" </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Professional</strong> 💼 </td></tr> Work emails <tr><td> "wanna" → "would like to" </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Friendly</strong> 🤗 </td></tr> Social media <tr><td> "Hello" → "Hey there!" </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Concise</strong> ⚡ </td></tr> Quick messages <tr><td> "In order to" → "To" </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Detailed</strong> 📚 </td></tr> Explanations <tr><td> "Go" → "Proceed forward" </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Persuasive</strong> 💪 </td></tr> Sales, pitches <tr><td> "Try this" → "Experience this" </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Neutral</strong> 😐 </td></tr> General use <tr><td> Balanced tone </td></tr></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">How to Use Tone Rewriting</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Method 1: Right-Click Menu</h4>
+<li class="mb-2">Select any text on a webpage</li>
+<li class="mb-2">Right-click</li>
+<li class="mb-2">Choose <strong>"Rewrite with OpenGrammar"</strong></li>
+<li class="mb-2">Rewrite popup opens</li>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Method 2: Keyboard Shortcut</h4>
+<li class="mb-2">Select text</li>
+<li class="mb-2">Press <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Shift+R</code> (Windows/Linux) or <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Cmd+Shift+R</code> (Mac)</li>
+<li class="mb-2">Rewrite popup opens</li>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Method 3: Extension Menu</h4>
+<li class="mb-2">Click extension icon</li>
+<li class="mb-2">Click <strong>"Rewrite Text"</strong></li>
+<li class="mb-2">Paste or type text</li>
+<li class="mb-2">Click rewrite</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Using the Rewrite Popup</h3>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>┌───────────────────────────────────────┐
+<p class="mb-4">│ Rewrite with OpenGrammar          [X] │</p>
+<p class="mb-4">├───────────────────────────────────────┤</p>
+<p class="mb-4">│                                       │</p>
+<p class="mb-4">│ Original Text:                        │</p>
+<p class="mb-4">│ ┌─────────────────────────────────┐   │</p>
+<p class="mb-4">│ │ hey whats up can we talk        │   │</p>
+<p class="mb-4">│ │                                 │   │</p>
+<p class="mb-4">│ └─────────────────────────────────┘   │</p>
+<p class="mb-4">│                                       │</p>
+<p class="mb-4">│ Choose Tone:                          │</p>
+<p class="mb-4">│ [Formal] [Casual] [Professional]      │</p>
+<p class="mb-4">│ [Friendly] [Concise] [Detailed]       │</p>
+<p class="mb-4">│ [Persuasive] [Neutral]                │</p>
+<p class="mb-4">│                                       │</p>
+<p class="mb-4">│ ┌─────────────────────────────────┐   │</p>
+<p class="mb-4">│ │ Rewritten Text:                 │   │</p>
+<p class="mb-4">│ │ Hello, how are you? May we      │   │</p>
+<p class="mb-4">│ │ have a conversation?            │   │</p>
+<p class="mb-4">│ └─────────────────────────────────┘   │</p>
+<p class="mb-4">│                                       │</p>
+<p class="mb-4">│ [Apply] [Copy] [Close]                │</p>
+<p class="mb-4">└───────────────────────────────────────┘</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Step-by-Step Example</h3>
+
+<p class="mb-4"><strong>Original Text:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>hey whats up can we talk bout the project
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>Step 1: Select Tone</strong></p>
+<p class="mb-4">Click <strong>Professional</strong> 💼</p>
+
+<p class="mb-4"><strong>Step 2: Click Rewrite</strong></p>
+<p class="mb-4">Wait for AI to process (~1-2 seconds)</p>
+
+<p class="mb-4"><strong>Step 3: Review Result</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Hello, how are you? May we discuss the project?
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>Step 4: Apply or Copy</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><strong>Apply</strong> - Replaces original text</li>
+<li class="mb-2"><strong>Copy</strong> - Copies to clipboard</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Tips for Tone Rewriting</h3>
+
+<p class="mb-4">✅ <strong>Do:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Select complete sentences</li>
+<li class="mb-2">Use appropriate tone for context</li>
+<li class="mb-2">Review before applying</li>
+<li class="mb-2">Try different tones for variety</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4">❌ <strong>Don't:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Rewrite single words (select phrases)</li>
+<li class="mb-2">Use formal tone for casual chats</li>
+<li class="mb-2">Apply without reviewing</li>
+<li class="mb-2">Overuse rewriting</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📊 Writing Statistics</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Overview</h3>
+
+<p class="mb-4">Get detailed insights into your writing:</p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Metrics Available</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Basic Counts</h4>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><strong>Words</strong> - Total word count</li>
+<li class="mb-2"><strong>Characters</strong> - Total characters (with/without spaces)</li>
+<li class="mb-2"><strong>Sentences</strong> - Number of sentences</li>
+<li class="mb-2"><strong>Paragraphs</strong> - Number of paragraphs</li>
+<li class="mb-2"><strong>Syllables</strong> - Total syllable count</li>
+<p class="mb-4"></ul></p>
+<h4 class="text-lg font-bold mt-4 mb-2">Readability Scores</h4>
+
+<p class="mb-4"><strong>Flesch Reading Ease</strong> (0-100)</p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>90-100: Very Easy (5th grade)
+<p class="mb-4">80-89: Easy (6th grade)</p>
+<p class="mb-4">70-79: Fairly Easy (7th grade)</p>
+<p class="mb-4">60-69: Standard (8th-9th grade)</p>
+<p class="mb-4">50-59: Fairly Difficult (10th-12th grade)</p>
+<p class="mb-4">30-49: Difficult (College)</p>
+<p class="mb-4">0-29: Very Difficult (College Graduate+)</p>
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>Flesch-Kincaid Grade Level</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>1-6: Elementary
+<p class="mb-4">7-9: Middle School</p>
+<p class="mb-4">10-12: High School</p>
+<p class="mb-4">13-16: College</p>
+<p class="mb-4">17+: Graduate</p>
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>Automated Readability Index (ARI)</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>1-6: Ages 5-12
+<p class="mb-4">7-9: Ages 12-15</p>
+<p class="mb-4">10-12: Ages 15-18</p>
+<p class="mb-4">13+: Ages 18+</p>
+<p class="mb-4"></code></pre></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Time Estimates</h4>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><strong>Reading Time</strong> - Based on 200 words per minute</li>
+<li class="mb-2"><strong>Speaking Time</strong> - Based on 150 words per minute</li>
+<p class="mb-4"></ul></p>
+<h4 class="text-lg font-bold mt-4 mb-2">Vocabulary Analysis</h4>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><strong>Unique Words</strong> - Number of different words</li>
+<li class="mb-2"><strong>Vocabulary Diversity</strong> - Percentage of unique words</li>
+<li class="mb-2"><strong>Average Word Length</strong> - Mean characters per word</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Accessing Statistics</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Method 1: Extension Popup</h4>
+<li class="mb-2">Click extension icon</li>
+<li class="mb-2">Click <strong>Statistics</strong> tab</li>
+<li class="mb-2">View real-time stats</li>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Method 2: Options Page</h4>
+<li class="mb-2">Right-click extension icon</li>
+<li class="mb-2">Choose <strong>Options</strong></li>
+<li class="mb-2">Navigate to <strong>Statistics</strong> section</li>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Method 3: Keyboard Shortcut</h4>
+<p class="mb-4">(If configured)</p>
+<li class="mb-2">Press shortcut</li>
+<li class="mb-2">Statistics popup appears</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Example Statistics Report</h3>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>┌─────────────────────────────────────┐
+<p class="mb-4">│ Writing Statistics                  │</p>
+<p class="mb-4">├─────────────────────────────────────┤</p>
+<p class="mb-4">│                                     │</p>
+<p class="mb-4">│ Basic Counts                        │</p>
+<p class="mb-4">│ ─────────────────────────────────── │</p>
+<p class="mb-4">│ Words:          1,248               │</p>
+<p class="mb-4">│ Characters:     6,542               │</p>
+<p class="mb-4">│ Sentences:      87                  │</p>
+<p class="mb-4">│ Paragraphs:     12                  │</p>
+<p class="mb-4">│                                     │</p>
+<p class="mb-4">│ Readability                         │</p>
+<p class="mb-4">│ ─────────────────────────────────── │</p>
+<p class="mb-4">│ Flesch Ease:    78 (Excellent)      │</p>
+<p class="mb-4">│ Grade Level:    8.5 (Good)          │</p>
+<p class="mb-4">│ ARI:            9 (Good)            │</p>
+<p class="mb-4">│                                     │</p>
+<p class="mb-4">│ Time Estimates                      │</p>
+<p class="mb-4">│ ─────────────────────────────────── │</p>
+<p class="mb-4">│ Reading Time:   4 minutes           │</p>
+<p class="mb-4">│ Speaking Time:  6 minutes           │</p>
+<p class="mb-4">│                                     │</p>
+<p class="mb-4">│ Vocabulary                          │</p>
+<p class="mb-4">│ ─────────────────────────────────── │</p>
+<p class="mb-4">│ Unique Words:   542                 │</p>
+<p class="mb-4">│ Diversity:      43% (Good)          │</p>
+<p class="mb-4">│ Avg Word Length: 4.8 characters     │</p>
+<p class="mb-4">│                                     │</p>
+<p class="mb-4">│ Issue Breakdown                     │</p>
+<p class="mb-4">│ ─────────────────────────────────── │</p>
+<p class="mb-4">│ Grammar:   3 issues  🔴             │</p>
+<p class="mb-4">│ Clarity:   5 issues  🟡             │</p>
+<p class="mb-4">│ Style:     7 issues  🔵             │</p>
+<p class="mb-4">└─────────────────────────────────────┘</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Improving Your Score</h3>
+
+<p class="mb-4"><strong>To Improve Readability:</strong></p>
+<li class="mb-2">Shorten long sentences</li>
+<li class="mb-2">Use simpler words</li>
+<li class="mb-2">Break up paragraphs</li>
+<li class="mb-2">Reduce passive voice</li>
+
+<p class="mb-4"><strong>To Improve Vocabulary:</strong></p>
+<li class="mb-2">Use synonyms for repeated words</li>
+<li class="mb-2">Vary sentence structure</li>
+<li class="mb-2">Learn new words</li>
+<li class="mb-2">Read diverse content</li>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📚 Custom Dictionary</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Overview</h3>
+
+<p class="mb-4">Add words that OpenGrammar should never flag as errors:</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Proper nouns (names, places)</li>
+<li class="mb-2">Technical terms</li>
+<li class="mb-2">Industry jargon</li>
+<li class="mb-2">Made-up words</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Managing Your Dictionary</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Add Words</h4>
+
+<p class="mb-4"><strong>Method 1: From Suggestion Popup</strong></p>
+<li class="mb-2">Click underlined word</li>
+<li class="mb-2">Click <strong>Add to Dictionary</strong></li>
+<li class="mb-2">Word is saved</li>
+
+<p class="mb-4"><strong>Method 2: Options Page</strong></p>
+<li class="mb-2">Right-click extension → Options</li>
+<li class="mb-2">Go to <strong>Custom Dictionary</strong></li>
+<li class="mb-2">Click <strong>Add Word</strong></li>
+<li class="mb-2">Enter word</li>
+<li class="mb-2">Click <strong>Save</strong></li>
+
+<p class="mb-4"><strong>Method 3: Bulk Import</strong></p>
+<li class="mb-2">Options → Custom Dictionary</li>
+<li class="mb-2">Click <strong>Import</strong></li>
+<li class="mb-2">Upload text file (one word per line)</li>
+<li class="mb-2">Words are added</li>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Remove Words</h4>
+
+<li class="mb-2">Options → Custom Dictionary</li>
+<li class="mb-2">Find word in list</li>
+<li class="mb-2">Click <strong>Remove</strong> (trash icon)</li>
+<li class="mb-2">Confirm deletion</li>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Export Dictionary</h4>
+
+<li class="mb-2">Options → Custom Dictionary</li>
+<li class="mb-2">Click <strong>Export</strong></li>
+<li class="mb-2">Download JSON file</li>
+<li class="mb-2">Save for backup</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Dictionary Tips</h3>
+
+<p class="mb-4">✅ <strong>Good Words to Add:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Your name</li>
+<li class="mb-2">Company names</li>
+<li class="mb-2">Product names</li>
+<li class="mb-2">Technical terminology</li>
+<li class="mb-2">Common abbreviations you use</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4">❌ <strong>Don't Add:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Common misspellings</li>
+<li class="mb-2">Offensive words</li>
+<li class="mb-2">Temporary terms</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Example Dictionary</h3>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>My Custom Dictionary (127 words)
+<p class="mb-4">─────────────────────────────────</p>
+<p class="mb-4">✓ opengrammar</p>
+<p class="mb-4">✓ typescript</p>
+<p class="mb-4">✓ javascript</p>
+<p class="mb-4">✓ swadhin</p>
+<p class="mb-4">✓ api</p>
+<p class="mb-4">✓ backend</p>
+<p class="mb-4">✓ frontend</p>
+<p class="mb-4">✓ devops</p>
+<p class="mb-4">✓ kubernetes</p>
+<p class="mb-4">✓ docker</p>
+<p class="mb-4">...</p>
+
+<p class="mb-4">[Add Word] [Import] [Export] [Clear All]</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🌐 Site-Specific Settings</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Overview</h3>
+
+<p class="mb-4">Control OpenGrammar behavior per website:</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Disable on specific domains</li>
+<li class="mb-2">Different settings per site</li>
+<li class="mb-2">Automatic detection</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Disabling Sites</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Method 1: Quick Disable</h4>
+<li class="mb-2">Click extension icon</li>
+<li class="mb-2">Toggle <strong>Enable on this site</strong></li>
+<li class="mb-2">Site is added to disabled list</li>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Method 2: Options Page</h4>
+<li class="mb-2">Right-click extension → Options</li>
+<li class="mb-2">Go to <strong>Site-Specific Settings</strong></li>
+<li class="mb-2">Click <strong>Add Domain</strong></li>
+<li class="mb-2">Enter domain (e.g., <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">twitter.com</code>)</li>
+<li class="mb-2">Toggle enabled/disabled</li>
+<li class="mb-2">Click <strong>Save</strong></li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Managing Disabled Sites</h3>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Site-Specific Settings
+<p class="mb-4">─────────────────────────────────────</p>
+<p class="mb-4">✓ gmail.com          [Disable] [Remove]</p>
+<p class="mb-4">✓ docs.google.com    [Disable] [Remove]</p>
+<p class="mb-4">✓ notion.so          [Disable] [Remove]</p>
+<p class="mb-4">✗ twitter.com        [Enable]  [Remove]</p>
+<p class="mb-4">✗ facebook.com       [Enable]  [Remove]</p>
+
+<p class="mb-4">[Add Domain] [Disable All] [Enable All]</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">When to Disable</h3>
+
+<p class="mb-4"><strong>Good Candidates:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Social media (casual writing)</li>
+<li class="mb-2">Code editors (technical text)</li>
+<li class="mb-2">Gaming sites (chat)</li>
+<li class="mb-2">Sites with custom text inputs</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Keep Enabled:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Email clients</li>
+<li class="mb-2">Document editors</li>
+<li class="mb-2">Writing tools</li>
+<li class="mb-2">Forms and applications</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">⌨️ Keyboard Shortcuts</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Default Shortcuts</h3>
+
+<p class="mb-4"><tr><td> Action </td></tr> Windows/Linux <tr><td> Mac </td></tr></p>
+<p class="mb-4"><tr><td>--------</td></tr>---------------<tr><td>-----</td></tr></p>
+<p class="mb-4"><tr><td> <strong>Rewrite Selected Text</strong> </td></tr> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Shift+R</code> <tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Cmd+Shift+R</code> </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Toggle Extension</strong> </td></tr> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Shift+E</code> <tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Cmd+Shift+E</code> </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Open Statistics</strong> </td></tr> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Shift+S</code> <tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Cmd+Shift+S</code> </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Open Settings</strong> </td></tr> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Shift+,</code> <tr><td> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Cmd+Shift+,</code> </td></tr></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Customizing Shortcuts</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Chrome/Brave/Edge</h4>
+<li class="mb-2">Go to <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">chrome://extensions/shortcuts</code></li>
+<li class="mb-2">Find OpenGrammar</li>
+<li class="mb-2">Click shortcut field</li>
+<li class="mb-2">Press new key combination</li>
+<li class="mb-2">Click <strong>Save</strong></li>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Firefox</h4>
+<li class="mb-2">Go to <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">about:addons</code></li>
+<li class="mb-2">Click gear icon → <strong>Manage Extension Shortcuts</strong></li>
+<li class="mb-2">Find OpenGrammar</li>
+<li class="mb-2">Set new shortcuts</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Shortcut Tips</h3>
+
+<p class="mb-4">✅ <strong>Best Practices:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Use memorable combinations</li>
+<li class="mb-2">Avoid system shortcuts</li>
+<li class="mb-2">Keep hands on home row</li>
+<li class="mb-2">Practice muscle memory</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4">❌ <strong>Avoid:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+C</code>, <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+V</code> (copy/paste)</li>
+<li class="mb-2"><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+Z</code> (undo)</li>
+<li class="mb-2"><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">Ctrl+T</code> (new tab)</li>
+<li class="mb-2">Browser-reserved shortcuts</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">💡 Tips & Best Practices</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Daily Usage Tips</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2">1. Start with Rule-Based Only</h4>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">No API key needed</li>
+<li class="mb-2">Works offline</li>
+<li class="mb-2">Catches basic errors</li>
+<li class="mb-2">Fast and free</li>
+<p class="mb-4"></ul></p>
+<h4 class="text-lg font-bold mt-4 mb-2">2. Add AI for Complex Writing</h4>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Use for important emails</li>
+<li class="mb-2">Enable for documents</li>
+<li class="mb-2">Disable for casual chat</li>
+<li class="mb-2">Choose right model</li>
+<p class="mb-4"></ul></p>
+<h4 class="text-lg font-bold mt-4 mb-2">3. Build Your Dictionary</h4>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Add names early</li>
+<li class="mb-2">Include technical terms</li>
+<li class="mb-2">Import from other tools</li>
+<li class="mb-2">Sync across devices</li>
+<p class="mb-4"></ul></p>
+<h4 class="text-lg font-bold mt-4 mb-2">4. Use Tone Rewriting Wisely</h4>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Professional for work</li>
+<li class="mb-2">Casual for friends</li>
+<li class="mb-2">Concise for messages</li>
+<li class="mb-2">Formal for documents</li>
+<p class="mb-4"></ul></p>
+<h4 class="text-lg font-bold mt-4 mb-2">5. Check Statistics Regularly</h4>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Monitor readability</li>
+<li class="mb-2">Track vocabulary</li>
+<li class="mb-2">Set improvement goals</li>
+<li class="mb-2">Compare documents</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Workflow Integration</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2">For Email</h4>
+<li class="mb-2">Compose in Gmail</li>
+<li class="mb-2">Wait for grammar check</li>
+<li class="mb-2">Review suggestions</li>
+<li class="mb-2">Apply important fixes</li>
+<li class="mb-2">Use tone rewriting for polish</li>
+
+<h4 class="text-lg font-bold mt-4 mb-2">For Documents</h4>
+<li class="mb-2">Write in Google Docs</li>
+<li class="mb-2">Enable full checking</li>
+<li class="mb-2">Review all suggestions</li>
+<li class="mb-2">Check statistics</li>
+<li class="mb-2">Rewrite key sections</li>
+
+<h4 class="text-lg font-bold mt-4 mb-2">For Social Media</h4>
+<li class="mb-2">Disable on casual sites</li>
+<li class="mb-2">Enable for professional posts</li>
+<li class="mb-2">Use concise tone</li>
+<li class="mb-2">Quick grammar check only</li>
+
+<h4 class="text-lg font-bold mt-4 mb-2">For Coding/Technical</h4>
+<li class="mb-2">Disable in code editors</li>
+<li class="mb-2">Enable for comments/docs</li>
+<li class="mb-2">Add technical terms to dictionary</li>
+<li class="mb-2">Use custom rules</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Common Mistakes to Avoid</h3>
+
+<p class="mb-4">❌ <strong>Over-relying on AI</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Review all suggestions</li>
+<li class="mb-2">Understand the changes</li>
+<li class="mb-2">Learn from mistakes</li>
+<li class="mb-2">Don't accept blindly</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4">❌ <strong>Ignoring Context</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Consider your audience</li>
+<li class="mb-2">Match tone to situation</li>
+<li class="mb-2">Keep your voice</li>
+<li class="mb-2">Don't over-edit</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4">❌ <strong>Not Customizing</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Add domain-specific terms</li>
+<li class="mb-2">Adjust settings per site</li>
+<li class="mb-2">Configure shortcuts</li>
+<li class="mb-2">Personalize dictionary</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4">❌ <strong>Skipping Statistics</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Check readability</li>
+<li class="mb-2">Monitor progress</li>
+<li class="mb-2">Set goals</li>
+<li class="mb-2">Track improvements</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Advanced Tips</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2">1. Hybrid Mode</h4>
+<p class="mb-4">Use both engines:</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Rules for basic errors (free, fast)</li>
+<li class="mb-2">AI for complex issues (smart, contextual)</li>
+<p class="mb-4"></ul></p>
+<h4 class="text-lg font-bold mt-4 mb-2">2. Batch Processing</h4>
+<p class="mb-4">For long documents:</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Write first draft</li>
+<li class="mb-2">Enable checking</li>
+<li class="mb-2">Review all at once</li>
+<li class="mb-2">Apply in batches</li>
+<p class="mb-4"></ul></p>
+<h4 class="text-lg font-bold mt-4 mb-2">3. Custom Prompts</h4>
+<p class="mb-4">(If supported)</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Create custom instructions</li>
+<li class="mb-2">Save favorite tones</li>
+<li class="mb-2">Set default styles</li>
+<li class="mb-2">Automate common tasks</li>
+<p class="mb-4"></ul></p>
+<h4 class="text-lg font-bold mt-4 mb-2">4. Export & Backup</h4>
+<p class="mb-4">Regularly:</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Export settings</li>
+<li class="mb-2">Backup dictionary</li>
+<li class="mb-2">Save statistics</li>
+<li class="mb-2">Document custom rules</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🆘 Troubleshooting</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Common Issues</h3>
+
+<p class="mb-4"><strong>Problem:</strong> No underlines appear</p>
+
+<p class="mb-4"><strong>Solutions:</strong></p>
+<li class="mb-2">Check extension is enabled</li>
+<li class="mb-2">Verify site not disabled</li>
+<li class="mb-2">Test backend connection</li>
+<li class="mb-2">Reload page</li>
+<li class="mb-2">Check browser console</li>
+
+<p class="mb-4"><strong>Problem:</strong> Suggestions not applying</p>
+
+<p class="mb-4"><strong>Solutions:</strong></p>
+<li class="mb-2">Click directly on suggestion</li>
+<li class="mb-2">Wait for popup to load</li>
+<li class="mb-2">Check permissions</li>
+<li class="mb-2">Try keyboard shortcut</li>
+<li class="mb-2">Restart browser</li>
+
+<p class="mb-4"><strong>Problem:</strong> Rewrite not working</p>
+
+<p class="mb-4"><strong>Solutions:</strong></p>
+<li class="mb-2">Select text first</li>
+<li class="mb-2">Check API key valid</li>
+<li class="mb-2">Verify backend running</li>
+<li class="mb-2">Try different tone</li>
+<li class="mb-2">Check network connection</li>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📚 Related Documentation</h2>
+
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><a href="04-browser-extension-setup.md" class="text-blue-600 dark:text-blue-400 hover:underline">Browser Setup</a> - Install on your browser</li>
+<li class="mb-2"><a href="07-ai-providers.md" class="text-blue-600 dark:text-blue-400 hover:underline">AI Providers</a> - Configure AI</li>
+<li class="mb-2"><a href="10-tone-rewriting.md" class="text-blue-600 dark:text-blue-400 hover:underline">Tone Rewriting</a> - Detailed rewriting guide</li>
+<li class="mb-2"><a href="18-troubleshooting.md" class="text-blue-600 dark:text-blue-400 hover:underline">Troubleshooting</a> - Fix common issues</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<p class="mb-4"><strong>Happy Writing! ✨</strong></p>
+
+<p class="mb-4">OpenGrammar is your companion for clear, confident writing. Use it wisely, customize it to your needs, and watch your writing improve!</p>
+
+        </article>
+        
+        <!-- Back to Top -->
+        <div class="mt-12 pt-8 border-t border-gray-200 dark:border-dark-700">
+            <a href="#" class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:underline">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                </svg>
+                Back to top
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-50 dark:bg-dark-900 border-t border-gray-200 dark:border-dark-700 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <img src="../logo.svg" alt="OpenGrammar Logo" class="h-6 w-6">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">© 2026 OpenGrammar. Apache 2.0 License</span>
+                </div>
+                <div class="flex gap-6">
+                    <a href="https://github.com/swadhinbiswas/opengrammar" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">GitHub</a>
+                    <a href="../index.html" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">Home</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Theme Script -->
+    <script>
+        const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        if (theme === 'dark') document.documentElement.classList.add('dark');
+        
+        function updateThemeIcons() {
+            const isDark = document.documentElement.classList.contains('dark');
+            document.getElementById('theme-toggle-light-icon').classList.toggle('hidden', !isDark);
+            document.getElementById('theme-toggle-dark-icon').classList.toggle('hidden', isDark);
+        }
+        updateThemeIcons();
+        
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            updateThemeIcons();
+        });
+    </script>
+</body>
+</html>

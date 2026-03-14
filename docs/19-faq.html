@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>❓ Frequently Asked Questions (FAQ) | OpenGrammar</title>
+    <meta name="description" content="OpenGrammar Documentation">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd',
+                            400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb',
+                            700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a',
+                        },
+                        dark: {
+                            50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1',
+                            400: '#94a3b8', 500: '#64748b', 600: '#475569',
+                            700: '#334155', 800: '#1e293b', 900: '#0f172a', 950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        .dark ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    </style>
+</head>
+<body class="font-sans antialiased bg-white dark:bg-dark-950 text-gray-900 dark:text-gray-100">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/80 dark:bg-dark-900/80 backdrop-blur-md border-b border-gray-200 dark:border-dark-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="../index.html" class="flex items-center gap-2">
+                    <img src="../logo.svg" alt="OpenGrammar Logo" class="h-8 w-8">
+                    <span class="font-bold text-xl tracking-tight">OpenGrammar Docs</span>
+                </a>
+                <div class="flex items-center gap-4">
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-dark-800 hover:bg-gray-200 dark:hover:bg-dark-700" aria-label="Toggle dark mode">
+                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                        </svg>
+                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                    </button>
+                    <a href="../index.html" class="text-sm font-medium hover:text-primary-600 dark:hover:text-primary-400">Back to Docs</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <article class="prose prose-lg dark:prose-invert max-w-none">
+            <h1 class="text-4xl font-bold mb-6">❓ Frequently Asked Questions (FAQ)</h1>
+
+<p class="mb-4">Common questions about OpenGrammar answered.</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📖 Table of Contents</h2>
+
+<li class="mb-2"><a href="#general-questions" class="text-blue-600 dark:text-blue-400 hover:underline">General Questions</a></li>
+<li class="mb-2"><a href="#installation--setup" class="text-blue-600 dark:text-blue-400 hover:underline">Installation & Setup</a></li>
+<li class="mb-2"><a href="#features--usage" class="text-blue-600 dark:text-blue-400 hover:underline">Features & Usage</a></li>
+<li class="mb-2"><a href="#privacy--security" class="text-blue-600 dark:text-blue-400 hover:underline">Privacy & Security</a></li>
+<li class="mb-2"><a href="#ai-providers" class="text-blue-600 dark:text-blue-400 hover:underline">AI Providers</a></li>
+<li class="mb-2"><a href="#troubleshooting" class="text-blue-600 dark:text-blue-400 hover:underline">Troubleshooting</a></li>
+<li class="mb-2"><a href="#contributing" class="text-blue-600 dark:text-blue-400 hover:underline">Contributing</a></li>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🎯 General Questions</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">What is OpenGrammar?</h3>
+
+<p class="mb-4">OpenGrammar is a free, open-source browser extension that helps you write clearly and confidently. It's a privacy-first alternative to Grammarly that runs in your browser and can work completely offline.</p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Is OpenGrammar really free?</h3>
+
+<p class="mb-4"><strong>Yes!</strong> OpenGrammar is 100% free and open-source. You can:</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Use the rule-based grammar checker for free (offline)</li>
+<li class="mb-2">Bring your own API key for AI features (pay only what you use)</li>
+<li class="mb-2">Self-host the backend for free</li>
+<li class="mb-2">Modify and distribute the code</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">How is OpenGrammar different from Grammarly?</h3>
+
+<p class="mb-4"><tr><td> Feature </td></tr> Grammarly <tr><td> OpenGrammar </td></tr></p>
+<p class="mb-4"><tr><td>---------</td></tr>-----------<tr><td>-------------</td></tr></p>
+<p class="mb-4"><tr><td> <strong>Cost</strong> </td></tr> $12/month for premium <tr><td> Free </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Privacy</strong> </td></tr> Sends data to servers <tr><td> Your data stays local </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Open Source</strong> </td></tr> No <tr><td> Yes </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Offline Mode</strong> </td></tr> Limited <tr><td> Full offline support </td></tr></p>
+<p class="mb-4"><tr><td> <strong>AI Providers</strong> </td></tr> Only Grammarly's AI <tr><td> Choose from 6+ providers </td></tr></p>
+<p class="mb-4"><tr><td> <strong>Self-Hosting</strong> </td></tr> No <tr><td> Yes </td></tr></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">What browsers are supported?</h3>
+
+<p class="mb-4">OpenGrammar works on all Chromium-based browsers:</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">✅ Google Chrome (88+)</li>
+<li class="mb-2">✅ Brave (1.20+)</li>
+<li class="mb-2">✅ Microsoft Edge (88+)</li>
+<li class="mb-2">✅ Opera (74+)</li>
+<li class="mb-2">✅ Vivaldi (3.6+)</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4">Firefox support is available but temporary (must reload each session).</p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Is OpenGrammar open-source?</h3>
+
+<p class="mb-4"><strong>Yes!</strong> The entire codebase is open-source under the Apache 2.0 license. You can:</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">View the source code on GitHub</li>
+<li class="mb-2">Contribute improvements</li>
+<li class="mb-2">Fork and modify</li>
+<li class="mb-2">Self-host your own version</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📥 Installation & Setup</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">How do I install OpenGrammar?</h3>
+
+<li class="mb-2">Clone the repository or download the release</li>
+<li class="mb-2">Build the extension: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">bun run build</code></li>
+<li class="mb-2">Load unpacked in your browser</li>
+<li class="mb-2">Configure settings</li>
+
+<p class="mb-4">See <a href="04-browser-extension-setup.md" class="text-blue-600 dark:text-blue-400 hover:underline">Browser Extension Setup</a> for detailed instructions.</p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Do I need to deploy a backend?</h3>
+
+<p class="mb-4"><strong>No, but it's recommended.</strong> You have options:</p>
+
+<p class="mb-4"><strong>Option 1: Local Backend (Recommended for testing)</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Run backend on your computer</li>
+<li class="mb-2">Free, full control</li>
+<li class="mb-2">Requires Node.js</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Option 2: Cloud Backend (Recommended for production)</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Deploy to Cloudflare Workers, Vercel, etc.</li>
+<li class="mb-2">Free tiers available</li>
+<li class="mb-2">Access from anywhere</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Option 3: Rule-Based Only</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">No backend needed</li>
+<li class="mb-2">Works offline</li>
+<li class="mb-2">Basic grammar checking only</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Is technical knowledge required?</h3>
+
+<p class="mb-4"><strong>Basic setup:</strong> Minimal technical knowledge needed</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Follow step-by-step guides</li>
+<li class="mb-2">Copy-paste commands</li>
+<li class="mb-2">Configure in UI</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Advanced setup:</strong> Some technical knowledge helpful</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Deploying to cloud platforms</li>
+<li class="mb-2">Running local servers</li>
+<li class="mb-2">Configuring API keys</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">How long does setup take?</h3>
+
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><strong>Quick setup:</strong> 5-10 minutes</li>
+<li class="mb-2"><strong>With cloud deployment:</strong> 15-20 minutes</li>
+<li class="mb-2"><strong>With local LLM:</strong> 30 minutes</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🎨 Features & Usage</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">What features are included?</h3>
+
+<p class="mb-4"><strong>Grammar Checking:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">40+ grammar rules</li>
+<li class="mb-2">Spelling correction</li>
+<li class="mb-2">Punctuation checks</li>
+<li class="mb-2">Style suggestions</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>AI Features:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Advanced grammar checking</li>
+<li class="mb-2">Tone rewriting (8 tones)</li>
+<li class="mb-2">Context understanding</li>
+<li class="mb-2">Writing statistics</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Privacy Features:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Local rule-based checking</li>
+<li class="mb-2">Self-hostable backend</li>
+<li class="mb-2">No data retention</li>
+<li class="mb-2">Bring your own API key</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Does it work offline?</h3>
+
+<p class="mb-4"><strong>Yes!</strong> The rule-based grammar checker works completely offline without any internet connection. AI features require internet for cloud providers, but you can use local LLMs (Ollama) for offline AI.</p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">What websites does it work on?</h3>
+
+<p class="mb-4">OpenGrammar works on most websites with text inputs:</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">✅ Gmail</li>
+<li class="mb-2">✅ Google Docs</li>
+<li class="mb-2">✅ Notion</li>
+<li class="mb-2">✅ Twitter/X</li>
+<li class="mb-2">✅ Facebook</li>
+<li class="mb-2">✅ LinkedIn</li>
+<li class="mb-2">✅ Reddit</li>
+<li class="mb-2">✅ Any custom text box</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4">Some sites may need to be manually enabled in settings.</p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Can I use it on mobile?</h3>
+
+<p class="mb-4">Currently, OpenGrammar is designed for <strong>desktop browsers only</strong>. Mobile browser extensions have limited support. We're working on mobile support in future releases.</p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">How do I disable it on certain sites?</h3>
+
+<li class="mb-2">Click extension icon</li>
+<li class="mb-2">Toggle "Enable on this site" OFF</li>
+<li class="mb-2">Or go to Options → Site-Specific Settings</li>
+<li class="mb-2">Add domains to disable list</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Can I add custom words?</h3>
+
+<p class="mb-4"><strong>Yes!</strong> Use the Custom Dictionary:</p>
+<li class="mb-2">Right-click extension → Options</li>
+<li class="mb-2">Go to Custom Dictionary</li>
+<li class="mb-2">Add your words</li>
+<li class="mb-2">Words won't be flagged as errors</li>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🔒 Privacy & Security</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Is my data safe?</h3>
+
+<p class="mb-4"><strong>Yes!</strong> OpenGrammar is designed with privacy in mind:</p>
+
+<p class="mb-4"><strong>Rule-Based Checking:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">100% local in your browser</li>
+<li class="mb-2">No data leaves your computer</li>
+<li class="mb-2">Works offline</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>AI Checking:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Text sent directly to your chosen provider</li>
+<li class="mb-2">Backend is stateless (doesn't store data)</li>
+<li class="mb-2">No databases or user accounts</li>
+<li class="mb-2">API keys stored locally in browser</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Do you store my API keys?</h3>
+
+<p class="mb-4"><strong>No.</strong> API keys are:</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Stored in your browser's local storage (encrypted by Chrome)</li>
+<li class="mb-2">Never sent to OpenGrammar servers</li>
+<li class="mb-2">Only used to authenticate with AI providers</li>
+<li class="mb-2">Under your complete control</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">What data is sent to AI providers?</h3>
+
+<p class="mb-4">When using AI features:</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Your text is sent to the provider (OpenAI, Groq, etc.)</li>
+<li class="mb-2">Provider processes the text</li>
+<li class="mb-2">Returns suggestions</li>
+<li class="mb-2">Text is <strong>not stored</strong> by the provider (check their policies)</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Can I run everything locally?</h3>
+
+<p class="mb-4"><strong>Yes!</strong> Complete local setup:</p>
+<li class="mb-2">Run backend locally (Docker or Node.js)</li>
+<li class="mb-2">Use Ollama for local LLM</li>
+<li class="mb-2">Everything stays on your computer</li>
+<li class="mb-2">100% offline, 100% private</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Is the code auditable?</h3>
+
+<p class="mb-4"><strong>Yes!</strong> Being open-source means:</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Anyone can review the code</li>
+<li class="mb-2">Security researchers can audit</li>
+<li class="mb-2">Community can verify privacy claims</li>
+<li class="mb-2">Transparent development</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🤖 AI Providers</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Which AI provider should I use?</h3>
+
+<p class="mb-4"><strong>For free usage:</strong> Groq</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">100 requests/day free</li>
+<li class="mb-2">Fast inference</li>
+<li class="mb-2">Good quality (Llama 3.1 70B)</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>For best quality:</strong> OpenAI</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">GPT-4o-mini model</li>
+<li class="mb-2">Highest accuracy</li>
+<li class="mb-2">Low cost (~$0.15/1K requests)</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>For privacy:</strong> Ollama</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Run models locally</li>
+<li class="mb-2">No API calls</li>
+<li class="mb-2">Complete privacy</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>For variety:</strong> OpenRouter</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Access to 100+ models</li>
+<li class="mb-2">Claude, Llama, Mistral, etc.</li>
+<li class="mb-2">Pay-per-use</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Do I need an API key?</h3>
+
+<p class="mb-4"><strong>For rule-based checking:</strong> No API key needed</p>
+
+<p class="mb-4"><strong>For AI features:</strong> Yes, but you have options:</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Get free Groq key (100/day free)</li>
+<li class="mb-2">Use your existing OpenAI key</li>
+<li class="mb-2">Run Ollama locally (no key needed)</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">How much does it cost?</h3>
+
+<p class="mb-4"><strong>Free options:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Groq: 100 requests/day free</li>
+<li class="mb-2">Ollama: Free (your hardware)</li>
+<li class="mb-2">Rule-based: Completely free</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Paid options:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">OpenAI GPT-4o-mini: ~$0.15 per 1K requests</li>
+<li class="mb-2">Typical user: $0.50-2/month</li>
+<li class="mb-2">Heavy user: $5-10/month</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Can I switch providers?</h3>
+
+<p class="mb-4"><strong>Yes!</strong> You can switch providers anytime:</p>
+<li class="mb-2">Click extension → Settings</li>
+<li class="mb-2">Change provider dropdown</li>
+<li class="mb-2">Enter new API key (if needed)</li>
+<li class="mb-2">Save settings</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">What if I hit rate limits?</h3>
+
+<p class="mb-4"><strong>Groq free tier:</strong> 100 requests/day</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Wait 24 hours for reset</li>
+<li class="mb-2">Or upgrade to paid plan</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Other providers:</strong> Check their limits</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Most have free tiers</li>
+<li class="mb-2">Upgrade if needed</li>
+<li class="mb-2">Use rule-based as fallback</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🔧 Troubleshooting</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Why isn't it working?</h3>
+
+<p class="mb-4"><strong>Most common issues:</strong></p>
+
+<li class="mb-2"><strong>Extension not enabled</strong></li>
+<p class="mb-4">   - Check chrome://extensions/</p>
+<p class="mb-4">   - Enable OpenGrammar</p>
+
+<li class="mb-2"><strong>Backend not running</strong></li>
+<p class="mb-4">   - Start backend: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">bun run dev</code></p>
+<p class="mb-4">   - Check health: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">curl localhost:8787/health</code></p>
+
+<li class="mb-2"><strong>Site disabled</strong></li>
+<p class="mb-4">   - Check Options → Site-Specific Settings</p>
+<p class="mb-4">   - Enable current site</p>
+
+<li class="mb-2"><strong>No API key</strong></li>
+<p class="mb-4">   - Add API key in Settings</p>
+<p class="mb-4">   - Or use rule-based only</p>
+
+<p class="mb-4">See <a href="18-troubleshooting.md" class="text-blue-600 dark:text-blue-400 hover:underline">Troubleshooting Guide</a> for detailed help.</p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Why is it slow?</h3>
+
+<p class="mb-4"><strong>Possible causes:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">AI provider latency (try Groq for speed)</li>
+<li class="mb-2">Long text (check in chunks)</li>
+<li class="mb-2">Slow internet connection</li>
+<li class="mb-2">Backend on free tier (upgrade or self-host)</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Why are there false positives?</h3>
+
+<p class="mb-4"><strong>Reasons:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Technical terms not in dictionary</li>
+<li class="mb-2">Proper nouns (names, places)</li>
+<li class="mb-2">Industry jargon</li>
+<li class="mb-2">Made-up words</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Solution:</strong> Add words to Custom Dictionary</p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">How do I report a bug?</h3>
+
+<li class="mb-2">Go to <a href="https://github.com/swadhinbiswas/opengrammar/issues" class="text-blue-600 dark:text-blue-400 hover:underline">GitHub Issues</a></li>
+<li class="mb-2">Search for similar issues</li>
+<li class="mb-2">Create new issue with:</li>
+<p class="mb-4">   - Description</p>
+<p class="mb-4">   - Steps to reproduce</p>
+<p class="mb-4">   - Expected behavior</p>
+<p class="mb-4">   - Screenshots (if helpful)</p>
+<p class="mb-4">   - Debug information</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🤝 Contributing</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">How can I contribute?</h3>
+
+<p class="mb-4"><strong>Non-developers:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Report bugs</li>
+<li class="mb-2">Suggest features</li>
+<li class="mb-2">Improve documentation</li>
+<li class="mb-2">Share with others</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Developers:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Fix bugs</li>
+<li class="mb-2">Add features</li>
+<li class="mb-2">Improve performance</li>
+<li class="mb-2">Add grammar rules</li>
+<li class="mb-2">Write tests</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Do I need to be an expert?</h3>
+
+<p class="mb-4"><strong>No!</strong> All skill levels welcome:</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Beginners: Fix typos, improve docs</li>
+<li class="mb-2">Intermediate: Add grammar rules</li>
+<li class="mb-2">Advanced: New features, optimizations</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">How do I add grammar rules?</h3>
+
+<p class="mb-4">See <a href="16-grammar-rules.md" class="text-blue-600 dark:text-blue-400 hover:underline">Grammar Rules Guide</a>:</p>
+<li class="mb-2">Open <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-red-600 dark:text-red-400">backend/src/analyzer-simple.ts</code></li>
+<li class="mb-2">Add regex pattern</li>
+<li class="mb-2">Add suggestion and reason</li>
+<li class="mb-2">Test and submit PR</li>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Is there a reward for contributing?</h3>
+
+<p class="mb-4"><strong>Intrinsic rewards:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Help thousands of users</li>
+<li class="mb-2">Improve your coding skills</li>
+<li class="mb-2">Build your portfolio</li>
+<li class="mb-2">Join open-source community</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>No monetary rewards</strong> - this is a community project</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📊 Technical Questions</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">What technology stack is used?</h3>
+
+<p class="mb-4"><strong>Extension:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">React + TypeScript</li>
+<li class="mb-2">Vite (bundler)</li>
+<li class="mb-2">Manifest V3</li>
+<li class="mb-2">Tailwind CSS</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Backend:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Hono (web framework)</li>
+<li class="mb-2">TypeScript</li>
+<li class="mb-2">Cloudflare Workers / Node.js</li>
+<li class="mb-2">OpenAI SDK</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Infrastructure:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Docker for self-hosting</li>
+<li class="mb-2">GitHub Actions for CI/CD</li>
+<li class="mb-2">GitHub Pages for docs</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Can I use it programmatically?</h3>
+
+<p class="mb-4"><strong>Yes!</strong> The backend provides a REST API:</p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>curl -X POST http://localhost:8787/analyze \
+<p class="mb-4">  -H "Content-Type: application/json" \</p>
+<p class="mb-4">  -d '{"text": "your text"}'</p>
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4">See <a href="15-api-reference.md" class="text-blue-600 dark:text-blue-400 hover:underline">API Reference</a> for details.</p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Can I integrate with other tools?</h3>
+
+<p class="mb-4"><strong>Yes!</strong> Options include:</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">VS Code extension (future)</li>
+<li class="mb-2">Desktop app (Electron)</li>
+<li class="mb-2">Mobile app (React Native)</li>
+<li class="mb-2">API integration in your apps</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">What's the roadmap?</h3>
+
+<p class="mb-4">See <a href="../ROADMAP.md" class="text-blue-600 dark:text-blue-400 hover:underline">ROADMAP.md</a>:</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">✅ v2.1: Tone rewriting, statistics</li>
+<li class="mb-2">🚧 v3.0: Firefox support, autocomplete</li>
+<li class="mb-2">📋 v4.0: Desktop apps, Developer API</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">💰 Cost Questions</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Is there a premium version?</h3>
+
+<p class="mb-4"><strong>No!</strong> OpenGrammar is completely free. No premium tier, no subscriptions, no hidden costs.</p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">How do you make money?</h3>
+
+<p class="mb-4"><strong>We don't.</strong> This is a community open-source project:</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Built by volunteers</li>
+<li class="mb-2">Funded by users (API costs)</li>
+<li class="mb-2">Free to use forever</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Will it stay free?</h3>
+
+<p class="mb-4"><strong>Yes!</strong> The project is committed to staying free:</p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Apache 2.0 license</li>
+<li class="mb-2">Community-driven</li>
+<li class="mb-2">No monetization plans</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📚 More Questions?</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Where can I find more information?</h3>
+
+<p class="mb-4"><strong>Documentation:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><a href="01-quick-start.md" class="text-blue-600 dark:text-blue-400 hover:underline">Quick Start</a></li>
+<li class="mb-2"><a href="09-using-opengrammar.md" class="text-blue-600 dark:text-blue-400 hover:underline">User Guide</a></li>
+<li class="mb-2"><a href="15-api-reference.md" class="text-blue-600 dark:text-blue-400 hover:underline">API Reference</a></li>
+<li class="mb-2"><a href="18-troubleshooting.md" class="text-blue-600 dark:text-blue-400 hover:underline">Troubleshooting</a></li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Community:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><a href="https://github.com/swadhinbiswas/opengrammar/discussions" class="text-blue-600 dark:text-blue-400 hover:underline">GitHub Discussions</a></li>
+<li class="mb-2"><a href="https://github.com/swadhinbiswas/opengrammar/issues" class="text-blue-600 dark:text-blue-400 hover:underline">GitHub Issues</a></li>
+<li class="mb-2"><a href="link-to-discord" class="text-blue-600 dark:text-blue-400 hover:underline">Discord Server</a></li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Still have questions?</h3>
+
+<p class="mb-4"><strong>Ask in GitHub Discussions!</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Community is friendly</li>
+<li class="mb-2">Developers respond quickly</li>
+<li class="mb-2">Others may have same questions</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<p class="mb-4"><strong>Last Updated:</strong> March 2026  </p>
+<p class="mb-4"><strong>Version:</strong> 2.1.0</p>
+
+        </article>
+        
+        <!-- Back to Top -->
+        <div class="mt-12 pt-8 border-t border-gray-200 dark:border-dark-700">
+            <a href="#" class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:underline">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                </svg>
+                Back to top
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-50 dark:bg-dark-900 border-t border-gray-200 dark:border-dark-700 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <img src="../logo.svg" alt="OpenGrammar Logo" class="h-6 w-6">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">© 2026 OpenGrammar. Apache 2.0 License</span>
+                </div>
+                <div class="flex gap-6">
+                    <a href="https://github.com/swadhinbiswas/opengrammar" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">GitHub</a>
+                    <a href="../index.html" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">Home</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Theme Script -->
+    <script>
+        const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        if (theme === 'dark') document.documentElement.classList.add('dark');
+        
+        function updateThemeIcons() {
+            const isDark = document.documentElement.classList.contains('dark');
+            document.getElementById('theme-toggle-light-icon').classList.toggle('hidden', !isDark);
+            document.getElementById('theme-toggle-dark-icon').classList.toggle('hidden', isDark);
+        }
+        updateThemeIcons();
+        
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            updateThemeIcons();
+        });
+    </script>
+</body>
+</html>

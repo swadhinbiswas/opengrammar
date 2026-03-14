@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 Writing Statistics Guide | OpenGrammar</title>
+    <meta name="description" content="OpenGrammar Documentation">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd',
+                            400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb',
+                            700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a',
+                        },
+                        dark: {
+                            50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1',
+                            400: '#94a3b8', 500: '#64748b', 600: '#475569',
+                            700: '#334155', 800: '#1e293b', 900: '#0f172a', 950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        .dark ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+    </style>
+</head>
+<body class="font-sans antialiased bg-white dark:bg-dark-950 text-gray-900 dark:text-gray-100">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/80 dark:bg-dark-900/80 backdrop-blur-md border-b border-gray-200 dark:border-dark-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="../index.html" class="flex items-center gap-2">
+                    <img src="../logo.svg" alt="OpenGrammar Logo" class="h-8 w-8">
+                    <span class="font-bold text-xl tracking-tight">OpenGrammar Docs</span>
+                </a>
+                <div class="flex items-center gap-4">
+                    <button id="theme-toggle" class="p-2 rounded-lg bg-gray-100 dark:bg-dark-800 hover:bg-gray-200 dark:hover:bg-dark-700" aria-label="Toggle dark mode">
+                        <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                        </svg>
+                        <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                    </button>
+                    <a href="../index.html" class="text-sm font-medium hover:text-primary-600 dark:hover:text-primary-400">Back to Docs</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <article class="prose prose-lg dark:prose-invert max-w-none">
+            <h1 class="text-4xl font-bold mb-6">📊 Writing Statistics Guide</h1>
+
+<p class="mb-4">Analyze and improve your writing with detailed statistics and metrics.</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📋 Overview</h2>
+
+<p class="mb-4">OpenGrammar provides comprehensive writing analytics to help you understand and improve your writing style.</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📈 Available Metrics</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Basic Counts</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Words</h4>
+<p class="mb-4"><strong>What it measures:</strong> Total number of words in your text</p>
+
+<p class="mb-4"><strong>Why it matters:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Track writing progress</li>
+<li class="mb-2">Meet word count requirements</li>
+<li class="mb-2">Monitor document length</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Example:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Text: "The quick brown fox jumps over the lazy dog"
+<p class="mb-4">Word Count: 9</p>
+<p class="mb-4"></code></pre></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Characters</h4>
+<p class="mb-4"><strong>What it measures:</strong> Total characters (with and without spaces)</p>
+
+<p class="mb-4"><strong>Why it matters:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Social media limits (Twitter: 280 chars)</li>
+<li class="mb-2">SMS message length</li>
+<li class="mb-2">Meta descriptions</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Example:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Text: "Hello World"
+<p class="mb-4">Characters (with spaces): 11</p>
+<p class="mb-4">Characters (no spaces): 10</p>
+<p class="mb-4"></code></pre></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Sentences</h4>
+<p class="mb-4"><strong>What it measures:</strong> Number of complete sentences</p>
+
+<p class="mb-4"><strong>Why it matters:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Sentence variety</li>
+<li class="mb-2">Writing rhythm</li>
+<li class="mb-2">Readability</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Example:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Text: "Hello. How are you? I hope you're well!"
+<p class="mb-4">Sentences: 3</p>
+<p class="mb-4"></code></pre></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Paragraphs</h4>
+<p class="mb-4"><strong>What it measures:</strong> Number of paragraph breaks</p>
+
+<p class="mb-4"><strong>Why it matters:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Document structure</li>
+<li class="mb-2">Visual breaks</li>
+<li class="mb-2">Organization</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h3 class="text-xl font-bold mt-6 mb-3">Readability Scores</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Flesch Reading Ease Score</h4>
+
+<p class="mb-4"><strong>Scale:</strong> 0-100 (higher = easier to read)</p>
+
+<p class="mb-4"><strong>Interpretation:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>90-100: Very Easy (5th grade)     ████████████████████
+<p class="mb-4">80-89:  Easy (6th grade)          ██████████████████</p>
+<p class="mb-4">70-79:  Fairly Easy (7th grade)   ████████████████</p>
+<p class="mb-4">60-69:  Standard (8th-9th grade)  ██████████████</p>
+<p class="mb-4">50-59:  Fairly Difficult (10th-12th) ████████████</p>
+<p class="mb-4">30-49:  Difficult (College)       ██████████</p>
+<p class="mb-4">0-29:   Very Difficult (Graduate) ██████</p>
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>Formula:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>206.835 - 1.015 × (words/sentences) - 84.6 × (syllables/words)
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>Tips to Improve:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Use shorter sentences</li>
+<li class="mb-2">Choose simpler words</li>
+<li class="mb-2">Break up complex ideas</li>
+<p class="mb-4"></ul></p>
+<h4 class="text-lg font-bold mt-4 mb-2">Flesch-Kincaid Grade Level</h4>
+
+<p class="mb-4"><strong>Scale:</strong> US grade levels (1-18+)</p>
+
+<p class="mb-4"><strong>Interpretation:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>1-6:   Elementary School
+<p class="mb-4">7-9:   Middle School</p>
+<p class="mb-4">10-12: High School</p>
+<p class="mb-4">13-16: College</p>
+<p class="mb-4">17+:   Graduate School</p>
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>Example:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Grade 8.5: Understandable by average 8th grader
+<p class="mb-4">Grade 12:  High school senior level</p>
+<p class="mb-4">Grade 16:  College graduate level</p>
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>Tips to Improve:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Reduce sentence length</li>
+<li class="mb-2">Use fewer complex words</li>
+<li class="mb-2">Simplify sentence structure</li>
+<p class="mb-4"></ul></p>
+<h4 class="text-lg font-bold mt-4 mb-2">Automated Readability Index (ARI)</h4>
+
+<p class="mb-4"><strong>Scale:</strong> 1-14+ (similar to grade levels)</p>
+
+<p class="mb-4"><strong>Formula:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>4.71 × (characters/words) + 0.5 × (words/sentences) - 21.43
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>Interpretation:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>1-6:   Ages 5-12 (Elementary)
+<p class="mb-4">7-9:   Ages 12-15 (Middle School)</p>
+<p class="mb-4">10-12: Ages 15-18 (High School)</p>
+<p class="mb-4">13+:   Ages 18+ (Adult)</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h3 class="text-xl font-bold mt-6 mb-3">Time Estimates</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Reading Time</h4>
+
+<p class="mb-4"><strong>Calculation:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Words ÷ 200 words per minute = Reading time in minutes
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>Example:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>1,000 words ÷ 200 = 5 minutes reading time
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>Use cases:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Blog posts</li>
+<li class="mb-2">Articles</li>
+<li class="mb-2">Documents</li>
+<li class="mb-2">Emails</li>
+<p class="mb-4"></ul></p>
+<h4 class="text-lg font-bold mt-4 mb-2">Speaking Time</h4>
+
+<p class="mb-4"><strong>Calculation:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Words ÷ 150 words per minute = Speaking time in minutes
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>Example:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>1,000 words ÷ 150 = 6.67 minutes speaking time
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>Use cases:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Presentations</li>
+<li class="mb-2">Speeches</li>
+<li class="mb-2">Video scripts</li>
+<li class="mb-2">Podcasts</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h3 class="text-xl font-bold mt-6 mb-3">Vocabulary Analysis</h3>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Unique Words</h4>
+
+<p class="mb-4"><strong>What it measures:</strong> Number of different words used</p>
+
+<p class="mb-4"><strong>Example:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Text: "The cat sat on the mat. The cat was happy."
+<p class="mb-4">Total words: 10</p>
+<p class="mb-4">Unique words: 7 (the, cat, sat, on, mat, was, happy)</p>
+<p class="mb-4"></code></pre></p>
+
+<h4 class="text-lg font-bold mt-4 mb-2">Vocabulary Diversity</h4>
+
+<p class="mb-4"><strong>Calculation:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>(Unique Words ÷ Total Words) × 100 = Diversity %
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>Interpretation:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>60%+: Excellent vocabulary
+<p class="mb-4">50-59%: Good vocabulary</p>
+<p class="mb-4">40-49%: Average vocabulary</p>
+<p class="mb-4">30-39%: Limited vocabulary</p>
+<p class="mb-4"><30%:  Very limited vocabulary</p>
+<p class="mb-4"></code></pre></p>
+
+<p class="mb-4"><strong>Tips to Improve:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Use synonyms</li>
+<li class="mb-2">Vary word choice</li>
+<li class="mb-2">Learn new words</li>
+<li class="mb-2">Read diverse content</li>
+<p class="mb-4"></ul></p>
+<h4 class="text-lg font-bold mt-4 mb-2">Average Word Length</h4>
+
+<p class="mb-4"><strong>What it measures:</strong> Mean characters per word</p>
+
+<p class="mb-4"><strong>Interpretation:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>3-4 chars: Simple vocabulary
+<p class="mb-4">4-5 chars: Average vocabulary</p>
+<p class="mb-4">5-6 chars: Advanced vocabulary</p>
+<p class="mb-4">6+ chars:  Complex vocabulary</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📊 Viewing Statistics</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Method 1: Extension Popup</h3>
+
+<li class="mb-2"><strong>Click Extension Icon</strong></li>
+<li class="mb-2"><strong>Select Statistics Tab</strong></li>
+<li class="mb-2"><strong>View Real-time Stats</strong></li>
+
+<p class="mb-4"><strong>Displays:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Word count</li>
+<li class="mb-2">Reading time</li>
+<li class="mb-2">Readability score</li>
+<li class="mb-2">Issue breakdown</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Method 2: Options Page</h3>
+
+<li class="mb-2"><strong>Right-click Extension → Options</strong></li>
+<li class="mb-2"><strong>Navigate to Statistics</strong></li>
+<li class="mb-2"><strong>View Detailed Analytics</strong></li>
+
+<p class="mb-4"><strong>Displays:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">All metrics</li>
+<li class="mb-2">Historical data</li>
+<li class="mb-2">Trends over time</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Method 3: Manual Check</h3>
+
+<li class="mb-2"><strong>Select Text</strong></li>
+<li class="mb-2"><strong>Right-click → "Analyze with OpenGrammar"</strong></li>
+<li class="mb-2"><strong>View Statistics Popup</strong></li>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📈 Example Statistics Report</h2>
+
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>┌─────────────────────────────────────────┐
+<p class="mb-4">│ Writing Statistics Report               │</p>
+<p class="mb-4">├─────────────────────────────────────────┤</p>
+<p class="mb-4">│                                         │</p>
+<p class="mb-4">│ 📊 Basic Counts                         │</p>
+<p class="mb-4">│ ─────────────────────────────────────── │</p>
+<p class="mb-4">│ Words:              1,248               │</p>
+<p class="mb-4">│ Characters:         6,542               │</p>
+<p class="mb-4">│ Characters (no sp): 5,421               │</p>
+<p class="mb-4">│ Sentences:          87                  │</p>
+<p class="mb-4">│ Paragraphs:         12                  │</p>
+<p class="mb-4">│ Syllables:          1,876               │</p>
+<p class="mb-4">│                                         │</p>
+<p class="mb-4">│ 📖 Readability Scores                   │</p>
+<p class="mb-4">│ ─────────────────────────────────────── │</p>
+<p class="mb-4">│ Flesch Ease:        78.5 (Excellent)    │</p>
+<p class="mb-4">│ Grade Level:        8.5 (Good)          │</p>
+<p class="mb-4">│ ARI:                9.2 (Good)          │</p>
+<p class="mb-4">│ Reading Level:      8th-9th grade       │</p>
+<p class="mb-4">│                                         │</p>
+<p class="mb-4">│ ⏱️ Time Estimates                       │</p>
+<p class="mb-4">│ ─────────────────────────────────────── │</p>
+<p class="mb-4">│ Reading Time:       6 min 14 sec        │</p>
+<p class="mb-4">│ Speaking Time:      8 min 19 sec        │</p>
+<p class="mb-4">│                                         │</p>
+<p class="mb-4">│ 🔤 Vocabulary Analysis                  │</p>
+<p class="mb-4">│ ─────────────────────────────────────── │</p>
+<p class="mb-4">│ Unique Words:       542                 │</p>
+<p class="mb-4">│ Vocabulary Diversity: 43.4% (Good)      │</p>
+<p class="mb-4">│ Average Word Length: 4.8 characters     │</p>
+<p class="mb-4">│ Long Words (>6):    156                 │</p>
+<p class="mb-4">│                                         │</p>
+<p class="mb-4">│ ⚠️ Issue Breakdown                      │</p>
+<p class="mb-4">│ ─────────────────────────────────────── │</p>
+<p class="mb-4">│ Grammar Errors:     3 🔴                │</p>
+<p class="mb-4">│ Spelling Errors:    5 🔴                │</p>
+<p class="mb-4">│ Style Issues:       7 🔵                │</p>
+<p class="mb-4">│ Clarity Issues:     4 🟡                │</p>
+<p class="mb-4">│ Total Issues:       19                  │</p>
+<p class="mb-4">│                                         │</p>
+<p class="mb-4">│ 📈 Overall Score                        │</p>
+<p class="mb-4">│ ─────────────────────────────────────── │</p>
+<p class="mb-4">│ Writing Quality:    85/100 (Very Good)  │</p>
+<p class="mb-4">│ ████████████████████░░░░                │</p>
+<p class="mb-4">│                                         │</p>
+<p class="mb-4">└─────────────────────────────────────────┘</p>
+<p class="mb-4"></code></pre></p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🎯 Improving Your Statistics</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Improve Readability</h3>
+
+<p class="mb-4"><strong>Goal:</strong> Higher Flesch score (easier to read)</p>
+
+<p class="mb-4"><strong>Strategies:</strong></p>
+
+<li class="mb-2"><strong>Shorten Sentences</strong></li>
+<p class="mb-4">   <pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>   Before: "The report, which was compiled over several months </p>
+<p class="mb-4">            by a team of researchers who worked tirelessly, </p>
+<p class="mb-4">            contains important findings." (32 words)</p>
+<p class="mb-4">   </p>
+<p class="mb-4">   After: "The report contains important findings. A team of </p>
+<p class="mb-4">           researchers compiled it over several months. They </p>
+<p class="mb-4">           worked tirelessly." (3 sentences, avg 8 words)</p>
+<p class="mb-4">   </code></pre></p>
+
+<li class="mb-2"><strong>Use Simpler Words</strong></li>
+<p class="mb-4">   <pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>   Before: "utilize, implement, facilitate, demonstrate"</p>
+<p class="mb-4">   After:  "use, put in place, help, show"</p>
+<p class="mb-4">   </code></pre></p>
+
+<li class="mb-2"><strong>Break Up Paragraphs</strong></li>
+<p class="mb-4">   - One idea per paragraph</p>
+<p class="mb-4">   - 3-5 sentences max</p>
+<p class="mb-4">   - White space helps readability</p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Improve Vocabulary Diversity</h3>
+
+<p class="mb-4"><strong>Goal:</strong> 50%+ diversity score</p>
+
+<p class="mb-4"><strong>Strategies:</strong></p>
+
+<li class="mb-2"><strong>Use Synonyms</strong></li>
+<p class="mb-4">   <pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>   Before: "The product is good. The product is useful. </p>
+<p class="mb-4">            The product is reliable."</p>
+<p class="mb-4">   </p>
+<p class="mb-4">   After:  "The product is excellent. It's practical and </p>
+<p class="mb-4">            dependable. This item serves its purpose well."</p>
+<p class="mb-4">   </code></pre></p>
+
+<li class="mb-2"><strong>Vary Sentence Structure</strong></li>
+<p class="mb-4">   <pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>   Before: "I went to the store. I bought milk. I came home."</p>
+<p class="mb-4">   After:  "After going to the store and buying milk, I </p>
+<p class="mb-4">            returned home."</p>
+<p class="mb-4">   </code></pre></p>
+
+<li class="mb-2"><strong>Learn New Words</strong></li>
+<p class="mb-4">   - Read widely</p>
+<p class="mb-4">   - Keep a word journal</p>
+<p class="mb-4">   - Use a thesaurus</p>
+<p class="mb-4">   - Practice new vocabulary</p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Improve Sentence Length</h3>
+
+<p class="mb-4"><strong>Goal:</strong> 15-20 words average</p>
+
+<p class="mb-4"><strong>Strategies:</strong></p>
+
+<li class="mb-2"><strong>Identify Long Sentences</strong></li>
+<p class="mb-4">   - Look for sentences >30 words</p>
+<p class="mb-4">   - Check for multiple clauses</p>
+<p class="mb-4">   - Find run-on sentences</p>
+
+<li class="mb-2"><strong>Split Long Sentences</strong></li>
+<p class="mb-4">   <pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>   Before: "The conference, which was held in San Francisco </p>
+<p class="mb-4">            last month and attended by over 500 professionals </p>
+<p class="mb-4">            from various industries, was highly successful."</p>
+<p class="mb-4">   </p>
+<p class="mb-4">   After:  "The conference was held in San Francisco last </p>
+<p class="mb-4">            month. Over 500 professionals attended from various </p>
+<p class="mb-4">            industries. The event was highly successful."</p>
+<p class="mb-4">   </code></pre></p>
+
+<li class="mb-2"><strong>Vary Sentence Length</strong></li>
+<p class="mb-4">   - Mix short and long sentences</p>
+<p class="mb-4">   - Short for impact</p>
+<p class="mb-4">   - Long for detail</p>
+<p class="mb-4">   - Creates rhythm</p>
+
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📊 Tracking Progress</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Set Goals</h3>
+
+<p class="mb-4"><strong>Example Goals:</strong></p>
+<pre class="bg-gray-800 text-gray-100 p-4 rounded-lg my-4 overflow-x-auto"><code>Week 1: Reduce average sentence length to 20 words
+<p class="mb-4">Week 2: Improve Flesch score to 70+</p>
+<p class="mb-4">Week 3: Increase vocabulary diversity to 50%</p>
+<p class="mb-4">Week 4: Maintain 85+ overall score</p>
+<p class="mb-4"></code></pre></p>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Monitor Trends</h3>
+
+<p class="mb-4"><strong>Track Over Time:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Daily writing sessions</li>
+<li class="mb-2">Weekly averages</li>
+<li class="mb-2">Monthly improvements</li>
+<li class="mb-2">Document comparisons</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Compare Documents</h3>
+
+<p class="mb-4"><strong>Compare:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Different writing styles</li>
+<li class="mb-2">Various topics</li>
+<li class="mb-2">Before/after edits</li>
+<li class="mb-2">Your writing vs. professionals</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">💡 Tips for Specific Use Cases</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Academic Writing</h3>
+
+<p class="mb-4"><strong>Target Metrics:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Grade Level: 12-16</li>
+<li class="mb-2">Flesch: 50-60</li>
+<li class="mb-2">Sentence Length: 20-25 words</li>
+<li class="mb-2">Vocabulary Diversity: 60%+</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Tips:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Technical terms are okay</li>
+<li class="mb-2">Maintain clarity</li>
+<li class="mb-2">Cite sources properly</li>
+<li class="mb-2">Use formal tone</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Business Writing</h3>
+
+<p class="mb-4"><strong>Target Metrics:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Grade Level: 10-12</li>
+<li class="mb-2">Flesch: 60-70</li>
+<li class="mb-2">Sentence Length: 15-20 words</li>
+<li class="mb-2">Vocabulary Diversity: 50%+</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Tips:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Be concise</li>
+<li class="mb-2">Use active voice</li>
+<li class="mb-2">Clear call-to-action</li>
+<li class="mb-2">Professional tone</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Blog Posts</h3>
+
+<p class="mb-4"><strong>Target Metrics:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Grade Level: 8-10</li>
+<li class="mb-2">Flesch: 70-80</li>
+<li class="mb-2">Sentence Length: 15-18 words</li>
+<li class="mb-2">Vocabulary Diversity: 45%+</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Tips:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Write conversationally</li>
+<li class="mb-2">Use subheadings</li>
+<li class="mb-2">Short paragraphs</li>
+<li class="mb-2">Engaging tone</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Social Media</h3>
+
+<p class="mb-4"><strong>Target Metrics:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Grade Level: 6-8</li>
+<li class="mb-2">Flesch: 80-90</li>
+<li class="mb-2">Sentence Length: 10-15 words</li>
+<li class="mb-2">Character Count: Platform limits</li>
+<p class="mb-4"></ul></p>
+<p class="mb-4"><strong>Tips:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Be brief</li>
+<li class="mb-2">Use emojis appropriately</li>
+<li class="mb-2">Include hashtags</li>
+<li class="mb-2">Engaging hooks</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">🆘 Troubleshooting</h2>
+
+<h3 class="text-xl font-bold mt-6 mb-3">Problem: Scores Seem Wrong</h3>
+
+<p class="mb-4"><strong>Solutions:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Check text selection (select all text)</li>
+<li class="mb-2">Ensure proper sentence punctuation</li>
+<li class="mb-2">Verify paragraph breaks</li>
+<li class="mb-2">Try recalculating</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Problem: Statistics Not Loading</h3>
+
+<p class="mb-4"><strong>Solutions:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Refresh the page</li>
+<li class="mb-2">Check extension is enabled</li>
+<li class="mb-2">Verify backend connection</li>
+<li class="mb-2">Clear browser cache</li>
+<p class="mb-4"></ul></p>
+<h3 class="text-xl font-bold mt-6 mb-3">Problem: Metrics Inconsistent</h3>
+
+<p class="mb-4"><strong>Solutions:</strong></p>
+<ul class="list-disc list-inside mb-4"><li class="mb-2">Different tools use different formulas</li>
+<li class="mb-2">Focus on trends, not absolute numbers</li>
+<li class="mb-2">Use OpenGrammar consistently</li>
+<li class="mb-2">Compare with multiple tools</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<h2 class="text-2xl font-bold mt-8 mb-4">📚 Related Documentation</h2>
+
+<ul class="list-disc list-inside mb-4"><li class="mb-2"><a href="09-using-opengrammar.md" class="text-blue-600 dark:text-blue-400 hover:underline">Using OpenGrammar</a> - Complete user guide</li>
+<li class="mb-2"><a href="10-tone-rewriting.md" class="text-blue-600 dark:text-blue-400 hover:underline">Tone Rewriting</a> - Improve writing style</li>
+<li class="mb-2"><a href="16-grammar-rules.md" class="text-blue-600 dark:text-blue-400 hover:underline">Grammar Rules</a> - Understand errors</li>
+<p class="mb-4"></ul></p>
+<hr class="my-8 border-gray-300 dark:border-gray-700">
+
+<p class="mb-4"><strong>Happy Writing! 📊</strong></p>
+
+<p class="mb-4">Use statistics to understand and improve your writing over time!</p>
+
+        </article>
+        
+        <!-- Back to Top -->
+        <div class="mt-12 pt-8 border-t border-gray-200 dark:border-dark-700">
+            <a href="#" class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:underline">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+                </svg>
+                Back to top
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-50 dark:bg-dark-900 border-t border-gray-200 dark:border-dark-700 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <img src="../logo.svg" alt="OpenGrammar Logo" class="h-6 w-6">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">© 2026 OpenGrammar. Apache 2.0 License</span>
+                </div>
+                <div class="flex gap-6">
+                    <a href="https://github.com/swadhinbiswas/opengrammar" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">GitHub</a>
+                    <a href="../index.html" class="text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400">Home</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Theme Script -->
+    <script>
+        const theme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        if (theme === 'dark') document.documentElement.classList.add('dark');
+        
+        function updateThemeIcons() {
+            const isDark = document.documentElement.classList.contains('dark');
+            document.getElementById('theme-toggle-light-icon').classList.toggle('hidden', !isDark);
+            document.getElementById('theme-toggle-dark-icon').classList.toggle('hidden', isDark);
+        }
+        updateThemeIcons();
+        
+        document.getElementById('theme-toggle').addEventListener('click', function() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            updateThemeIcons();
+        });
+    </script>
+</body>
+</html>
