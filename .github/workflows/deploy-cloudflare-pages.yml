@@ -1,0 +1,59 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - 'index.html'
+      - 'logo.svg'
+      - 'docs/**'
+      - '_routes.json'
+      - '.github/workflows/deploy-cloudflare-pages.yml'
+  workflow_dispatch:
+
+# Allow this job to clone the repo and create a page deployment
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "cloudflare-pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: cloudflare-pages
+      url: ${{ steps.deployment.outputs.url }}
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Wrangler
+        run: npm install -g wrangler
+
+      - name: Deploy to Cloudflare Pages
+        id: deployment
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          wrangler pages deploy . \
+            --project-name=opengrammar-docs \
+            --branch=main \
+            --commit-dirty=true
+
+      - name: Output deployment URL
+        run: |
+          echo "✅ Deployment complete!"
+          echo "🌐 URL: https://opengrammar-docs.pages.dev"
