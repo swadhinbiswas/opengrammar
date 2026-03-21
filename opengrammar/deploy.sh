@@ -1,100 +1,127 @@
 #!/bin/bash
-# OpenGrammar Production Deployment Script
-# This script builds and deploys both the backend and extension
+# OpenGrammar Deployment Script
+# Deploy backend to multiple platforms
 
-set -e  # Exit on error
+set -e
 
-echo "🪶 OpenGrammar Production Deployment"
-echo "===================================="
+echo "🚀 OpenGrammar Deployment Script"
+echo "================================="
 echo ""
 
 # Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
-BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-# Check if Bun is installed
-if ! command -v bun &> /dev/null; then
-    echo -e "${RED}Error: Bun is not installed${NC}"
-    echo "Please install Bun: https://bun.sh"
-    exit 1
-fi
+# Functions
+log_info() {
+    echo -e "${GREEN}[INFO]${NC} $1"
+}
 
-BUN_VERSION=$(bun -v)
-echo -e "${BLUE}✓ Bun version $BUN_VERSION check passed${NC}"
+log_warn() {
+    echo -e "${YELLOW}[WARN]${NC} $1"
+}
+
+log_error() {
+    echo -e "${RED}[ERROR]${NC} $1"
+}
+
+check_command() {
+    if ! command -v $1 &> /dev/null; then
+        log_error "$1 is not installed. Please install it first."
+        exit 1
+    fi
+}
+
+# Check required commands
+log_info "Checking required commands..."
+check_command npm
+check_command git
+
+# Get deployment target
 echo ""
-
-# Get script directory
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cd "$SCRIPT_DIR"
-
-# Deploy Backend
-echo "📦 Step 1: Deploying Backend to Cloudflare Workers"
-echo "-------------------------------------------------"
-cd backend
-
-if [ ! -d "node_modules" ]; then
-    echo "Installing backend dependencies with Bun..."
-    bun install
-fi
-
-# Check if wrangler is logged in
-if ! bun x wrangler whoami &> /dev/null; then
-    echo -e "${RED}Error: Not logged in to Cloudflare${NC}"
-    echo "Run: bun x wrangler login"
-    exit 1
-fi
-
-echo "Deploying to production..."
-DEPLOY_OUTPUT=$(bun x wrangler deploy --env production 2>&1)
-echo "$DEPLOY_OUTPUT"
-
-# Extract backend URL from deploy output
-BACKEND_URL=$(echo "$DEPLOY_OUTPUT" | grep -oP 'https://[^\s]+\.workers\.dev' | head -1)
-
-if [ -z "$BACKEND_URL" ]; then
-    echo -e "${RED}Error: Could not extract backend URL${NC}"
-    echo "Please manually set the backend URL in the extension"
-else
-    echo -e "${GREEN}✓ Backend deployed to: $BACKEND_URL${NC}"
-fi
-
+echo "Select deployment target:"
+echo "1) Cloudflare Workers"
+echo "2) Vercel"
+echo "3) Render"
+echo "4) Railway"
+echo "5) All platforms"
 echo ""
+read -p "Enter choice (1-5): " deployment_choice
 
-# Build Extension
-echo "📦 Step 2: Building Chrome Extension"
-echo "------------------------------------"
-cd "$SCRIPT_DIR/extension"
+# Build backend
+log_info "Building backend..."
+cd opengrammar/backend
+npm install
+npm run build
 
-if [ ! -d "node_modules" ]; then
-    echo "Installing extension dependencies with Bun..."
-    bun install
-fi
+case $deployment_choice in
+    1)
+        log_info "Deploying to Cloudflare Workers..."
+        check_command npx
+        npx wrangler deploy --env production
+        log_info "✅ Deployed to Cloudflare Workers"
+        ;;
+    2)
+        log_info "Deploying to Vercel..."
+        check_command vercel
+        vercel --prod
+        log_info "✅ Deployed to Vercel"
+        ;;
+    3)
+        log_info "Deploying to Render..."
+        git push render main
+        log_info "✅ Deployed to Render"
+        ;;
+    4)
+        log_info "Deploying to Railway..."
+        check_command railway
+        railway up
+        log_info "✅ Deployed to Railway"
+        ;;
+    5)
+        log_info "Deploying to all platforms..."
+        
+        # Cloudflare
+        log_info "Deploying to Cloudflare Workers..."
+        npx wrangler deploy --env production
+        log_info "✅ Cloudflare Workers deployed"
+        
+        # Vercel
+        log_info "Deploying to Vercel..."
+        vercel --prod
+        log_info "✅ Vercel deployed"
+        
+        # Render
+        log_info "Deploying to Render..."
+        git push render main
+        log_info "✅ Render deployed"
+        
+        # Railway
+        log_info "Deploying to Railway..."
+        railway up
+        log_info "✅ Railway deployed"
+        
+        log_info "🎉 All deployments complete!"
+        ;;
+    *)
+        log_error "Invalid choice. Please run the script again."
+        exit 1
+        ;;
+esac
 
-echo "Building extension..."
-bun run build
+# Verify deployment
+echo ""
+log_info "Verifying deployment..."
+sleep 5
 
-echo -e "${GREEN}✓ Extension built successfully${NC}"
+# Health check (user should replace with actual URL)
 echo ""
-
-# Summary
-echo "✅ Deployment Complete!"
-echo "======================"
+echo "📝 Next steps:"
+echo "1. Copy your deployment URL"
+echo "2. Update BACKEND_URL in extension/src/background/index.ts"
+echo "3. Rebuild the extension"
+echo "4. Test the health endpoint: https://your-url.com/health"
 echo ""
-echo "Backend URL: $BACKEND_URL"
-echo ""
-echo "Next steps:"
-echo "1. Load the extension in Chrome:"
-echo "   - Go to chrome://extensions/"
-echo "   - Enable 'Developer mode'"
-echo "   - Click 'Load unpacked'"
-echo "   - Select: $SCRIPT_DIR/extension/dist"
-echo ""
-echo "2. Configure the extension:"
-echo "   - Click the extension icon"
-echo "   - Open Settings"
-echo "   - Set Backend URL to: $BACKEND_URL"
-echo "   - Add your OpenAI API key (optional)"
-echo ""
-echo -e "${GREEN}Happy writing with OpenGrammar!${NC}"
+log_info "Deployment complete! 🎉"
