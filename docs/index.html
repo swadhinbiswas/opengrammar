@@ -1,0 +1,1966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenGrammar - Privacy-First Writing Assistant Docs</title>
+  <meta name="description" content="Complete documentation for OpenGrammar - Your privacy-first, open-source writing assistant">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Kalam:wght@300;400;700&family=Patrick+Hand+SC&family=Indie+Flower&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #6B5B95;
+      --secondary: #FF6F61;
+      --accent-1: #88B04B;
+      --accent-2: #F7CAC9;
+      --accent-3: #92A8D1;
+      --accent-4: #955251;
+      --accent-5: #B565A7;
+      --accent-6: #009B77;
+      --accent-7: #DD4124;
+      --accent-8: #45B8AC;
+      --paper: #FDFBF7;
+      --paper-dark: #F5F0E6;
+      --paper-lines: #E8E4D9;
+      --sidebar-width: 300px;
+      --ink: #2C2416;
+      --ink-light: #5C4D3C;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Kalam', cursive;
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.9;
+      overflow-x: hidden;
+    }
+
+    /* Paper texture background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 27px,
+          rgba(180, 160, 140, 0.12) 27px,
+          rgba(180, 160, 140, 0.12) 28px
+        );
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* Floating doodles */
+    .floating-doodle {
+      position: fixed;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0.15;
+      animation: floatDoodle 20s ease-in-out infinite;
+    }
+
+    .doodle-1 { top: 10%; left: 5%; font-size: 3rem; animation-delay: 0s; }
+    .doodle-2 { top: 30%; right: 3%; font-size: 2.5rem; animation-delay: -5s; }
+    .doodle-3 { top: 60%; left: 8%; font-size: 2rem; animation-delay: -10s; }
+    .doodle-4 { bottom: 20%; right: 5%; font-size: 2.8rem; animation-delay: -15s; }
+    .doodle-5 { top: 45%; right: 8%; font-size: 2.2rem; animation-delay: -7s; }
+
+    @keyframes floatDoodle {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-20px) rotate(5deg); }
+      50% { transform: translateY(-10px) rotate(-3deg); }
+      75% { transform: translateY(-25px) rotate(3deg); }
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: linear-gradient(180deg, var(--paper-dark) 0%, #EDE8DC 100%);
+      border-right: 3px dashed var(--accent-4);
+      overflow-y: auto;
+      z-index: 100;
+      padding: 25px 15px;
+      transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      box-shadow: 5px 0 20px rgba(0,0,0,0.05);
+    }
+
+    .sidebar::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+      background: var(--accent-3);
+      border-radius: 3px;
+    }
+
+    .sidebar-header {
+      text-align: center;
+      padding-bottom: 20px;
+      border-bottom: 3px wavy var(--accent-2);
+      margin-bottom: 20px;
+    }
+
+    .sidebar-logo {
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 10px;
+      animation: logoWiggle 3s ease-in-out infinite;
+    }
+
+    @keyframes logoWiggle {
+      0%, 100% { transform: rotate(-3deg) scale(1); }
+      50% { transform: rotate(3deg) scale(1.05); }
+    }
+
+    .sidebar-title {
+      font-family: 'Caveat', cursive;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-shadow: 3px 3px 0 var(--accent-2);
+      letter-spacing: 1px;
+    }
+
+    .sidebar-subtitle {
+      font-family: 'Indie Flower', cursive;
+      font-size: 0.95rem;
+      color: var(--ink-light);
+      margin-top: 5px;
+    }
+
+    .version-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-8));
+      color: white;
+      padding: 3px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      margin-top: 8px;
+    }
+
+    .sidebar-nav {
+      list-style: none;
+    }
+
+    .nav-section {
+      margin-bottom: 18px;
+    }
+
+    .nav-section-title {
+      font-family: 'Patrick Hand SC', cursive;
+      font-size: 1.1rem;
+      color: var(--secondary);
+      margin-bottom: 10px;
+      padding: 5px 10px;
+      background: linear-gradient(90deg, rgba(255,111,97,0.1), transparent);
+      border-radius: 0 10px 10px 0;
+      border-left: 4px solid var(--secondary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-item {
+      margin-bottom: 2px;
+    }
+
+    .nav-link {
+      display: block;
+      padding: 10px 15px;
+      font-family: 'Kalam', cursive;
+      font-size: 1rem;
+      color: var(--ink);
+      text-decoration: none;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-link::before {
+      content: '✎';
+      position: absolute;
+      left: -30px;
+      transition: left 0.3s ease;
+      opacity: 0;
+    }
+
+    .nav-link:hover {
+      background: linear-gradient(90deg, rgba(107,91,149,0.15), transparent);
+      padding-left: 35px;
+      color: var(--primary);
+    }
+
+    .nav-link:hover::before {
+      left: 12px;
+      opacity: 1;
+    }
+
+    .nav-link.active {
+      background: linear-gradient(90deg, var(--accent-3), var(--accent-8));
+      color: white;
+      font-weight: 600;
+      box-shadow: 4px 4px 0 rgba(0,0,0,0.15);
+      transform: translate(-2px, -2px);
+    }
+
+    .sidebar-footer {
+      margin-top: 25px;
+      padding-top: 20px;
+      border-top: 2px dashed var(--paper-lines);
+      text-align: center;
+    }
+
+    .github-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--ink);
+      text-decoration: none;
+      font-family: 'Kalam', cursive;
+      padding: 10px 20px;
+      border-radius: 25px;
+      background: var(--paper);
+      border: 2px solid var(--ink);
+      transition: all 0.3s ease;
+    }
+
+    .github-link:hover {
+      background: var(--ink);
+      color: var(--paper);
+      transform: scale(1.05);
+    }
+
+    /* Mobile menu toggle */
+    .menu-toggle {
+      display: none;
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 200;
+      background: linear-gradient(135deg, var(--primary), var(--accent-5));
+      color: white;
+      border: none;
+      padding: 14px 18px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-family: 'Kalam', cursive;
+      font-size: 1rem;
+      box-shadow: 4px 4px 0 var(--accent-7);
+      transition: all 0.3s ease;
+    }
+
+    .menu-toggle:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 var(--accent-7);
+    }
+
+    /* Main content */
+    .main-content {
+      margin-left: var(--sidebar-width);
+      padding: 50px 70px;
+      min-height: 100vh;
+      max-width: 1000px;
+    }
+
+    /* Section styling */
+    .section {
+      position: relative;
+      margin-bottom: 70px;
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 20px;
+      border: 2px solid var(--paper-lines);
+      box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.03);
+    }
+
+    .section::before {
+      content: '';
+      position: absolute;
+      top: -8px;
+      left: -8px;
+      right: -8px;
+      bottom: -8px;
+      border: 3px dashed var(--accent-3);
+      border-radius: 25px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .section:hover::before {
+      opacity: 0.5;
+    }
+
+    .section-title-decoration {
+      position: absolute;
+      top: -15px;
+      left: 30px;
+      background: var(--paper);
+      padding: 0 15px;
+      font-size: 1.5rem;
+    }
+
+    h1 {
+      font-family: 'Caveat', cursive;
+      font-size: 3.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 25px;
+      position: relative;
+      display: inline-block;
+      line-height: 1.2;
+    }
+
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--secondary), var(--accent-5), var(--accent-8), var(--accent-1));
+      border-radius: 3px;
+      transform: rotate(-1deg);
+    }
+
+    h2 {
+      font-family: 'Patrick Hand SC', cursive;
+      font-size: 2.1rem;
+      color: var(--secondary);
+      margin: 40px 0 20px;
+      padding-left: 20px;
+      border-left: 5px solid var(--accent-1);
+      position: relative;
+    }
+
+    h2::before {
+      content: '✎';
+      position: absolute;
+      left: -30px;
+      color: var(--accent-1);
+    }
+
+    h3 {
+      font-family: 'Kalam', cursive;
+      font-size: 1.5rem;
+      color: var(--accent-7);
+      margin: 30px 0 15px;
+      font-weight: 600;
+    }
+
+    p {
+      font-family: 'Kalam', cursive;
+      font-size: 1.15rem;
+      margin-bottom: 18px;
+      text-align: justify;
+    }
+
+    ul, ol {
+      margin-left: 30px;
+      margin-bottom: 18px;
+    }
+
+    li {
+      font-family: 'Kalam', cursive;
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      padding-left: 5px;
+    }
+
+    /* Code blocks */
+    pre {
+      background: linear-gradient(135deg, #2C2416, #3D3426);
+      color: #F7CAC9;
+      padding: 25px;
+      border-radius: 15px;
+      overflow-x: auto;
+      margin: 25px 0;
+      border-left: 6px solid var(--accent-1);
+      box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    pre::before {
+      content: '📝';
+      position: absolute;
+      top: -12px;
+      left: 15px;
+      background: var(--paper);
+      padding: 2px 8px;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    code {
+      font-family: 'Fira Code', 'Courier New', monospace;
+      background: linear-gradient(135deg, #2C2416, #3D3426);
+      color: #F7CAC9;
+      padding: 3px 10px;
+      border-radius: 5px;
+      font-size: 0.95rem;
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+      color: inherit;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 25px 0;
+      font-family: 'Kalam', cursive;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    th, td {
+      padding: 15px 18px;
+      text-align: left;
+      border-bottom: 2px solid var(--paper-lines);
+    }
+
+    th {
+      background: linear-gradient(90deg, var(--accent-3), var(--accent-8));
+      color: white;
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+
+    tr:nth-child(even) {
+      background: rgba(146, 168, 209, 0.1);
+    }
+
+    tr:hover {
+      background: rgba(136, 176, 75, 0.15);
+    }
+
+    /* Feature cards */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+      margin: 30px 0;
+    }
+
+    .feature-card {
+      background: linear-gradient(145deg, white, var(--paper));
+      border: 3px solid var(--paper-lines);
+      border-radius: 20px;
+      padding: 25px;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.4), transparent);
+      transform: rotate(45deg);
+      transition: all 0.6s ease;
+      opacity: 0;
+    }
+
+    .feature-card:hover::before {
+      opacity: 1;
+      left: 100%;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px) rotate(-1deg);
+      box-shadow: 10px 10px 0 var(--accent-1);
+      border-color: var(--accent-1);
+    }
+
+    .feature-icon {
+      font-size: 3.5rem;
+      margin-bottom: 15px;
+      animation: iconBounce 2s ease-in-out infinite;
+    }
+
+    .feature-card:nth-child(2) .feature-icon { animation-delay: 0.2s; }
+    .feature-card:nth-child(3) .feature-icon { animation-delay: 0.4s; }
+    .feature-card:nth-child(4) .feature-icon { animation-delay: 0.6s; }
+
+    @keyframes iconBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .feature-title {
+      font-family: 'Patrick Hand SC', cursive;
+      font-size: 1.4rem;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .feature-desc {
+      font-size: 1rem;
+      color: var(--ink-light);
+    }
+
+    /* Callout boxes */
+    .callout {
+      padding: 25px;
+      border-radius: 15px;
+      margin: 25px 0;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid transparent;
+    }
+
+    .callout::before {
+      content: attr(data-emoji);
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 2.5rem;
+      opacity: 0.2;
+    }
+
+    .callout-info {
+      background: linear-gradient(90deg, rgba(146, 168, 209, 0.25), transparent);
+      border-left: 6px solid var(--accent-3);
+    }
+
+    .callout-warning {
+      background: linear-gradient(90deg, rgba(255, 214, 165, 0.4), transparent);
+      border-left: 6px solid var(--secondary);
+    }
+
+    .callout-success {
+      background: linear-gradient(90deg, rgba(136, 176, 75, 0.25), transparent);
+      border-left: 6px solid var(--accent-1);
+    }
+
+    .callout-danger {
+      background: linear-gradient(90deg, rgba(221, 65, 36, 0.15), transparent);
+      border-left: 6px solid var(--accent-7);
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-block;
+      padding: 5px 15px;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin: 3px;
+      box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+    }
+
+    .badge-free { background: linear-gradient(135deg, var(--accent-1), #6B9B37); color: white; }
+    .badge-pro { background: linear-gradient(135deg, var(--accent-7), #B8341E); color: white; }
+    .badge-offline { background: linear-gradient(135deg, var(--accent-8), #359580); color: white; }
+    .badge-ai { background: linear-gradient(135deg, var(--accent-5), #955285); color: white; }
+
+    /* Colorful text */
+    .text-primary { color: var(--primary); }
+    .text-secondary { color: var(--secondary); }
+    .text-accent1 { color: var(--accent-1); }
+    .text-accent3 { color: var(--accent-3); }
+    .text-accent5 { color: var(--accent-5); }
+    .text-accent7 { color: var(--accent-7); }
+    .text-accent8 { color: var(--accent-8); }
+
+    /* Steps */
+    .steps {
+      counter-reset: step;
+      margin: 30px 0;
+    }
+
+    .step {
+      position: relative;
+      padding-left: 80px;
+      margin-bottom: 35px;
+      padding-top: 5px;
+    }
+
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 55px;
+      height: 55px;
+      background: linear-gradient(135deg, var(--secondary), var(--accent-7));
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Caveat', cursive;
+      font-size: 1.8rem;
+      font-weight: 700;
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+
+    .step h3 {
+      margin-top: 0;
+    }
+
+    /* Hero section */
+    .hero {
+      text-align: center;
+      padding: 50px 30px;
+      margin-bottom: 50px;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '✿ ❀ ✿';
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.5rem;
+      color: var(--accent-2);
+      letter-spacing: 15px;
+    }
+
+    .hero-title {
+      font-size: 4.5rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent-5), var(--accent-8));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: heroFloat 4s ease-in-out infinite;
+      margin-top: 20px;
+    }
+
+    @keyframes heroFloat {
+      0%, 100% { transform: translateY(0) rotate(-1deg); }
+      50% { transform: translateY(-15px) rotate(1deg); }
+    }
+
+    .hero-subtitle {
+      font-family: 'Shadows Into Light', cursive;
+      font-size: 2rem;
+      color: var(--ink-light);
+      margin-top: 15px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      margin-top: 25px;
+      padding: 12px 30px;
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-8));
+      color: white;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+
+    .hero-badges {
+      margin-top: 25px;
+    }
+
+    /* Progress bar */
+    .progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      z-index: 1000;
+      background: transparent;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--secondary), var(--accent-5), var(--accent-8), var(--accent-1));
+      width: 0%;
+      transition: width 0.15s ease-out;
+      border-radius: 0 3px 3px 0;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 50px 30px;
+      margin-top: 80px;
+      border-top: 4px wavy var(--paper-lines);
+      position: relative;
+    }
+
+    .footer::before {
+      content: '~ end of docs ~';
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--paper);
+      padding: 0 20px;
+      font-family: 'Indie Flower', cursive;
+      color: var(--ink-light);
+    }
+
+    .footer-text {
+      font-family: 'Indie Flower', cursive;
+      font-size: 1.3rem;
+      color: var(--ink-light);
+      margin-bottom: 10px;
+    }
+
+    .footer-text a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .footer-text a:hover {
+      text-decoration: underline;
+    }
+
+    /* Fade in animation */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .main-content {
+        padding: 50px 40px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+        box-shadow: 15px 0 40px rgba(0, 0, 0, 0.2);
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .main-content {
+        margin-left: 0;
+        padding: 90px 25px 50px;
+      }
+
+      h1 {
+        font-size: 2.8rem;
+      }
+
+      h2 {
+        font-size: 1.7rem;
+      }
+
+      .hero-title {
+        font-size: 3rem;
+      }
+
+      .hero-subtitle {
+        font-size: 1.5rem;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      table {
+        font-size: 0.9rem;
+      }
+
+      pre {
+        padding: 20px;
+        font-size: 0.85rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .main-content {
+        padding: 80px 15px 40px;
+      }
+
+      .section {
+        padding: 25px 20px;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+      }
+
+      .step {
+        padding-left: 60px;
+      }
+
+      .step::before {
+        width: 45px;
+        height: 45px;
+        font-size: 1.4rem;
+      }
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--paper);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(var(--accent-3), var(--accent-8));
+      border-radius: 6px;
+      border: 2px solid var(--paper);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(var(--accent-8), var(--accent-1));
+    }
+
+    /* Print styles */
+    @media print {
+      .sidebar, .menu-toggle, .floating-doodle, .progress-container {
+        display: none !important;
+      }
+      .main-content {
+        margin-left: 0;
+        padding: 20px;
+      }
+      .section {
+        break-inside: avoid;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating doodles -->
+  <div class="floating-doodle doodle-1">✿</div>
+  <div class="floating-doodle doodle-2">❀</div>
+  <div class="floating-doodle doodle-3">➤</div>
+  <div class="floating-doodle doodle-4">✎</div>
+  <div class="floating-doodle doodle-5">❋</div>
+
+  <!-- Progress bar -->
+  <div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <!-- Mobile menu toggle -->
+  <button class="menu-toggle" onclick="toggleSidebar()">
+    ☰ Menu
+  </button>
+
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <svg class="sidebar-logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="45" stroke="#6B5B95" stroke-width="4" fill="#FDFBF7"/>
+        <path d="M30 70 Q35 30 50 35 Q65 40 60 70" stroke="#FF6F61" stroke-width="3" fill="none"/>
+        <circle cx="40" cy="45" r="6" fill="#88B04B"/>
+        <circle cx="56" cy="52" r="5" fill="#92A8D1"/>
+        <circle cx="48" cy="60" r="4" fill="#B565A7"/>
+        <path d="M25 75 L75 75" stroke="#6B5B95" stroke-width="2" stroke-dasharray="5,3"/>
+      </svg>
+      <h1 class="sidebar-title">OpenGrammar</h1>
+      <p class="sidebar-subtitle">Privacy-First Writing Assistant</p>
+      <span class="version-badge">v2.1.0</span>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li class="nav-section">
+        <div class="nav-section-title">Getting Started</div>
+        <ul>
+          <li class="nav-item"><a href="#overview" class="nav-link active">Overview</a></li>
+          <li class="nav-item"><a href="#features" class="nav-link">Features</a></li>
+          <li class="nav-item"><a href="#quickstart" class="nav-link">Quick Start</a></li>
+        </ul>
+      </li>
+
+      <li class="nav-section">
+        <div class="nav-section-title">Installation</div>
+        <ul>
+          <li class="nav-item"><a href="#browser-extension" class="nav-link">Browser Extension</a></li>
+          <li class="nav-item"><a href="#backend-setup" class="nav-link">Backend Setup</a></li>
+          <li class="nav-item"><a href="#docker" class="nav-link">Docker</a></li>
+        </ul>
+      </li>
+
+      <li class="nav-section">
+        <div class="nav-section-title">Configuration</div>
+        <ul>
+          <li class="nav-item"><a href="#ai-providers" class="nav-link">AI Providers</a></li>
+          <li class="nav-item"><a href="#settings" class="nav-link">Settings</a></li>
+          <li class="nav-item"><a href="#keyboard" class="nav-link">Shortcuts</a></li>
+        </ul>
+      </li>
+
+      <li class="nav-section">
+        <div class="nav-section-title">Usage</div>
+        <ul>
+          <li class="nav-item"><a href="#using" class="nav-link">Using OpenGrammar</a></li>
+          <li class="nav-item"><a href="#tone-rewriting" class="nav-link">Tone Rewriting</a></li>
+          <li class="nav-item"><a href="#statistics" class="nav-link">Statistics</a></li>
+        </ul>
+      </li>
+
+      <li class="nav-section">
+        <div class="nav-section-title">Development</div>
+        <ul>
+          <li class="nav-item"><a href="#api" class="nav-link">API Reference</a></li>
+          <li class="nav-item"><a href="#contributing" class="nav-link">Contributing</a></li>
+          <li class="nav-item"><a href="#roadmap" class="nav-link">Roadmap</a></li>
+        </ul>
+      </li>
+
+      <li class="nav-section">
+        <div class="nav-section-title">Help</div>
+        <ul>
+          <li class="nav-item"><a href="#troubleshooting" class="nav-link">Troubleshooting</a></li>
+          <li class="nav-item"><a href="#faq" class="nav-link">FAQ</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <a href="https://github.com/swadhinbiswas/opengrammar" target="_blank" class="github-link">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+        </svg>
+        GitHub
+      </a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+      <h1 class="hero-title">OpenGrammar</h1>
+      <p class="hero-subtitle">Your privacy-first, open-source writing assistant</p>
+      <span class="hero-badge">Apache 2.0 License • Self-Hostable • 100% Free</span>
+      
+      <div class="hero-badges">
+        <span class="badge badge-free">Free Tier</span>
+        <span class="badge badge-offline">Offline Mode</span>
+        <span class="badge badge-ai">AI-Powered</span>
+      </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section class="section fade-in" id="overview">
+      <h1>Overview</h1>
+      
+      <p><strong>OpenGrammar</strong> is a powerful, self-hostable browser extension that helps you write clearly and confidently everywhere on the web. It's built to feel like the premium writing assistants you know, but with a critical difference: <em>you control your data</em>, and it can run completely for free.</p>
+
+      <div class="callout callout-info" data-emoji="💡">
+        <strong>Why OpenGrammar?</strong><br>
+        Most popular grammar assistants require you to send every keystroke to their servers and charge a hefty monthly fee for advanced features. OpenGrammar changes that.
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">💰</div>
+          <div class="feature-title">Zero Cost Option</div>
+          <div class="feature-desc">The core engine runs locally in your browser, checking for passive voice, repetition, and readability without needing a server.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🤖</div>
+          <div class="feature-title">Bring Your Own AI</div>
+          <div class="feature-desc">Paste your own API key (OpenAI, Groq, OpenRouter). You pay only fractions of a cent for what you actually use.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <div class="feature-title">Absolute Privacy</div>
+          <div class="feature-desc">No database, no accounts. Your API key never leaves your browser. Data is processed and immediately forgotten.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🚀</div>
+          <div class="feature-title">Open Source</div>
+          <div class="feature-desc">Deploy to Cloudflare Workers or Vercel Edge for free. You own the infrastructure completely.</div>
+        </div>
+      </div>
+
+      <h2>Technology Stack</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Component</th>
+            <th>Technology</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Extension UI</td><td>React 18, Vite</td></tr>
+          <tr><td>Backend</td><td>Hono, TypeScript</td></tr>
+          <tr><td>Deployment</td><td>Cloudflare Workers, Vercel, Docker</td></tr>
+          <tr><td>AI SDK</td><td>OpenAI SDK, Groq SDK</td></tr>
+          <tr><td>Runtime</td><td>Node.js, Bun</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section fade-in" id="features">
+      <h1>Features</h1>
+
+      <h2>Dual-Engine Architecture</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">📝</div>
+          <div class="feature-title">Rule-Based Engine</div>
+          <div class="feature-desc">Free & Offline - Catches passive voice, repeated words, overly long sentences using 40+ regex rules.</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">✨</div>
+          <div class="feature-title">AI-Powered Engine</div>
+          <div class="feature-desc">Advanced grammar, spelling, clarity, and style suggestions using GPT-4, Groq, or open-source models.</div>
+        </div>
+      </div>
+
+      <h2>Grammar Rules Categories</h2>
+      <ul>
+        <li><span class="text-accent7">Spelling:</span> 100+ common misspellings detected automatically</li>
+        <li><span class="text-accent3">Grammar:</span> Subject/object pronouns, irregular verbs, contractions</li>
+        <li><span class="text-accent1">Style:</span> Passive voice, weak words, redundant phrases, cliches</li>
+        <li><span class="text-accent8">Clarity:</span> Long sentences (>35 words), readability scores</li>
+      </ul>
+
+      <h2>Color-Coded Underlines</h2>
+      <div class="feature-grid">
+        <div class="feature-card" style="border-left: 6px solid #DC3545;">
+          <div class="feature-title">Red</div>
+          <div class="feature-desc">Grammar & Spelling errors</div>
+        </div>
+        <div class="feature-card" style="border-left: 6px solid #FFC107;">
+          <div class="feature-title">Amber</div>
+          <div class="feature-desc">Clarity issues</div>
+        </div>
+        <div class="feature-card" style="border-left: 6px solid #0D6EFD;">
+          <div class="feature-title">Blue</div>
+          <div class="feature-desc">Style suggestions</div>
+        </div>
+      </div>
+
+      <h2>Interactive Tooltips</h2>
+      <p>Click on underlined text to see:</p>
+      <ul>
+        <li>The suggested correction</li>
+        <li>Apply or Ignore buttons</li>
+        <li>Add to dictionary option</li>
+        <li>Confidence score display</li>
+      </ul>
+
+      <h2>Tone Rewriting</h2>
+      <p>Rewrite text in 8 different tones via right-click context menu or <code>Ctrl+Shift+R</code>:</p>
+      <div class="feature-grid">
+        <div class="feature-card"><span class="badge badge-free">Formal</span></div>
+        <div class="feature-card"><span class="badge badge-free">Casual</span></div>
+        <div class="feature-card"><span class="badge badge-free">Professional</span></div>
+        <div class="feature-card"><span class="badge badge-free">Friendly</span></div>
+        <div class="feature-card"><span class="badge badge-free">Concise</span></div>
+        <div class="feature-card"><span class="badge badge-free">Detailed</span></div>
+        <div class="feature-card"><span class="badge badge-free">Persuasive</span></div>
+        <div class="feature-card"><span class="badge badge-free">Neutral</span></div>
+      </div>
+
+      <h2>Writing Statistics</h2>
+      <ul>
+        <li>Word, character, sentence, paragraph counts</li>
+        <li>Flesch Reading Ease score</li>
+        <li>Flesch-Kincaid Grade Level</li>
+        <li>Automated Readability Index (ARI)</li>
+        <li>Reading & speaking time estimates</li>
+        <li>Vocabulary diversity analysis</li>
+      </ul>
+    </section>
+
+    <!-- Quick Start Section -->
+    <section class="section fade-in" id="quickstart">
+      <h1>Quick Start Guide</h1>
+      <p>Get up and running with OpenGrammar in 5 minutes!</p>
+
+      <h2>Prerequisites</h2>
+      <ul>
+        <li>Node.js (v18 or newer)</li>
+        <li>npm, pnpm, or yarn</li>
+        <li>Chrome browser (or Chromium-based)</li>
+      </ul>
+
+      <h2>Installation Steps</h2>
+      <div class="steps">
+        <div class="step">
+          <h3>Clone the Repository</h3>
+          <pre><code>git clone https://github.com/swadhinbiswas/opengrammar.git
+cd opengrammar</code></pre>
+        </div>
+
+        <div class="step">
+          <h3>Install Dependencies</h3>
+          <pre><code># Install all dependencies
+bun install
+
+# Or with npm
+npm install</code></pre>
+        </div>
+
+        <div class="step">
+          <h3>Set Up the Backend</h3>
+          <pre><code>cd opengrammar/backend
+npm run dev</code></pre>
+          <p>Runs on <code>http://localhost:8787</code></p>
+        </div>
+
+        <div class="step">
+          <h3>Build the Extension</h3>
+          <pre><code>cd opengrammar/extension
+npm run build</code></pre>
+        </div>
+
+        <div class="step">
+          <h3>Load in Chrome</h3>
+          <ol>
+            <li>Open <code>chrome://extensions/</code></li>
+            <li>Enable Developer Mode</li>
+            <li>Click "Load unpacked"</li>
+            <li>Select <code>opengrammar/extension/dist</code></li>
+          </ol>
+        </div>
+
+        <div class="step">
+          <h3>Configure & Go!</h3>
+          <p>Click the OpenGrammar icon in your toolbar. Paste your API key to enable AI features, or start writing with free offline mode!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Browser Extension Section -->
+    <section class="section fade-in" id="browser-extension">
+      <h1>Browser Extension Setup</h1>
+
+      <div class="callout callout-warning" data-emoji="⚠️">
+        <strong>Note:</strong> Since this is an open-source developer project, it is not yet published on the Chrome Web Store. You will need to load it manually.
+      </div>
+
+      <h2>Manual Installation (Chrome)</h2>
+      <div class="steps">
+        <div class="step">
+          <h3>Download/Clone</h3>
+          <p>Download the latest release or clone this repository.</p>
+        </div>
+        <div class="step">
+          <h3>Open Extensions Page</h3>
+          <p>In Chrome, go to <code>chrome://extensions/</code></p>
+        </div>
+        <div class="step">
+          <h3>Enable Developer Mode</h3>
+          <p>Toggle the switch in the top right corner.</p>
+        </div>
+        <div class="step">
+          <h3>Load Unpacked</h3>
+          <p>Click "Load unpacked" and select the <code>dist</code> folder.</p>
+        </div>
+      </div>
+
+      <h2>Configure Extension</h2>
+      <ol>
+        <li>Click the OpenGrammar icon in your browser toolbar</li>
+        <li>Paste your API key (optional for AI features)</li>
+        <li>Choose your preferred AI provider and model</li>
+        <li>You're ready to write!</li>
+      </ol>
+    </section>
+
+    <!-- Backend Setup Section -->
+    <section class="section fade-in" id="backend-setup">
+      <h1>Backend Deployment</h1>
+
+      <h2>Cloudflare Workers (Recommended)</h2>
+      <pre><code># Navigate to backend
+cd opengrammar/backend
+
+# Install Wrangler if needed
+npm install -g wrangler
+
+# Deploy!
+npx wrangler deploy</code></pre>
+      <p>After deploying, copy the provided URL (e.g., <code>https://opengrammar.yourname.workers.dev</code>)</p>
+
+      <h2>Vercel Edge</h2>
+      <pre><code>cd opengrammar/backend
+vercel deploy</code></pre>
+
+      <h2>Railway</h2>
+      <pre><code># Connect your GitHub repo to Railway
+# Railway will auto-detect the backend</code></pre>
+
+      <h2>Render</h2>
+      <pre><code># Create a new Web Service
+# Set build command: npm run build
+# Set start command: npm start</code></pre>
+
+      <h2>Environment Variables</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>PORT</code></td><td>No</td><td>Server port (default: 8787)</td></tr>
+          <tr><td><code>GROQ_API_KEY</code></td><td>No</td><td>Groq API key</td></tr>
+          <tr><td><code>OPENAI_API_KEY</code></td><td>No</td><td>OpenAI API key</td></tr>
+          <tr><td><code>OPENROUTER_API_KEY</code></td><td>No</td><td>OpenRouter API key</td></tr>
+          <tr><td><code>TOGETHER_API_KEY</code></td><td>No</td><td>Together AI key</td></tr>
+          <tr><td><code>OLLAMA_BASE_URL</code></td><td>No</td><td>Ollama URL (default: localhost:11434)</td></tr>
+          <tr><td><code>DEBUG</code></td><td>No</td><td>Enable debug logging</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Docker Section -->
+    <section class="section fade-in" id="docker">
+      <h1>Docker Self-Hosting</h1>
+
+      <h2>Quick Start with Docker Compose</h2>
+      <pre><code># Backend only
+docker-compose up -d opengrammar-backend
+
+# With Ollama (local LLM)
+docker-compose --profile local-llm up -d</code></pre>
+
+      <h2>Docker Commands</h2>
+      <pre><code># Build the image
+docker build -t opengrammar/backend ./opengrammar/backend
+
+# Run the container
+docker run -d -p 8787:8787 \
+  -e GROQ_API_KEY=your_key \
+  opengrammar/backend</code></pre>
+
+      <h2>Deployment Platforms</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Platform</th>
+            <th>Free Tier</th>
+            <th>Always-On</th>
+            <th>Cold Start</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Cloudflare Workers</td><td>100K req/day</td><td>Yes</td><td>~50ms</td></tr>
+          <tr><td>Vercel</td><td>100GB-hrs/mo</td><td>Yes</td><td>~100ms</td></tr>
+          <tr><td>Railway</td><td>$5 credit</td><td>Yes</td><td>~500ms</td></tr>
+          <tr><td>Render</td><td>750 hrs/mo</td><td>No</td><td>~30s</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- AI Providers Section -->
+    <section class="section fade-in" id="ai-providers">
+      <h1>AI Providers</h1>
+
+      <p>OpenGrammar supports multiple AI providers. Choose based on your speed, quality, and budget needs.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Provider</th>
+            <th>Speed</th>
+            <th>Quality</th>
+            <th>Cost</th>
+            <th>Models</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Groq</strong></td>
+            <td class="text-accent1">Fastest</td>
+            <td>Excellent</td>
+            <td class="text-accent1">Free tier (100/day)</td>
+            <td>llama-3.1-70b, llama-3.1-8b</td>
+          </tr>
+          <tr>
+            <td><strong>OpenAI</strong></td>
+            <td>Fast</td>
+            <td>Best</td>
+            <td>~$0.15/1K tokens</td>
+            <td>gpt-4o-mini, gpt-4o</td>
+          </tr>
+          <tr>
+            <td><strong>OpenRouter</strong></td>
+            <td>Good</td>
+            <td>Best</td>
+            <td>Pay-per-use</td>
+            <td>100+ models (Claude, Llama)</td>
+          </tr>
+          <tr>
+            <td><strong>Together AI</strong></td>
+            <td>Fast</td>
+            <td>Good</td>
+            <td>Cheap</td>
+            <td>Llama 3.1 70B, Mixtral</td>
+          </tr>
+          <tr>
+            <td><strong>Ollama</strong></td>
+            <td>HW dependent</td>
+            <td>Good</td>
+            <td class="text-accent1">Free</td>
+            <td>qwen2.5, phi4-mini, llama3.2</td>
+          </tr>
+          <tr>
+            <td><strong>Custom</strong></td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>Any OpenAI-compatible API</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-success" data-emoji="🎯">
+        <strong>Recommendation:</strong> Start with Groq for the best free tier and fastest speeds. No credit card required!
+      </div>
+    </section>
+
+    <!-- Settings Section -->
+    <section class="section fade-in" id="settings">
+      <h1>Settings Reference</h1>
+
+      <h2>Extension Settings</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Setting</th>
+            <th>Type</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>enabled</code></td><td>boolean</td><td>true</td><td>Extension enabled</td></tr>
+          <tr><td><code>provider</code></td><td>string</td><td>openai</td><td>AI provider</td></tr>
+          <tr><td><code>model</code></td><td>string</td><td>gpt-4o-mini</td><td>AI model</td></tr>
+          <tr><td><code>apiKey</code></td><td>string</td><td>-</td><td>API key</td></tr>
+          <tr><td><code>backendUrl</code></td><td>string</td><td>http://localhost:8787</td><td>Backend URL</td></tr>
+          <tr><td><code>checkAsYouType</code></td><td>boolean</td><td>true</td><td>Real-time checking</td></tr>
+          <tr><td><code>showNotifications</code></td><td>boolean</td><td>true</td><td>Show notifications</td></tr>
+          <tr><td><code>autocompleteEnabled</code></td><td>boolean</td><td>true</td><td>Autocomplete feature</td></tr>
+          <tr><td><code>disabledDomains</code></td><td>string[]</td><td>[]</td><td>Disabled domains</td></tr>
+          <tr><td><code>dictionary</code></td><td>string[]</td><td>[]</td><td>Custom dictionary</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Custom Dictionary</h2>
+      <p>Add words to your personal dictionary to ignore them in future checks:</p>
+      <ul>
+        <li>Add words to ignore</li>
+        <li>Import/export dictionary</li>
+        <li>Per-domain settings</li>
+        <li>Site-specific configurations</li>
+      </ul>
+    </section>
+
+    <!-- Keyboard Shortcuts Section -->
+    <section class="section fade-in" id="keyboard">
+      <h1>Keyboard Shortcuts</h1>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Action</th>
+            <th>Windows/Linux</th>
+            <th>Mac</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Rewrite Selected Text</td><td><code>Ctrl+Shift+R</code></td><td><code>Cmd+Shift+R</code></td></tr>
+          <tr><td>Toggle Extension</td><td><code>Ctrl+Shift+E</code></td><td><code>Cmd+Shift+E</code></td></tr>
+          <tr><td>Open Statistics</td><td><code>Ctrl+Shift+S</code></td><td><code>Cmd+Shift+S</code></td></tr>
+          <tr><td>Open Settings</td><td><code>Ctrl+Shift+,</code></td><td><code>Cmd+Shift+,</code></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Using OpenGrammar Section -->
+    <section class="section fade-in" id="using">
+      <h1>Using OpenGrammar</h1>
+
+      <h2>How It Works</h2>
+      <p>OpenGrammar automatically detects text inputs, textareas, and rich text editors on any webpage. It works seamlessly across:</p>
+      <ul>
+        <li>Gmail & Google Docs</li>
+        <li>Notion & Evernote</li>
+        <li>Reddit & social media</li>
+        <li>WordPress & CMS platforms</li>
+        <li>And thousands of other sites!</li>
+      </ul>
+
+      <h2>Real-Time Checking</h2>
+      <p>With 800ms debounce, OpenGrammar checks your text as you type without slowing you down. Issues are highlighted with color-coded underlines:</p>
+      <ul>
+        <li><span style="color: #DC3545; text-decoration: underline; font-weight: bold;">Red</span> - Grammar/Spelling errors</li>
+        <li><span style="color: #E6A800; text-decoration: underline; font-weight: bold;">Amber</span> - Clarity improvements</li>
+        <li><span style="color: #0D6EFD; text-decoration: underline; font-weight: bold;">Blue</span> - Style suggestions</li>
+      </ul>
+
+      <h2>Interactive Tooltips</h2>
+      <p>Click any underlined text to see:</p>
+      <ul>
+        <li>The original text</li>
+        <li>Suggested correction</li>
+        <li>Reason for the suggestion</li>
+        <li>Apply / Ignore buttons</li>
+        <li>Confidence score</li>
+        <li>Add to dictionary option</li>
+      </ul>
+
+      <div class="callout callout-success" data-emoji="📴">
+        <strong>Offline Mode:</strong> The rule-based engine works completely offline! No internet required for basic grammar checking. AI features require an API key and internet.
+      </div>
+    </section>
+
+    <!-- Tone Rewriting Section -->
+    <section class="section fade-in" id="tone-rewriting">
+      <h1>Tone Rewriting</h1>
+
+      <p>OpenGrammar can rewrite your text in 8 different tones to match your audience and purpose.</p>
+
+      <h2>Available Tones</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-title">Formal</div>
+          <div class="feature-desc">Professional, business-appropriate language</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-title">Casual</div>
+          <div class="feature-desc">Relaxed, conversational tone</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-title">Professional</div>
+          <div class="feature-desc">Workplace-appropriate communication</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-title">Friendly</div>
+          <div class="feature-desc">Warm, approachable style</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-title">Concise</div>
+          <div class="feature-desc">Brief, to-the-point messaging</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-title">Detailed</div>
+          <div class="feature-desc">Comprehensive, thorough coverage</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-title">Persuasive</div>
+          <div class="feature-desc">Convincing, compelling language</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-title">Neutral</div>
+          <div class="feature-desc">Balanced, unbiased tone</div>
+        </div>
+      </div>
+
+      <h2>How to Use</h2>
+      <ol>
+        <li>Select the text you want to rewrite</li>
+        <li>Right-click and select "Rewrite with OpenGrammar"</li>
+        <li>Or use <code>Ctrl+Shift+R</code></li>
+        <li>Choose your desired tone</li>
+        <li>Review and apply the rewritten text</li>
+      </ol>
+    </section>
+
+    <!-- Writing Statistics Section -->
+    <section class="section fade-in" id="statistics">
+      <h1>Writing Statistics</h1>
+
+      <p>The built-in dashboard provides comprehensive writing analytics to help you improve.</p>
+
+      <h2>Available Metrics</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <div class="feature-title">Word Count</div>
+          <div class="feature-desc">Total words in your text</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔤</div>
+          <div class="feature-title">Character Count</div>
+          <div class="feature-desc">Total characters (with/without spaces)</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📝</div>
+          <div class="feature-title">Sentence Count</div>
+          <div class="feature-desc">Number of sentences</div>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📄</div>
+          <div class="feature-title">Paragraph Count</div>
+          <div class="feature-desc">Number of paragraphs</div>
+        </div>
+      </div>
+
+      <h2>Readability Scores</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Description</th>
+            <th>Ideal Range</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Flesch Reading Ease</td>
+            <td>How easy the text is to read</td>
+            <td>60-70 (Standard)</td>
+          </tr>
+          <tr>
+            <td>Flesch-Kincaid Grade</td>
+            <td>Grade level required to understand</td>
+            <td>7-8 (Middle School)</td>
+          </tr>
+          <tr>
+            <td>Automated Readability Index</td>
+            <td>Combined score based on characters/words</td>
+            <td>7-8</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Time Estimates</h2>
+      <ul>
+        <li><strong>Reading Time:</strong> Average adult reads 200-250 words per minute</li>
+        <li><strong>Speaking Time:</strong> Average person speaks 150 words per minute</li>
+      </ul>
+
+      <h2>Vocabulary Analysis</h2>
+      <ul>
+        <li>Unique word count</li>
+        <li>Vocabulary diversity ratio</li>
+        <li>Most common words</li>
+      </ul>
+    </section>
+
+    <!-- API Reference Section -->
+    <section class="section fade-in" id="api">
+      <h1>API Reference</h1>
+
+      <h2>Base URL</h2>
+      <pre><code>http://localhost:8787  # Local development
+https://your-backend.workers.dev  # Production</code></pre>
+
+      <h2>Endpoints Overview</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Endpoint</th>
+            <th>Method</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>/health</code></td><td>GET</td><td>Health check</td></tr>
+          <tr><td><code>/providers</code></td><td>GET</td><td>List AI providers</td></tr>
+          <tr><td><code>/models</code></td><td>POST</td><td>Get models for provider</td></tr>
+          <tr><td><code>/analyze</code></td><td>POST</td><td>Analyze text for grammar</td></tr>
+          <tr><td><code>/rewrite</code></td><td>POST</td><td>Rewrite text in tone</td></tr>
+          <tr><td><code>/autocomplete</code></td><td>POST</td><td>Get autocomplete suggestions</td></tr>
+        </tbody>
+      </table>
+
+      <h2>POST /analyze</h2>
+      <p>Analyze text for grammar, spelling, and style issues.</p>
+
+      <h3>Request</h3>
+      <pre><code>{
+  "text": "me and him went to store",
+  "provider": "groq",
+  "model": "llama-3.1-70b-versatile",
+  "apiKey": "gsk_xxx"
+}</code></pre>
+
+      <h3>Response</h3>
+      <pre><code>{
+  "issues": [
+    {
+      "type": "grammar",
+      "original": "me and him",
+      "suggestion": "he and I",
+      "reason": "Subject pronoun error",
+      "offset": 0,
+      "length": 9,
+      "confidence": 0.96,
+      "priority": 95.0
+    }
+  ],
+  "metadata": {
+    "textLength": 24,
+    "issuesCount": 1,
+    "processingTimeMs": 245,
+    "provider": "groq"
+  }
+}</code></pre>
+
+      <h2>POST /rewrite</h2>
+      <p>Rewrite text in a different tone.</p>
+
+      <h3>Request</h3>
+      <pre><code>{
+  "text": "hey whats up",
+  "tone": "formal",
+  "provider": "groq",
+  "model": "llama-3.1-70b-versatile"
+}</code></pre>
+
+      <h3>Response</h3>
+      <pre><code>{
+  "original": "hey whats up",
+  "rewritten": "Greetings, how are you?",
+  "tone": "formal"
+}</code></pre>
+
+      <h2>GET /health</h2>
+      <p>Health check endpoint.</p>
+      <pre><code>{
+  "status": "healthy",
+  "timestamp": "2024-01-01T00:00:00.000Z",
+  "version": "1.0.0"
+}</code></pre>
+    </section>
+
+    <!-- Contributing Section -->
+    <section class="section fade-in" id="contributing">
+      <h1>Contributing</h1>
+
+      <p>We welcome contributions from developers and non-developers alike!</p>
+
+      <h2>Non-Developer Contributions</h2>
+      <ul>
+        <li>Report bugs via GitHub Issues</li>
+        <li>Suggest features via GitHub Discussions</li>
+        <li>Improve documentation</li>
+        <li>Add grammar rules (no code needed!)</li>
+      </ul>
+
+      <h2>Developer Setup</h2>
+      <div class="steps">
+        <div class="step">
+          <h3>Fork & Clone</h3>
+          <pre><code>git clone https://github.com/YOUR_USERNAME/opengrammar.git
+cd opengrammar</code></pre>
+        </div>
+        <div class="step">
+          <h3>Install Dependencies</h3>
+          <pre><code>bun install</code></pre>
+        </div>
+        <div class="step">
+          <h3>Development</h3>
+          <pre><code># Backend
+cd opengrammar/backend
+bun run dev  # http://localhost:8787
+
+# Extension  
+cd opengrammar/extension
+bun run dev</code></pre>
+        </div>
+      </div>
+
+      <h2>Adding Grammar Rules</h2>
+      <p>Edit <code>opengrammar/backend/src/analyzer-simple.ts</code>:</p>
+      <pre><code>{
+  pattern: /\bword\b/gi,
+  suggestion: 'correction',
+  reason: 'Explanation of the error.',
+  type: 'spelling'
+}</code></pre>
+
+      <div class="callout callout-info" data-emoji="📝">
+        <strong>Rule Categories Needed:</strong> Common misspellings, confused words, redundant phrases, style & clarity rules, punctuation & spacing.
+      </div>
+
+      <h2>Code Style</h2>
+      <ul>
+        <li>TypeScript strict mode</li>
+        <li>Conventional commits (feat, fix, docs, refactor, test)</li>
+        <li>Descriptive branch names: <code>feature/add-tone</code>, <code>fix/grammar-detection</code></li>
+      </ul>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section class="section fade-in" id="roadmap">
+      <h1>Development Roadmap</h1>
+
+      <h2>Version Timeline</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Version</th>
+            <th>Target</th>
+            <th>Features</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge badge-free">v2.1</span></td>
+            <td>Current</td>
+            <td>Tone rewriting, statistics, custom prompts</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-pro">v3.0</span></td>
+            <td>Q2 2026</td>
+            <td>Autocomplete, Firefox support, Google Docs</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-pro">v3.5</span></td>
+            <td>Q3 2026</td>
+            <td>Contextual understanding, writing analytics</td>
+          </tr>
+          <tr>
+            <td><span class="badge badge-pro">v4.0</span></td>
+            <td>Q4 2026</td>
+            <td>Desktop apps, Developer API, Safari support</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Phase Status</h2>
+      <div class="feature-grid">
+        <div class="feature-card" style="border: 3px solid var(--accent-1);">
+          <div class="feature-title">✓ Phase 1: Foundation</div>
+          <div class="feature-desc">Chrome Extension, Serverless Backend, Dual Engine, Privacy Features</div>
+        </div>
+        <div class="feature-card" style="border: 3px solid var(--accent-1);">
+          <div class="feature-title">✓ Phase 2: Enhanced UX</div>
+          <div class="feature-desc">Tone Rewriting, Statistics Dashboard, Custom Prompts</div>
+        </div>
+        <div class="feature-card" style="border: 3px dashed var(--accent-3);">
+          <div class="feature-title">⟳ Phase 3: Advanced</div>
+          <div class="feature-desc">Autocomplete, Contextual Understanding, Writing Analytics</div>
+        </div>
+        <div class="feature-card" style="border: 3px dashed var(--paper-lines);">
+          <div class="feature-title">○ Phase 4: Expansion</div>
+          <div class="feature-desc">Cross-Browser, Desktop Apps, Developer API</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Troubleshooting Section -->
+    <section class="section fade-in" id="troubleshooting">
+      <h1>Troubleshooting</h1>
+
+      <h2>Common Issues</h2>
+
+      <h3>Extension Not Loading</h3>
+      <div class="callout callout-warning" data-emoji="🔧">
+        <strong>Solution:</strong>
+        <ol>
+          <li>Make sure you built the extension: <code>cd extension && npm run build</code></li>
+          <li>Check that you're loading the <code>dist</code> folder</li>
+          <li>Refresh the extensions page and try again</li>
+        </ol>
+      </div>
+
+      <h3>AI Features Not Working</h3>
+      <div class="callout callout-warning" data-emoji="🔧">
+        <strong>Solution:</strong>
+        <ol>
+          <li>Verify your API key is correctly entered</li>
+          <li>Check that the backend is running</li>
+          <li>Update backendUrl in extension settings</li>
+          <li>Check browser console for errors</li>
+        </ol>
+      </div>
+
+      <h3>Highlighting Not Showing</h3>
+      <div class="callout callout-warning" data-emoji="🔧">
+        <strong>Solution:</strong>
+        <ol>
+          <li>Make sure the extension is enabled</li>
+          <li>Check if the site is in disabled domains</li>
+          <li>Some sites may not support content scripts</li>
+        </ol>
+      </div>
+
+      <h3>Backend Connection Failed</h3>
+      <pre><code># Check if backend is running
+curl http://localhost:8787/health
+
+# Check CORS settings
+# Make sure backend URL in extension matches</code></pre>
+
+      <h2>Getting Help</h2>
+      <ul>
+        <li>Check GitHub Issues for known problems</li>
+        <li>Join our Discussions for questions</li>
+        <li>Run in debug mode: set <code>DEBUG=true</code> in backend</li>
+      </ul>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section fade-in" id="faq">
+      <h1>Frequently Asked Questions</h1>
+
+      <h3>Is OpenGrammar really free?</h3>
+      <p>Yes! The rule-based engine is completely free and works offline. AI features require your own API key, which costs fractions of a cent per use with providers like Groq.</p>
+
+      <h3>Is my data safe?</h3>
+      <p>Absolutely. We have no database, no user accounts, and your API key never leaves your browser. If you use AI features, text is processed by stateless edge functions and immediately forgotten.</p>
+
+      <h3>Can I self-host the backend?</h3>
+      <p>Yes! Deploy to Cloudflare Workers, Vercel, Railway, Render, or any Docker-compatible platform in minutes.</p>
+
+      <h3>What AI providers are supported?</h3>
+      <p>Groq, OpenAI, OpenRouter, Together AI, Ollama, and any OpenAI-compatible API.</p>
+
+      <h3>Does it work on mobile?</h3>
+      <p>Currently, OpenGrammar is a Chrome/Chromium browser extension. Mobile support is planned for future versions.</p>
+
+      <h3>How do I add custom grammar rules?</h3>
+      <p>Edit <code>opengrammar/backend/src/analyzer-simple.ts</code> and add your regex-based rules. No coding experience needed for simple rule suggestions!</p>
+
+      <h3>Can I use my own LLM locally?</h3>
+      <p>Yes! Use Ollama with our Docker setup for completely offline AI-powered grammar checking.</p>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p class="footer-text">Made with 💜 by the <a href="https://github.com/swadhinbiswas" target="_blank">OpenGrammar Community</a></p>
+      <p class="footer-text">Apache 2.0 License • Open Source Forever</p>
+      <p class="footer-text">
+        <a href="https://github.com/swadhinbiswas/opengrammar" target="_blank">GitHub</a> •
+        <a href="#">Discussions</a> •
+        <a href="#">Issues</a>
+      </p>
+      <p class="footer-text" style="margin-top: 20px; opacity: 0.7;">Last Updated: March 2026 | Version 2.1.0</p>
+    </footer>
+  </main>
+
+  <script>
+    // Toggle sidebar on mobile
+    function toggleSidebar() {
+      document.getElementById('sidebar').classList.toggle('open');
+    }
+
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', function(e) {
+      const sidebar = document.getElementById('sidebar');
+      const menuToggle = document.querySelector('.menu-toggle');
+      if (window.innerWidth <= 900 && 
+          !sidebar.contains(e.target) && 
+          !menuToggle.contains(e.target) &&
+          sidebar.classList.contains('open')) {
+        sidebar.classList.remove('open');
+      }
+    });
+
+    // Active nav link on scroll
+    const sections = document.querySelectorAll('.section, .hero');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    function updateActiveNav() {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (pageYOffset >= sectionTop - 250) {
+          current = section.getAttribute('id');
+        }
+      });
+      
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', updateActiveNav);
+
+    // Fade in animations on scroll
+    const fadeElements = document.querySelectorAll('.fade-in');
+    
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    fadeElements.forEach(el => fadeObserver.observe(el));
+
+    // Progress bar
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('progressBar').style.width = scrolled + '%';
+    });
+
+    // Smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // Close sidebar on mobile after click
+          if (window.innerWidth <= 900) {
+            document.getElementById('sidebar').classList.remove('open');
+          }
+        }
+      });
+    });
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      updateActiveNav();
+    });
+  </script>
+</body>
+</html>
