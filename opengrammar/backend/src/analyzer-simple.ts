@@ -29,6 +29,11 @@ export class RuleBasedAnalyzer {
     issues.push(...this.checkRedundantPhrases(text));
     issues.push(...this.checkLongSentences(text));
     issues.push(...this.checkCustomRules(text));
+    issues.push(...this.checkArticleErrors(text));
+    issues.push(...this.checkCommaSplices(text));
+    issues.push(...this.checkDanglingModifiers(text));
+    issues.push(...this.checkSubjectVerbAgreement(text));
+    issues.push(...this.checkCapitalizationErrors(text));
 
     return issues;
   }
@@ -518,6 +523,185 @@ export class RuleBasedAnalyzer {
         }
       }
     }
+    return issues;
+  }
+
+  private static checkArticleErrors(text: string): Issue[] {
+    const issues: Issue[] = [];
+
+    // Check for "a" before vowel sounds
+    const aBeforeVowelRegex = /\ba\s+(hour|heir|honor|honest|herb)\b/gi;
+    const aMatches = text.matchAll(aBeforeVowelRegex);
+    for (const match of aMatches) {
+      if (match[0] && match.index !== undefined) {
+        issues.push({
+          type: 'grammar',
+          original: match[0],
+          suggestion: match[0].replace(/\ba\b/i, 'an'),
+          reason: 'Use "an" before words that start with a vowel sound.',
+          offset: match.index,
+          length: match[0].length,
+        });
+      }
+    }
+
+    // Check for "an" before consonant sounds
+    const anBeforeConsonantRegex = /\ban\s+(university|European|one-time|useful|useless|unicorn)\b/gi;
+    const anMatches = text.matchAll(anBeforeConsonantRegex);
+    for (const match of anMatches) {
+      if (match[0] && match.index !== undefined) {
+        issues.push({
+          type: 'grammar',
+          original: match[0],
+          suggestion: match[0].replace(/\ban\b/i, 'a'),
+          reason: 'Use "a" before words that start with a consonant sound.',
+          offset: match.index,
+          length: match[0].length,
+        });
+      }
+    }
+
+    return issues;
+  }
+
+  private static checkCommaSplices(text: string): Issue[] {
+    const issues: Issue[] = [];
+
+    // Detect potential comma splices (two independent clauses joined by comma)
+    const commaSpliceRegex = /\b([A-Z][^.!?]*?)\s*,\s*([A-Z][^.!?]*?)\s*[.!?]/g;
+    const matches = text.matchAll(commaSpliceRegex);
+    for (const match of matches) {
+      if (match[1] && match[2] && match.index !== undefined) {
+        // Check if both parts could be independent clauses
+        const hasVerb1 = /\b(is|are|was|were|has|have|had|do|does|did|will|would|could|should|may|might|must)\b/i.test(match[1]);
+        const hasVerb2 = /\b(is|are|was|were|has|have|had|do|does|did|will|would|could|should|may|might|must)\b/i.test(match[2]);
+        
+        if (hasVerb1 && hasVerb2) {
+          issues.push({
+            type: 'grammar',
+            original: match[0],
+            suggestion: 'Consider using a period, semicolon, or adding a conjunction.',
+            reason: 'This may be a comma splice. Two independent clauses should not be joined only by a comma.',
+            offset: match.index,
+            length: match[0].length,
+          });
+        }
+      }
+    }
+
+    return issues;
+  }
+
+  private static checkDanglingModifiers(text: string): Issue[] {
+    const issues: Issue[] = [];
+
+    // Detect potential dangling participles
+    const danglingPatterns = [
+      {
+        pattern: /\b(After|Before|While|When)\s+(reading|writing|running|walking|talking|thinking|working|studying|eating|sleeping)\s*,\s*(it|there|this|that)\b/gi,
+        reason: 'This may be a dangling modifier. The subject after the comma should be the one doing the action.'
+      },
+      {
+        pattern: /\b(Based on|According to|Depending on)\s*,\s*(it|we|I|you)\b/gi,
+        reason: 'Consider rephrasing to clarify what the modifier refers to.'
+      },
+    ];
+
+    for (const { pattern, reason } of danglingPatterns) {
+      const matches = text.matchAll(pattern);
+      for (const match of matches) {
+        if (match[0] && match.index !== undefined) {
+          issues.push({
+            type: 'clarity',
+            original: match[0],
+            suggestion: 'Rephrase to clarify the subject of the modifier.',
+            reason,
+            offset: match.index,
+            length: match[0].length,
+          });
+        }
+      }
+    }
+
+    return issues;
+  }
+
+  private static checkSubjectVerbAgreement(text: string): Issue[] {
+    const issues: Issue[] = [];
+
+    // Check for common subject-verb agreement errors
+    const agreementErrors = [
+      {
+        pattern: /\b(everyone|everybody|someone|somebody|anyone|anybody|no one|nobody)\s+(are|were|have)\b/gi,
+        suggestion: 'is',
+        reason: 'Indefinite pronouns like "everyone" are singular and take singular verbs.'
+      },
+      {
+        pattern: /\b(neither|either)\s+(are|were)\b/gi,
+        suggestion: 'is',
+        reason: '"Neither" and "either" are singular and take singular verbs.'
+      },
+      {
+        pattern: /\b(the\s+\w+ly\s+\w+)\s+(are|were)\b/gi,
+        suggestion: 'is',
+        reason: 'Gerund phrases are singular and take singular verbs.'
+      },
+    ];
+
+    for (const { pattern, suggestion, reason } of agreementErrors) {
+      const matches = text.matchAll(pattern);
+      for (const match of matches) {
+        if (match[0] && match.index !== undefined) {
+          issues.push({
+            type: 'grammar',
+            original: match[0],
+            suggestion: match[0].replace(pattern, `$1 ${suggestion}`),
+            reason,
+            offset: match.index,
+            length: match[0].length,
+          });
+        }
+      }
+    }
+
+    return issues;
+  }
+
+  private static checkCapitalizationErrors(text: string): Issue[] {
+    const issues: Issue[] = [];
+
+    // Check for lowercase "i" as a pronoun
+    const lowercaseIRegex = /\s+i\s+(am|have|will|would|could|should|can|may|might|must|need|want|like|love|hate|think|know|believe|feel|see|hear|said|told|asked)\s/gi;
+    const iMatches = text.matchAll(lowercaseIRegex);
+    for (const match of iMatches) {
+      if (match[0] && match.index !== undefined) {
+        issues.push({
+          type: 'spelling',
+          original: match[0],
+          suggestion: match[0].replace(/\s+i\s+/i, ' I '),
+          reason: 'The pronoun "I" should always be capitalized.',
+          offset: match.index + 1,
+          length: 1,
+        });
+      }
+    }
+
+    // Check for sentences not starting with capital letter
+    const sentenceStartRegex = /([.!?]\s*)([a-z])/g;
+    const sentenceMatches = text.matchAll(sentenceStartRegex);
+    for (const match of sentenceMatches) {
+      if (match[0] && match.index !== undefined && match[2]) {
+        issues.push({
+          type: 'grammar',
+          original: match[0],
+          suggestion: match[1] + match[2].toUpperCase(),
+          reason: 'Sentences should start with a capital letter.',
+          offset: match.index + match[1].length,
+          length: 1,
+        });
+      }
+    }
+
     return issues;
   }
 
