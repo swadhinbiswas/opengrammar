@@ -1,0 +1,180 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="t d">
+  <title id="t">OpenGrammar pipeline</title>
+  <desc id="d">Text from Gmail, Google Docs, Notion and Reddit runs through an offline dictionary and rule engine, then through a BYOK AI router for what local rules miss. The same backend deploys to Cloudflare, Vercel, Netlify, Docker or NPM, with no database and keys kept in the browser.</desc>
+  <defs>
+    <radialGradient id="bgGlow" cx="18%" cy="0%" r="95%">
+      <stop offset="0%" stop-color="#171327"/>
+      <stop offset="55%" stop-color="#0C0C10"/>
+      <stop offset="100%" stop-color="#09090B"/>
+    </radialGradient>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#1C1C23"/>
+    </pattern>
+    <linearGradient id="titleGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="60%" stop-color="#D6D6DC"/>
+      <stop offset="100%" stop-color="#9A9AA4"/>
+    </linearGradient>
+    <marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#5A5A66"/>
+    </marker>
+    <style>
+      .f { font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      .card { fill: #121218; stroke: #2E2E37; stroke-width: 1; }
+      .card-title { fill: #ECECF1; font-size: 12.5px; font-weight: 700; letter-spacing: .5px; }
+      .sub { fill: #8C8C97; font-size: 10px; }
+      .micro { fill: #67677A; font-size: 9px; letter-spacing: 1.8px; }
+      .item { fill: #A9A9B4; font-size: 10px; }
+      .chip { fill: #17171E; stroke: #33333D; }
+      .chip-t { fill: #BCBCC7; font-size: 9.5px; }
+      .node { fill: #13131A; stroke: #34343F; }
+      .node-t { fill: #E4E4EA; font-size: 11px; font-weight: 700; }
+      .node-s { fill: #7F7F8B; font-size: 8.8px; }
+      .flow { stroke: #565663; stroke-width: 1.4; fill: none; stroke-dasharray: 5 7; animation: dash 1.15s linear infinite; }
+      .live { fill: #34D399; animation: blink 2s ease-in-out infinite; }
+      .stage { animation: stagePulse 7.6s linear infinite; }
+      .bar { transform-box: fill-box; transform-origin: left center; animation: grow 1.1s cubic-bezier(.2,.7,.2,1) both; }
+      .track { fill: #1B1B22; }
+      .lbl { fill: #A9A9B4; font-size: 9.5px; }
+      .val { fill: #8C8C97; font-size: 9px; }
+      @keyframes dash { to { stroke-dashoffset: -24; } }
+      @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: .18; } }
+      @keyframes stagePulse { 0%, 100% { stroke: #34343F; } 8% { stroke: #A78BFA; } 20% { stroke: #34343F; } }
+      @keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+      @media (prefers-reduced-motion: reduce) {
+        .flow, .live, .stage, .bar { animation: none; }
+      }
+    </style>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bgGlow)"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect x="12" y="12" width="1176" height="606" rx="22" fill="none" stroke="#24242C" stroke-width="1.2"/>
+
+  <g transform="translate(48,41) scale(1.05)">
+    <path d="M12.67 19a2 2 0 0 0 1.416-.588l6.154-6.172a6 6 0 0 0-8.49-8.49L5.586 9.914A2 2 0 0 0 5 11.328V18a1 1 0 0 0 1 1z" fill="none" stroke="#E8E8EE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M16 8 2 22" fill="none" stroke="#A78BFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M17.5 15H9" fill="none" stroke="#E8E8EE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text class="f" x="84" y="62" font-size="25" font-weight="800" letter-spacing="3" fill="url(#titleGrad)">OPENGRAMMAR</text>
+  <text class="f sub" x="86" y="86">privacy-first, self-hosted writing assistant</text>
+
+  <rect x="958" y="38" width="194" height="32" rx="16" fill="#111118" stroke="#2E2E37"/>
+  <circle class="live" cx="978" cy="54" r="3.5"/>
+  <text class="f chip-t" x="992" y="58">Apache-2.0 · offline-first</text>
+
+  <text class="f micro" x="48" y="122">01 · WRITE ANYWHERE</text>
+  <text class="f micro" x="48" y="292">02 · SELF-HOST</text>
+  <text class="f micro" x="48" y="458">03 · SCORE &amp; PRIVACY</text>
+
+  <rect class="card" x="48" y="132" width="328" height="118" rx="14"/>
+  <text class="f card-title" x="64" y="160">Where text lives</text>
+  <text class="f sub" x="64" y="178">extension content script</text>
+  <circle cx="66" cy="197" r="1.8" fill="#67E8F9"/>
+  <text class="f item" x="76" y="200">Gmail · Google Docs</text>
+  <circle cx="66" cy="215" r="1.8" fill="#67E8F9"/>
+  <text class="f item" x="76" y="218">Notion · Reddit</text>
+  <circle cx="66" cy="233" r="1.8" fill="#67E8F9"/>
+  <text class="f item" x="76" y="236">any rich-text editor</text>
+
+  <path id="pa" class="flow" d="M380 191 H428" marker-end="url(#ah)"/>
+  <path id="pb" class="flow" d="M768 191 H818" marker-end="url(#ah)"/>
+
+  <rect class="card" x="436" y="132" width="328" height="118" rx="14"/>
+  <text class="f card-title" x="452" y="160">Local engine</text>
+  <text class="f sub" x="452" y="178">offline, in the browser</text>
+  <circle cx="454" cy="197" r="1.8" fill="#A78BFA"/>
+  <text class="f item" x="464" y="200">156,000-word dictionary</text>
+  <circle cx="454" cy="215" r="1.8" fill="#A78BFA"/>
+  <text class="f item" x="464" y="218">40+ regex rule patterns</text>
+  <circle cx="454" cy="233" r="1.8" fill="#A78BFA"/>
+  <text class="f item" x="464" y="236">instant, zero requests</text>
+
+  <rect class="card" x="824" y="132" width="328" height="118" rx="14"/>
+  <text class="f card-title" x="840" y="160">AI router (BYOK)</text>
+  <text class="f sub" x="840" y="178">only what local rules miss</text>
+  <circle cx="842" cy="197" r="1.8" fill="#FCD34D"/>
+  <text class="f item" x="852" y="200">OpenAI · Groq · OpenRouter</text>
+  <circle cx="842" cy="215" r="1.8" fill="#FCD34D"/>
+  <text class="f item" x="852" y="218">Together · Ollama</text>
+  <circle cx="842" cy="233" r="1.8" fill="#34D399"/>
+  <text class="f item" x="852" y="236">deduped against local findings</text>
+
+  <path id="pc" class="flow" d="M988 250 V296" marker-end="url(#ah)"/>
+
+  <rect class="card" x="48" y="302" width="1104" height="128" rx="14"/>
+  <text class="f card-title" x="64" y="330">Deploy it anywhere</text>
+  <text class="f sub" x="1136" y="330" text-anchor="end">one REST API · /analyze · /autocomplete · /providers</text>
+
+  <rect class="node stage" x="60" y="348" width="196" height="62" rx="10" style="animation-delay:0s"/>
+  <text class="f node-t" x="158" y="376" text-anchor="middle">Cloudflare Workers</text>
+  <text class="f node-s" x="158" y="392" text-anchor="middle">edge runtime</text>
+
+  <rect class="node stage" x="281" y="348" width="196" height="62" rx="10" style="animation-delay:1.5s"/>
+  <text class="f node-t" x="379" y="376" text-anchor="middle">Vercel Edge</text>
+  <text class="f node-s" x="379" y="392" text-anchor="middle">edge runtime</text>
+
+  <rect class="node stage" x="502" y="348" width="196" height="62" rx="10" style="animation-delay:3s"/>
+  <text class="f node-t" x="600" y="376" text-anchor="middle">Netlify Functions</text>
+  <text class="f node-s" x="600" y="392" text-anchor="middle">serverless</text>
+
+  <rect class="node stage" x="723" y="348" width="196" height="62" rx="10" style="animation-delay:4.5s"/>
+  <text class="f node-t" x="821" y="376" text-anchor="middle">Docker</text>
+  <text class="f node-s" x="821" y="392" text-anchor="middle">multi-arch image</text>
+
+  <rect class="node stage" x="944" y="348" width="196" height="62" rx="10" style="animation-delay:6s"/>
+  <text class="f node-t" x="1042" y="376" text-anchor="middle">NPM / Node</text>
+  <text class="f node-s" x="1042" y="392" text-anchor="middle">npx opengrammar-server</text>
+
+  <path class="flow" d="M260 379 H275" marker-end="url(#ah)"/>
+  <path class="flow" d="M481 379 H496" marker-end="url(#ah)"/>
+  <path class="flow" d="M702 379 H717" marker-end="url(#ah)"/>
+  <path class="flow" d="M923 379 H938" marker-end="url(#ah)"/>
+  <circle r="3" fill="#A78BFA" opacity="0.9"><animateMotion dur="7.6s" repeatCount="indefinite"><mpath href="#pl"/></animateMotion></circle>
+  <path id="pl" d="M72 379 H1128" fill="none" stroke="none"/>
+
+  <path id="pd" class="flow" d="M600 434 V462" marker-end="url(#ah)"/>
+  <path id="pe" class="flow" d="M672 522 H718" marker-end="url(#ah)"/>
+
+  <rect class="card" x="48" y="468" width="620" height="110" rx="14"/>
+  <text class="f card-title" x="64" y="496">Writing score</text>
+  <text class="f sub" x="636" y="496" text-anchor="end">0-100 · four dimensions</text>
+
+  <text class="f lbl" x="64" y="514">correctness</text>
+  <rect class="track" x="150" y="508" width="320" height="8" rx="4"/>
+  <rect class="bar" x="150" y="508" width="282" height="8" rx="4" fill="#67E8F9"/>
+  <text class="f val" x="482" y="516">88</text>
+
+  <text class="f lbl" x="64" y="533">readability</text>
+  <rect class="track" x="150" y="527" width="320" height="8" rx="4"/>
+  <rect class="bar" x="150" y="527" width="243" height="8" rx="4" fill="#A78BFA" style="animation-delay:.18s"/>
+  <text class="f val" x="482" y="535">76</text>
+
+  <text class="f lbl" x="64" y="552">engagement</text>
+  <rect class="track" x="150" y="546" width="320" height="8" rx="4"/>
+  <rect class="bar" x="150" y="546" width="205" height="8" rx="4" fill="#FCD34D" style="animation-delay:.36s"/>
+  <text class="f val" x="482" y="554">64</text>
+
+  <text class="f lbl" x="64" y="571">delivery</text>
+  <rect class="track" x="150" y="565" width="320" height="8" rx="4"/>
+  <rect class="bar" x="150" y="565" width="262" height="8" rx="4" fill="#34D399" style="animation-delay:.54s"/>
+  <text class="f val" x="482" y="573">82</text>
+
+  <rect class="card" x="724" y="468" width="428" height="110" rx="14"/>
+  <text class="f card-title" x="740" y="496">Privacy by default</text>
+  <rect class="chip" x="740" y="504" width="85" height="22" rx="11"/>
+  <text class="f chip-t" x="782" y="519" text-anchor="middle">no database</text>
+  <rect class="chip" x="833" y="504" width="157" height="22" rx="11"/>
+  <text class="f chip-t" x="911" y="519" text-anchor="middle">keys stay in the browser</text>
+  <rect class="chip" x="740" y="536" width="123" height="22" rx="11"/>
+  <text class="f chip-t" x="801" y="551" text-anchor="middle">stateless AI calls</text>
+  <rect class="chip" x="871" y="536" width="78" height="22" rx="11"/>
+  <text class="f chip-t" x="910" y="551" text-anchor="middle">Apache-2.0</text>
+  <text class="f sub" x="740" y="572">text is never stored on a server</text>
+
+  <circle r="2.6" fill="#A78BFA"><animateMotion dur="1.5s" repeatCount="indefinite"><mpath href="#pa"/></animateMotion></circle>
+  <circle r="2.6" fill="#A78BFA"><animateMotion dur="1.5s" repeatCount="indefinite" begin="0.4s"><mpath href="#pb"/></animateMotion></circle>
+  <circle r="2.6" fill="#A78BFA"><animateMotion dur="1.5s" repeatCount="indefinite" begin="0.2s"><mpath href="#pc"/></animateMotion></circle>
+  <circle r="2.6" fill="#A78BFA"><animateMotion dur="1.5s" repeatCount="indefinite" begin="0.1s"><mpath href="#pd"/></animateMotion></circle>
+  <circle r="2.6" fill="#A78BFA"><animateMotion dur="1.5s" repeatCount="indefinite" begin="0.6s"><mpath href="#pe"/></animateMotion></circle>
+</svg>
